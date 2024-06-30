@@ -1,102 +1,17 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-
-// namespace GenGuiReloaded
-// {
-//     public class Tag
-//     {
-//         private string Line { get; }
-//         private int OriginalLineNumber { get; }
-//         private int HashLineNumber { get; }
-
-//         public Tag( string line, int originalLN, int hashLN )
-//         {
-//             Line = line;
-//             OriginalLineNumber = originalLN;
-//             HashLineNumber = hashLN;
-//         }
-//     }
-
-//     public class BlockData : Dictionary<string, object>
-//     {
-//         private Tag Tags { get; }
-//         private string BlockName { get; }
-//         private string BlockFlag { get; }
-//         private int SelectCount { get; }
-//         private List<object> SelectedLines { get; }
-
-//         private readonly Dictionary<string, object>? property;
-
-//         public BlockData( Dictionary<string, object>? properties)
-//         {
-//             Tags = new Tag("", 0, 0);
-//             BlockName = "";
-//             BlockFlag = "";
-//             SelectCount = 0;
-//             SelectedLines = new List<object>();
-
-//             property = properties;
-//         }
-
-//         public BlockData( )
-//         {
-//             Tags = new Tag("", 0, 0);
-//             BlockName = "";
-//             BlockFlag = "";
-//             SelectCount = 0;
-//             SelectedLines = new List<object>();
-//         }
-//     }
-
-//     public class MainProgram
-//     {
-
-//         public static void Main()
-//         {
-
-//             var test = new BlockData();
-//             Console.WriteLine($"{test}");
-
-
-//         }
-
-//     }
-
-// }
-
-
-
-
-
-
-
-
-
-
-
+﻿
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using GenGui_CrystalStar.Exceptions;
+using GenGui_CrystalStar.Validations;
 
-
-
-
-
+// grab files from path
 string datapath = @"C:\Users\sbker\OneDrive\Desktop\(WS)-GenGui-CrystalStar\Prompt Collections";
-
 string[] files = Directory.GetFiles(datapath, "*.txt");
 
-foreach (var file in files)
-{
-    Console.WriteLine($"{file}");
-}
-
-// string[] lines = File.ReadAllLines(files[0]);
-
-var datalines = new List<string>();
-datalines.Capacity = 20000;
-
+// grab lines from files
+var datalines = new List<string> { Capacity = 20000 };
 foreach (var file in files)
 {
     var lines = File.ReadAllLines(file);
@@ -106,93 +21,106 @@ foreach (var file in files)
     }
 }
 
-var startofblocks = new OrderedDictionary();
-var endofblocks = new OrderedDictionary();
-var datacount = datalines.Count;
-var blocks = new Dictionary<string,Dictionary<string, object>>();
+// block start and end, technically not needed but may be of use later
+var startofblocks = new Dictionary<string, int>();
+var endofblocks = new Dictionary<string, int>();
 
-for ( int i = 0; i < datacount; i++ )
+// blocks section, probably removed later when made into class
+var blocks = new Dictionary<string, Dictionary<string, object>>();
+
+// grab count so it is not re-called every loop <--- actually it shouldn't matter because references?
+var total_lines = datalines.Count;
+
+/* loop through lines, do all the things within a single loop
+GenGui-Reloaded loops to find blocks, then loops through each block
+we will increment the linenum within the loop while inside a block
+after leaving a block, the for continues having 'skipped' lines
+basically the for loop looks for a start of a block */
+for (int linenum = 0; linenum < total_lines; linenum++)
 {
-    try 
+    /*         default .Net Regex Options = case sensitive, not m
+            Regex.Matches = g (global), Regex.Match = not global, return after first */
+    try
     {
-        if (Regex.IsMatch(datalines[i], @"\s?\{.*:.*$"))
+        /*         start of a block
+                \s*\{.*:.*$ <- 86 steps to fail, oops
+                ^\s*\{.*:.*$ <- 3 steps to fail 
+                ^\s*\{\s*\w*:.*$ faster than above line */
+        if (Regex.IsMatch(datalines[linenum], @"(?i)^\s*\{\s*\w*:.*$"))
         {
-            var match = Regex.Match(datalines[i],@"^\s?\{\s?(\S*):.*$");
-            string blockname = match.Groups[1].ToString();
-            startofblocks.Add(blockname, i);
-            var flagmatch = Regex.Match(datalines[i], @".*:(\S*).*$");
-            string blockflag = flagmatch.Groups[1].ToString();
-            i++;
-            var tags = new List<string>();
-            while (i < datacount && Regex.IsMatch(datalines[i], @"^\s?\}\s?") == false)
+            // Validate flag exists and is a valid one
+            var flagmatch = Regex.Match(datalines[linenum], @"(?i)\W*\w*:\s*(\w*)$");
+            if (flagmatch.Success == false)
             {
-                tags.Add(datalines[i]);
-                i++;
+                var e = new InvalidFlag($"{GetAllData.DataContext(datalines, linenum)}");
+                throw e;
             }
-            endofblocks.Add(blockname, i);
-            var thestuff = new Dictionary<string, object>
+            else if (Flags.ValidFlags.Contains(flagmatch.Groups[1].ToString()) == false)
             {
-                { "Tags", tags },
-                { "BlockName", blockname },
-                { "BlockFlag", blockflag},
-                { "SelectCount", 0},
-                { "SelectedLines", new List<string>()}
-            };
-            blocks.Add(blockname, thestuff);
-        } 
-        // else if (Regex.IsMatch(line, @"^\s?\}\s?"))
-        // {
-        //     int laststart = startofblocks.Count - 1;
-        //     if (laststart >= 0)
-        //     {  // v the fuck is this shit? v , shits easier to do in powershell
-        //         var findtheDictionarykey = startofblocks.Cast<DictionaryEntry>().ElementAt(laststart).Key.ToString();
-        //         endofblocks.Add(findtheDictionarykey!, i);
-        //     }
-        //     else 
-        //     {
-        //         var e = new Exception();
-        //         throw e;
-        //     }
-        // }
-        // i++;
+                var e = new InvalidFlag($"{flagmatch.Groups[1]} is not a valid flag.{GetAllData.DataContext(datalines, linenum)}");
+                throw e;
+            }
+            else
+            {
+                string blockflag = flagmatch.Groups[1].ToString();
+
+                /*             capture the blockname, save for later, add to startofblocks
+                            ^\s*\{\s*(\w*):.*$ <- 11 steps
+                            ^\W*(\w*) <- 6 steps */
+                var match = Regex.Match(datalines[linenum], @"(?i)^\W*(\w*)");
+                string blockname = match.Groups[1].ToString();
+                startofblocks.Add(blockname, linenum);
+
+
+                // increase linenum so we don't add the blockstart to tags list
+                linenum++;
+
+                // grab the tags
+                var tags = new List<string>();
+                // go till end of block but don't capture that one, if a new start block is found, throw and discard the current block
+                while (linenum < total_lines && Regex.IsMatch(datalines[linenum], @"^\s*\}\s*$|^\s*\{") == false)
+                {
+                    tags.Add(datalines[linenum]);
+                    linenum++;
+                }
+                if (Regex.IsMatch(datalines[linenum], @"^\s*\}\s*$") == false || linenum == total_lines)
+                {
+                    linenum--; //negate last skip
+                    var e = new UnclosedBlock($"{GetAllData.DataContext(datalines, linenum)}");
+                    throw e;
+                }
+
+                // add blockname and endblock linenum
+                endofblocks.Add(blockname, linenum);
+
+                // create the Dictionary with the goods
+                var thestuff = new Dictionary<string, object>
+                {
+                    { "Tags", tags },
+                    { "BlockName", blockname },
+                    { "BlockFlag", blockflag},
+                    { "SelectCount", 0},
+                    { "SelectedLines", new List<string>()}
+                };
+
+                // add to blocks Dictionary
+                blocks.Add(blockname, thestuff);
+            }
+        }
     }
-    catch
+    catch (InvalidFlag e)
     {
-        Console.WriteLine("I died");
-        Environment.Exit(0);
+        Console.WriteLine($"{e}");
     }
-} 
-
-try 
-{
-    if (startofblocks.Count != endofblocks.Count)
+    catch (UnclosedBlock e)
     {
-        var e = new Exception();
+        Console.WriteLine($"{e}");
     }
 }
-catch
-{
-    Console.WriteLine("I should learn how to properly do these exceptions");
-    Environment.Exit(0);
-}
 
 
 
-foreach (DictionaryEntry item in startofblocks)
-{
-    Console.WriteLine($"{item.Key}: {item.Value}");
-}
-foreach (DictionaryEntry item in endofblocks)
-{
-    Console.WriteLine($"{item.Key}: {item.Value}");
-}
 
-foreach ( var item in blocks.Keys)
-{
-    Console.WriteLine($"{item}");
-    Console.WriteLine($"{blocks[$"{item}"]}");
-    
-}
 
 
 
