@@ -4,21 +4,63 @@ using GenGui_CrystalStar.Validations;
 
 namespace GenGui_CrystalStar.Services;
 
-public class TagBlocks : Dictionary<string, Dictionary<string, object>>
+public class TagBlocks : Dictionary<string, BlockData>
 {
-    public Dictionary<string, Dictionary<string, object>> Tagblocks { get; set; }
+    public Dictionary<string, BlockData> Tagblocks { get; set; }
 
     public TagBlocks()
     {
-        Tagblocks = new Dictionary<string, Dictionary<string, object>>();
+        Tagblocks = new Dictionary<string, BlockData>();
+    }
+
+
+}
+
+public class BlockData 
+{
+    public List<string> Tags { get; set; }
+    public string BlockName { get; set; }
+    public string BlockFlag { get; set; }
+    public int SelectCount { get; set; }
+    public List<string> SelectedLines { get; set; }
+
+    // Parameterless constructor
+    public BlockData() 
+    {
+        Tags = new List<string>();
+        BlockName = string.Empty;
+        BlockFlag = string.Empty;
+        SelectCount = 0;
+        SelectedLines = new List<string>();
+    }
+
+    // Constructor that accepts a dictionary for initialization
+    public BlockData(Dictionary<string, object> properties) : this() // <-- this() is what I was missing
+    {
+        Init(properties);
+    }
+
+    // Init method to initialize properties
+    private void Init(Dictionary<string, object> properties) 
+    {
+        // Initialize with default values
+        Tags = properties.TryGetValue("Tags", out var tags) ? tags as List<string> : new List<string>();
+        BlockName = properties.TryGetValue("BlockName", out var blockname) ? blockname as string : string.Empty;
+        BlockFlag = properties.TryGetValue("BlockFlag", out var blockflag) ? blockflag as string : string.Empty;
+        SelectCount = properties.TryGetValue("SelectCount", out var selectcount) ? (int)selectcount : SelectCount = 0;
+        SelectedLines = properties.TryGetValue("SelectedLines", out var selectedlines) ? selectedlines as List<string> : new List<string>();
+
     }
 }
+
+
 
 public class GetData
 {
 
     public static async Task<TagBlocks> GetLinesFromTxtFiles()
     {
+
         // grab files from path
         string datapath = @"C:\Users\sbker\OneDrive\Desktop\(WS)-GenGui-CrystalStar\Prompt Collections";
         string[] files = Directory.GetFiles(datapath, "*.txt");
@@ -108,16 +150,15 @@ public class GetData
 
                         // create the Dictionary with the goods
                         var thestuff = new Dictionary<string, object>
-                {
-                    { "Tags", tags },
-                    { "BlockName", blockname },
-                    { "BlockFlag", blockflag},
-                    { "SelectCount", 0},
-                    { "SelectedLines", new List<string>()}
-                };
+                        {
+                            { "Tags", tags },
+                            { "BlockName", blockname },
+                            { "BlockFlag", blockflag }
+                        };
+                        
 
                         // add to blocks Dictionary
-                        blocks.Add(blockname, thestuff);
+                        blocks.Add(blockname, new BlockData(thestuff));
                     }
                 }
             }

@@ -15,14 +15,17 @@ public class Program
         DB.ClearDatabase(dbConnection);
 
         var blocks = await GetLines;
-        foreach (var key in blocks.Keys)
-        {
-            DB.CreateTable(dbConnection, key);
-            // oh god what have I done
-            var taglist = blocks.FirstOrDefault(m => m.Key == key).Value.FirstOrDefault(m => m.Key == "Tags").Value as List<string>;
-            DB.InsertTags(dbConnection, key, taglist);
-            // I mean it works, but its slow as balls. like 1 min slow
-            // nvm fixed it
-        }
+        
+        var tasks = new List<Task>();
+            foreach (var key in blocks.Keys)
+            {
+                DB.CreateTagTable(dbConnection, key); // Assuming this is synchronous and necessary before inserting tags
+                var taglist = blocks[key].Tags; // Direct access to avoid FirstOrDefault
+                var task = DB.InsertTagsAsync(dbConnection, key, taglist);
+                tasks.Add(task);
+            }
+        await Task.WhenAll(tasks);
+
+        DB.InsertBlockData(dbConnection, blocks);
     }
 }
