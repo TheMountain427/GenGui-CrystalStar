@@ -1,31 +1,15 @@
-﻿using Microsoft.Data.Sqlite;
-using GenGui_CrystalStar.Services;
-using SQLitePCL;
-
+﻿using GenGui_CrystalStar.Services;
+using Microsoft.Extensions.Configuration;
 namespace GenGui_CrystalStar;
 
-public class Program
+class Program
 {
-    public static async Task Main()
+    static void Main(string[] args)
     {
-        Task<TagBlocks> GetLines = GetData.GetLinesFromTxtFiles();
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false).Build();
+        string datapath = config.GetValue<string>("DataSource:Path")!;
 
-        var dbConnection = await DB.NewSqliteConnection();
-
-        DB.ClearDatabase(dbConnection);
-
-        var blocks = await GetLines;
-        
-        var tasks = new List<Task>();
-            foreach (var key in blocks.Keys)
-            {
-                DB.CreateTagTable(dbConnection, key); // Assuming this is synchronous and necessary before inserting tags
-                var taglist = blocks[key].Tags; // Direct access to avoid FirstOrDefault
-                var task = DB.InsertTagsAsync(dbConnection, key, taglist);
-                tasks.Add(task);
-            }
-        await Task.WhenAll(tasks);
-
-        DB.InsertBlockData(dbConnection, blocks);
+        var dbservice = new GenGuiDataBaseService();
+        var textservice = new TextFileSourceService(datapath);
     }
 }
