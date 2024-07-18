@@ -8,7 +8,7 @@ namespace GenGui_CrystalStar.Services;
 
 public interface IGenGuiDatabaseService
 {
-    void Init();
+    void InitAsync();
     Task ClearTransientTables();
     Task ClearStatefulTables();
 
@@ -20,19 +20,21 @@ public interface IGenGuiDatabaseService
 
 public class GenGuiDataBaseService : IGenGuiDatabaseService
 {
-    private GenGuiContext _dbContext;
+    private readonly GenGuiContext _database;
     private SQLiteAsyncConnection _db;
 
-    public GenGuiDataBaseService()
+    public GenGuiDataBaseService(GenGuiContext database)
     {
-        _dbContext = new GenGuiContext();
-        _db = new SQLiteAsyncConnection(_dbContext.DatabasePath);
-        Init();
+        _database = database;
+        _db = new SQLiteAsyncConnection(_database.DatabasePath);
+        InitAsync();
+
+        Console.WriteLine("Database Initialized");
     }
 
-    public void Init()
+    public async void InitAsync()
     {
-        Task.Run( async () =>
+        await Task.Run( async () =>
         {
             await CreateNewTransientTables();
             await CreateNewStatefulTables();

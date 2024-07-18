@@ -89,7 +89,6 @@ public class Response<T>
         }
     }
 
-
     public Response(string exception)
     {
         this.SetException(exception);

@@ -22,6 +22,13 @@ public class GenGuiContext : DbContext
         DatabasePath = System.IO.Path.Join(path, "GenGui.db");
     }
 
+    public GenGuiContext(DbContextOptions<GenGuiContext> options)
+        : base(options)
+    {
+        var path = Environment.CurrentDirectory;
+        DatabasePath = System.IO.Path.Join(path, "GenGui.db");
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DatabasePath}");
 

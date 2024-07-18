@@ -10,7 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace GenGui_CrystalStar.Services;
 
-public class TextFileSourceService
+public class ITextFileSourceService
+{
+}
+
+public class TextFileSourceService : ITextFileSourceService
 {
     private string _dataPath { get; set; } = "";
     public string DataPath { get => _dataPath; }
@@ -23,12 +27,9 @@ public class TextFileSourceService
 
     private GenGuiContext _database { get; set; }
 
-
-
-
-    public TextFileSourceService(string dataPath)
+    public TextFileSourceService(GenGuiContext database, string dataPath)
     {
-        _database = new GenGuiContext();
+        _database = database;
         if(Init(dataPath).Result.Success == false)
         {
             throw new Exception("Error initializing TextFileSourceService");
@@ -38,20 +39,20 @@ public class TextFileSourceService
 
     private async Task<Response<ResultCode>> Init(string dataPath)
     {
-        var t_SetFilePath = await SetFilePath(dataPath);
+        var setFilePath = await SetFilePath(dataPath);
 
-        if(t_SetFilePath.Success == false)
+        if(setFilePath.Success == false)
         {
-            return new Response<ResultCode>(ResultCode.Error);
+            return new Response<ResultCode>(setFilePath.Exception!, (ResultCode)setFilePath.Code);
         }
 
         else
         {
 
-            Task t_LoadAllTextFiles = Task.Run(LoadAllTextFiles);
-            await t_LoadAllTextFiles;
+            // Task loadAllTextFiles = Task.Run(LoadAllTextFiles);
+            var loadAllTextFiles = await LoadAllTextFiles();
 
-            if(t_LoadAllTextFiles.IsCompletedSuccessfully == true)
+            if(loadAllTextFiles.Success == true)
             {
                 WatchFiles();
                 return new Response<ResultCode>(ResultCode.Okay);
@@ -59,7 +60,8 @@ public class TextFileSourceService
 
             else
             {
-                return new Response<ResultCode>(ResultCode.Failed);
+
+                return new Response<ResultCode>(loadAllTextFiles.Exception!, ResultCode.Failed);
             }
         }
     }
@@ -67,28 +69,35 @@ public class TextFileSourceService
     // lets fucking gooo
     private async Task<Response<ResultCode>> LoadAllTextFiles()
     {
-        // Convert each file path into a task of List<Tag>
-        var loadFileTasks = new List<Task<List<Tags>>>();
-        foreach (var file in _textFiles)
+        try
         {
-            loadFileTasks.Add(Task.Run(() => LoadTextFile(file)));
-            System.Console.WriteLine("loadtextfile tasks");
-        }
-
-        // Await the completion of all tasks
-        var results = await Task.WhenAll(loadFileTasks);
-
-
-        // Now, results is an array of List<Tag>, where each List<Tag> corresponds to a file
-        foreach (var tagsList in results)
-        {
-            if (tagsList.Any())
+            // Convert each file path into a task of List<Tag>
+            var loadFileTasks = new List<Task<List<Tags>>>();
+            foreach (var file in _textFiles)
             {
-                await _database.AddRangeAsync(tagsList);
+                loadFileTasks.Add(Task.Run(() => LoadTextFile(file)));
+                System.Console.WriteLine("loadtextfile tasks");
             }
+
+            // Await the completion of all tasks
+            var results = await Task.WhenAll(loadFileTasks);
+
+            // Now, results is an array of List<Tag>, where each List<Tag> corresponds to a file
+            foreach (var tagsList in results)
+            {
+                if (tagsList.Any())
+                {
+                    await _database.AddRangeAsync(tagsList);
+                }
+            }
+            await _database.SaveChangesAsync();
+            return new Response<ResultCode>(ResultCode.Okay);
         }
-        await _database.SaveChangesAsync();
-        return new Response<ResultCode>(ResultCode.Okay);
+
+        catch (Exception e)
+        {
+            return new Response<ResultCode>(e.Message, ResultCode.Error);
+        }
     }
 
     private List<Tags> LoadTextFile(TextFile textfile)
@@ -183,11 +192,11 @@ public class TextFileSourceService
 
     private async Task<Response<ResultCode>> SetFilePath(string path)
     {
-        var t_SetFilePath = await Task.Run(() =>
+        var setFilePath = await Task.Run(() =>
         {
             if(string.IsNullOrEmpty(path))
             {
-                return new Response<ResultCode>(ResultCode.NullItemInput);
+                return new Response<ResultCode>("Invalid File Path",ResultCode.NullItemInput);
             }
 
             else if (Directory.Exists(path))
@@ -205,11 +214,11 @@ public class TextFileSourceService
 
             else
             {
-                return new Response<ResultCode>(ResultCode.NotFound);
+                return new Response<ResultCode>("Filepath not Found",ResultCode.NotFound);
             }
         });
 
-        return t_SetFilePath;
+        return setFilePath;
     }
 
     private static bool TryMatchFlag(string flag)
