@@ -4,7 +4,7 @@ namespace GenGui_CrystalStar.Code;
 
 public class Response<T>
 {
-
+    #pragma warning disable CS8618 // shut up shut up shut up
 
     public Response()
     {
@@ -122,7 +122,7 @@ public class Response<T>
 
     public bool Success { get; set; } = true;
     public int Code { get; set; } = 1;
-    public string? Exception { get; private set; }
+    public string Exception { get; private set; } = "";
     public T Data { get; set; }
 
     public void SetException(Exception e)
@@ -143,4 +143,6 @@ public class Response<T>
         Success = false;
         this.Code = (int)code;
     }
+
+    #pragma warning restore CS8618
 }

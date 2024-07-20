@@ -29,11 +29,6 @@ public enum BlockFlag
         do_not_save_grid = 24
 }
 
-public enum DataSource
-{
-    TextFile = 1
-}
-
 public enum ResultCode
     {
         Okay = 1,

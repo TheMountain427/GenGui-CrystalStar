@@ -8,12 +8,14 @@ namespace GenGui_CrystalStar.Services;
 
 public interface IGenGuiDatabaseService
 {
-    void InitAsync();
+    void Init();
     Task ClearTransientTables();
     Task ClearStatefulTables();
+    Task ResetTagsTable();
+    Task ResetBlocksTable();
+    Task ResetBlockFilesTable();
 
-
-    Task RefreshTransientTables(List<Tags> Tags);
+    // Task RefreshTransientTables(List<Tags> Tags);
     // void RefreshBlocksTable();
     // void RefreshGenerationSettingsTable();
 }
@@ -23,57 +25,61 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
     private readonly GenGuiContext _database;
     private SQLiteAsyncConnection _db;
 
+
     public GenGuiDataBaseService(GenGuiContext database)
     {
         _database = database;
         _db = new SQLiteAsyncConnection(_database.DatabasePath);
-        InitAsync();
+        Init();
 
-        Console.WriteLine("Database Initialized");
+        // Console.WriteLine("Database Initialized");
     }
 
-    public async void InitAsync()
+
+    public void Init()
     {
-        await Task.Run( async () =>
+        CreateNewTransientTables();
+        CreateNewStatefulTables();
+    }
+
+    private void CreateNewTransientTables()
+    {
+        var t = Task.Run(async () =>
+            {
+                await _db.DropTableAsync<Tags>();
+                await _db.DropTableAsync<Blocks>();
+                await _db.DropTableAsync<BlockFiles>();
+            });
+        // Program finishes before db is created lol
+        // Do this and ignore warning or do Thread.Sleep(1000); in main
+        Task.WaitAll(t);
+
+        t = Task.Run(async () =>
+            {
+                await _db.CreateTableAsync<Tags>();
+                await _db.CreateTableAsync<Blocks>();
+                await _db.CreateTableAsync<BlockFiles>();
+
+            });
+
+        Task.WaitAll(t);
+    }
+
+    private void CreateNewStatefulTables()
+    {
+        var t = Task.Run(async () =>
         {
-            await CreateNewTransientTables();
-            await CreateNewStatefulTables();
+            await _db.CreateTableAsync<GenerationSettings>();
         });
-    }
 
-    private async Task CreateNewTransientTables()
-    {
-        var dropTransientTables = new List<Task>
-        {
-            _db.DropTableAsync<Tags>(),
-            _db.DropTableAsync<Blocks>()
-        };
-
-        await Task.WhenAll(dropTransientTables);
-
-        var createTransientTables = new List<Task>
-        {
-            _db.CreateTableAsync<Tags>(),
-            _db.CreateTableAsync<Blocks>()
-        };
-
-        await Task.WhenAll(createTransientTables);
-    }
-
-    private async Task CreateNewStatefulTables()
-    {
-        var createStatefulTables = new List<Task>
-        {
-            _db.CreateTableAsync<GenerationSettings>()
-        };
-
-        await Task.WhenAll(createStatefulTables);
+        Task.WaitAll(t);
     }
 
     public async Task ClearTransientTables()
     {
         await _db.DeleteAllAsync<Tags>();
         await _db.DeleteAllAsync<Blocks>();
+        await _db.DeleteAllAsync<BlockFiles>();
     }
 
     public async Task ClearStatefulTables()
@@ -81,11 +87,24 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
         await _db.DeleteAllAsync<GenerationSettings>();
     }
 
-    // ????
-    public async Task RefreshTransientTables(List<Tags> Tags)
+    public async Task ResetTagsTable()
     {
-        await ClearTransientTables();
-        throw new NotImplementedException();
+
+        await _db.DropTableAsync<Tags>();
+        await _db.CreateTableAsync<Tags>();
+
+    }
+
+    public async Task ResetBlocksTable()
+    {
+        await _db.DropTableAsync<Blocks>();
+        await _db.CreateTableAsync<Blocks>();
+    }
+
+    public async Task ResetBlockFilesTable()
+    {
+        await _db.DropTableAsync<BlockFiles>();
+        await _db.CreateTableAsync<BlockFiles>();
     }
 
 }

@@ -16,7 +16,7 @@ public class TagMaker
     private string _cleanTagUnderscore { get; set; } = "";
     private string _commaTagUnderscore { get; set; } = "";
     private int _linenumber { get; set; }
-    private string _blockName { get; set; }
+    private string? _blockName { get; set; }
     private BlockFlag _blockFlag { get; set; }
 
     public Tags MakeTag(string inputLine, int inputLineNum)

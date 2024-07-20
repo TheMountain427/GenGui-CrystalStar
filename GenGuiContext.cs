@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using GenGui_CrystalStar.Code.DatabaseModels;
 using GenGui_CrystalStar.Code.DatabaseModels.Configurations;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace GenGui_CrystalStar;
+
 
 public class GenGuiContext : DbContext
 {
@@ -10,6 +12,7 @@ public class GenGuiContext : DbContext
     public DbSet<Tags> Tags { get; set; }
     public DbSet<Blocks> Blocks { get; set; }
     public DbSet<GenerationSettings> GenerationSettings { get; set; }
+    public DbSet<BlockFiles> BlockFiles { get; set; }
 
     public string DatabasePath { get; }
 
@@ -29,8 +32,13 @@ public class GenGuiContext : DbContext
         DatabasePath = System.IO.Path.Join(path, "GenGui.db");
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DatabasePath}");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite($"Data Source={DatabasePath}");
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        // optionsBuilder.LogTo(Console.WriteLine);
+        // optionsBuilder.EnableSensitiveDataLogging();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,5 +46,8 @@ public class GenGuiContext : DbContext
             modelBuilder.ApplyConfiguration(new TagConfig());
             modelBuilder.ApplyConfiguration(new BlocksConfig());
             modelBuilder.ApplyConfiguration(new GenerationSettingsConfig());
+            modelBuilder.ApplyConfiguration(new BlockFilesConfig());
+
+            base.OnModelCreating(modelBuilder);
         }
 }

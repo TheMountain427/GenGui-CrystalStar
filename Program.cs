@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using GenGui_CrystalStar.Code.DatabaseModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using GenGui_CrystalStar.Code.Models;
+using GenGui.CrystalStar.Code.Models;
 
 namespace GenGui_CrystalStar;
 
@@ -10,38 +12,49 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var configuration = new ConfigurationBuilder();
+        // ------------------------
+        var DataSourceSettings = new DataSourceSettings();
+        var TextFileSourceSettings = new TextFileSourceSettings();
+
+        // ------------------------
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false).Build();
-        string datapath = config.GetValue<string>("DataSource:Path")!;
+
+        // ------------------------
+        config.GetSection("DataSourceSettings").Bind(DataSourceSettings);
+        config.GetSection("TextFileSourceSettings").Bind(TextFileSourceSettings);
 
 
-        var serviceProvider = new ServiceCollection()
-            .AddDbContext<GenGuiContext>()
-            .AddScoped<IGenGuiDatabaseService, GenGuiDataBaseService>()
-            // .AddScoped<ITextFileSourceService, TextFileSourceService>()
-            .AddScoped<IGenGuiDataService, GenGuiDataService>();
+        // ------------------------
+        var serviceProvider = new ServiceCollection();
 
+        // ------------------------
+        serviceProvider.AddDbContext<GenGuiContext>();
+
+        // ------------------------
+        serviceProvider.AddSingleton<IDataSourceSettings>(DataSourceSettings);
+        serviceProvider.AddSingleton<ITextFileSourceSettings>(TextFileSourceSettings);
+
+        // ------------------------
+        serviceProvider.AddScoped<GenGuiContext>();
+        serviceProvider.AddScoped<IGenGuiDatabaseService, GenGuiDataBaseService>();
+        serviceProvider.AddScoped<ITextFileSourceService, TextFileSourceService>();
+        serviceProvider.AddScoped<IGenGuiDataService, GenGuiDataService>();
+
+        // ------------------------
         var srv = serviceProvider.BuildServiceProvider();
 
 
-        var a = new List<Tags>()
-        {
-            new Tags()
-            {
-                LineNumber = 1,
-                Line = "Line",
-                CommaTag = "CommaTag",
-                CleanTag = "CleanTag",
-                CleanTagUnderscore = "CleanTagUnderscore",
-                CommaTagUnderscore = "CommaTagUnderscore",
-                IsMultiTag = true,
-                BlockName = "BlockName",
-                BlockFlag = BlockFlag.cfg_scale
-            }
-        };
-        srv.GetService<IGenGuiDatabaseService>().InitAsync();
-        await srv.GetService<IGenGuiDataService>().InsertTags(a);
+
+
+        srv.GetService<IGenGuiDatabaseService>()!.Init();
+        srv.GetService<IGenGuiDataService>()!.Init();
+        srv.GetService<ITextFileSourceService>()!.Init();
+        // await srv.GetService<ITextFileSourceService>()!.RefreshAllTags();
+        // await srv.GetService<IGenGuiDataService>()!.DeleteTagBlock("Cars_Pos");
+        // var a = await srv.GetService<IGenGuiDataService>()!.GetBlockFile("Cars_Pos");
+        var b = await srv.GetService<ITextFileSourceService>()!.RefreshTagBlock("Cars_Pos");
         Console.WriteLine("Hello World!");
+
     }
 }
 

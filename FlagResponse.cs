@@ -165,8 +165,11 @@ public class FlagResponse<T>
             case "styles":
                 Code = (int)BlockFlag.styles;
                 break;
-            case "seed_resize":
+            case "seed_resize_from_w":
                 Code = (int)BlockFlag.seed_resize_from_w;
+                break;
+            case "seed_resize_from_h":
+                Code = (int)BlockFlag.seed_resize_from_h;
                 break;
             case "n_iter":
                 Code = (int)BlockFlag.n_iter;
