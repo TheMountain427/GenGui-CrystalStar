@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GenGui_CrystalStar.Code.DatabaseModels.Configurations;
 
-internal class GenerationSettingsConfig : IEntityTypeConfiguration<GenerationSettings>
+internal class PromptHistoryConfig : IEntityTypeConfiguration<PromptHistory>
 {
-    public void Configure(EntityTypeBuilder<GenerationSettings> builder)
+    public void Configure(EntityTypeBuilder<PromptHistory> builder)
     {
-        builder.ToTable("GenerationSettings");
+        builder.ToTable("PromptHistory");
         builder.HasKey(x => x.ID);
     }
 }

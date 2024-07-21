@@ -19,6 +19,7 @@ public interface IGenGuiDataService
     Task<Response<BlockFiles>> GetBlockFile(string blockName);
     Task<Response<ResultCode>> UpdateSingleBlockTagCount(string blockName);
     Task<Response<ResultCode>> UpdateSingleBlockTagCount(string blockName, int count);
+    Task<Response<int>> GetTotalTagCount(string blockName);
 }
 
 public class GenGuiDataService : IGenGuiDataService
@@ -35,6 +36,15 @@ public class GenGuiDataService : IGenGuiDataService
     public void Init()
     {
 
+    }
+
+    public async Task<Response<int>> GetTotalTagCount(string blockName)
+    {
+        var tagCount = await _database.Tags.CountAsync(x => x.BlockName == blockName);
+        if (tagCount == 0)
+            return new Response<int>("Zero tags found, won't update", ResultCode.DataError);
+
+        return new Response<int>(tagCount);
     }
 
     public async Task<Response<ResultCode>> UpdateSingleBlockTagCount(string blockName)

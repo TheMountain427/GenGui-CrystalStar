@@ -69,7 +69,7 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
     {
         var t = Task.Run(async () =>
         {
-            await _db.CreateTableAsync<GenerationSettings>();
+            await _db.CreateTableAsync<PastGenerationSettings>();
         });
 
         Task.WaitAll(t);
@@ -84,7 +84,7 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
 
     public async Task ClearStatefulTables()
     {
-        await _db.DeleteAllAsync<GenerationSettings>();
+        await _db.DeleteAllAsync<PastGenerationSettings>();
     }
 
     public async Task ResetTagsTable()

@@ -17,6 +17,7 @@ public interface ITextFileSourceService
     void Init();
     Task<Response<ResultCode>> RefreshAllTags();
     Task<Response<ResultCode>> RefreshTagBlock (string blockName);
+    Response<List<Tags>> LoadTextFile(TextFile textfile);
 }
 
 public class TextFileSourceService : ITextFileSourceService
@@ -29,8 +30,8 @@ public class TextFileSourceService : ITextFileSourceService
     private static readonly string rx_BlockEnd = @"^\s*\}\s*$";
 
     // private GenGuiContext _database { get; set; }
-    private ITextFileSourceSettings _dataPath { get; set; }
-    private IGenGuiDataService _dataService { get; set; }
+    private readonly ITextFileSourceSettings _dataPath;
+    private readonly IGenGuiDataService _dataService;
 
     public TextFileSourceService(/* GenGuiContext database, */ ITextFileSourceSettings dataPath, IGenGuiDataService dataService)
     {
@@ -439,7 +440,7 @@ public class TextFileSourceService : ITextFileSourceService
         return new Response<List<BlockFiles>>(blockFiles);
     }
 
-    private Response<List<Tags>> LoadTextFile(TextFile textfile)
+    public Response<List<Tags>> LoadTextFile(TextFile textfile)
     {
         var tagList = new List<Tags>();
         var path = textfile.FilePath;

@@ -30,27 +30,76 @@ public enum BlockFlag
 }
 
 public enum ResultCode
-    {
-        Okay = 1,
-        None = 0,
-        Invalid = -1,
-        NotFound = -2,
-        NullItemInput = -3,
-        Error = -5,
-        DataValidationError = -6,
-        AlreadyExists = -7,
-        AccessDenied = -8,
-        InvalidOperation = -9,
-        InvalidData = -10,
-        InvalidArgument = -11,
-        Timeout = -12,
-        Warning = -13,
-        Exception = -14,
-        UnhandledException = -15,
-        Pending = -16,
-        Failed = -17,
-        DataError = -18,
-        GeneralError = -19,
-        NotImplemented = -9999,
+{
+    Okay = 1,
+    None = 0,
+    Invalid = -1,
+    NotFound = -2,
+    NullItemInput = -3,
+    Error = -5,
+    DataValidationError = -6,
+    AlreadyExists = -7,
+    AccessDenied = -8,
+    InvalidOperation = -9,
+    InvalidData = -10,
+    InvalidArgument = -11,
+    Timeout = -12,
+    Warning = -13,
+    Exception = -14,
+    UnhandledException = -15,
+    Pending = -16,
+    Failed = -17,
+    DataError = -18,
+    GeneralError = -19,
+    NotImplemented = -9999,
 
-    }
+}
+
+
+public enum TrimLastComma
+{
+    True = 1,
+    False = 0
+}
+
+public enum TagStyle
+{
+    Clean = 1,
+    Comma = 2,
+    Random = 10
+}
+
+public enum OutputType
+{
+    Positive = 1,
+    Api = 2
+}
+
+public enum GlobalShuffleSetting
+{
+    None = 0,
+    Full = 1,
+    WithinBlocks = 2,
+    WholeBlocks = 3,
+
+}
+
+public enum Enabled
+{
+    Disabled = 0,
+    Enabled = 1
+}
+
+public enum SelectionScope
+{
+    Global = 1,
+    IndividualBlocks = 2
+}
+
+public enum AdjType
+{
+    All = 0,
+    Size = 1,
+    Color = 2,
+    Other = 3
+}
