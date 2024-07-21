@@ -29,6 +29,8 @@ public class TagMaker
         else
         {
             _line = EscapeParenthesis(inputLine.Trim());
+            if (string.IsNullOrEmpty(_line))
+                return null;
             _linenumber = inputLineNum;
             // to do: undo whatever I was doing here
             CleanSpaces();

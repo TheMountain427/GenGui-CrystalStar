@@ -496,7 +496,7 @@ public class TextFileSourceService : ITextFileSourceService
                                 var newTag = new TagMaker().MakeTag(lines[lineNum], blocklineNum);
                                 if( newTag is null)
                                 {
-                                    Console.WriteLine($"{lines[lineNum]} is an invalid line");
+                                    Console.WriteLine($"Block: \"{blockName}\" Line: {lineNum} is an invalid line");
                                 }
 
                                 else
@@ -504,8 +504,8 @@ public class TextFileSourceService : ITextFileSourceService
                                     newTag.BlockName = blockName;
                                     newTag.BlockFlag = (BlockFlag)blockFlag; // hope that works
                                     tagList.Add(newTag);
+                                    blocklineNum++;
                                 }
-                                blocklineNum++;
                                 lineNum++;
                             }
                             if (Regex.IsMatch(lines[lineNum], rx_BlockEnd) == false || lineNum == lines.Count)

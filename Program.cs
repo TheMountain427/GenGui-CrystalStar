@@ -68,8 +68,9 @@ class Program
         // deeznutz.BlockGenSettings.Add(new BlockGenerationSettings());
         // var json = JsonSerializer.Serialize(deeznutz);
 
-        var bbb = JsonSerializer.Deserialize<BlockGenSettingsList>(blockSettingString);
-        var ggg = JsonSerializer.Deserialize<BlockGenSettingsList>(globalSettingsString);
+        // var bbb = JsonSerializer.Deserialize<BlockGenSettingsList>(blockSettingString);
+        // var ggg = JsonSerializer.Deserialize<BlockGenSettingsList>(globalSettingsString);
+        srv.GetService<IGeneratorService>()!.GeneratePrompt(globalSettingsString, blockSettingString);
 
         Console.WriteLine("Hello World!");
 
