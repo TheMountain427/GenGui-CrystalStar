@@ -10,6 +10,7 @@ public class GeneratorSettingFramework
     public int TotalTags { get; set; }
     public List<int> SelectedLineNumbers { get; set; } = [];
     public List<Tags> SelectedLines { get; set; } = [];
+    public List<string> FinalLines { get; set; } = [];
     public TagStyle TagStyle { get; set; } = TagStyle.Clean;
     public Enabled BlockShuffle { get; set; } = Enabled.Disabled;
     public Enabled RandomDrop { get; set;} = Enabled.Disabled;

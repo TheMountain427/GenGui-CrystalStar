@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using GenGui_CrystalStar.Code.DatabaseModels;
 using GenGui_CrystalStar.Code;
+using GenGui_CrystalStar.Code.DatabaseModels.Commands;
 using System.Diagnostics;
+using GenGui_CrystalStar.Code.Models;
 
 namespace GenGui_CrystalStar.Services;
 
@@ -20,6 +22,9 @@ public interface IGenGuiDataService
     Task<Response<ResultCode>> UpdateSingleBlockTagCount(string blockName);
     Task<Response<ResultCode>> UpdateSingleBlockTagCount(string blockName, int count);
     Task<Response<int>> GetTotalTagCount(string blockName);
+    Task<Response<List<GeneratorSettingFramework>>> GetTags(List<GeneratorSettingFramework> blocksToProcess);
+    Task<Response<ResultCode>> InsertPromptHistory(List<PromptOutput> promptOutputs);
+    Task<Response<List<PromptHistory>>> GetPromptHistory();
 }
 
 public class GenGuiDataService : IGenGuiDataService
@@ -36,6 +41,40 @@ public class GenGuiDataService : IGenGuiDataService
     public void Init()
     {
 
+    }
+    public async Task<Response<List<PromptHistory>>> GetPromptHistory()
+    {
+        var promptHistory =  await _database.PromptHistory.OrderByDescending(item => item.ID)
+                                                          .Take(50)
+                                                          .OrderBy(item => item.ID)
+                                                          .ToListAsync();
+
+        return new Response<List<PromptHistory>>(promptHistory);
+    }
+
+    public async Task<Response<ResultCode>> InsertPromptHistory(List<PromptOutput> promptOutputs)
+    {
+        foreach (var prompt in promptOutputs)
+        {
+            var promptHistory = new PromptHistory{
+                Output = prompt.NewPrompt,
+                GenSettings = prompt.GenSettings,
+                BlockAttributes = prompt.BlockAttributes
+            };
+            await _database.PromptHistory.AddAsync(promptHistory);
+        }
+        await _database.SaveChangesAsync();
+        _database.ChangeTracker.Clear();
+        return new Response<ResultCode>(ResultCode.Okay);
+    }
+
+    public async Task<Response<List<GeneratorSettingFramework>>> GetTags(List<GeneratorSettingFramework> blocksToProcess)
+    {
+        var foundTags = await SelectTagsSingleQuery.SelectTagsWithJoinAsync(_database, blocksToProcess);
+        if (foundTags.Success == false)
+            return new Response<List<GeneratorSettingFramework>>("no tags for you", ResultCode.Error);
+
+        return new Response<List<GeneratorSettingFramework>>(foundTags.Data);
     }
 
     public async Task<Response<int>> GetTotalTagCount(string blockName)

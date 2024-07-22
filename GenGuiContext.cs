@@ -11,7 +11,6 @@ public class GenGuiContext : DbContext
     public DbSet<sqlite_schema> sqlite_schema { get; set; }
     public DbSet<Tags> Tags { get; set; }
     public DbSet<Blocks> Blocks { get; set; }
-    public DbSet<PastGenerationSettings> PastGenerationSettings { get; set; }
     public DbSet<BlockFiles> BlockFiles { get; set; }
     public DbSet<PromptHistory> PromptHistory { get; set; }
 
@@ -46,7 +45,6 @@ public class GenGuiContext : DbContext
             modelBuilder.ApplyConfiguration(new sqlite_schemaConfig());
             modelBuilder.ApplyConfiguration(new TagConfig());
             modelBuilder.ApplyConfiguration(new BlocksConfig());
-            modelBuilder.ApplyConfiguration(new PastGenerationSettingsConfig());
             modelBuilder.ApplyConfiguration(new BlockFilesConfig());
             modelBuilder.ApplyConfiguration(new PromptHistoryConfig());
 

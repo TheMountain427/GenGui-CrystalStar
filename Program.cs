@@ -70,8 +70,8 @@ class Program
 
         // var bbb = JsonSerializer.Deserialize<BlockGenSettingsList>(blockSettingString);
         // var ggg = JsonSerializer.Deserialize<BlockGenSettingsList>(globalSettingsString);
-        srv.GetService<IGeneratorService>()!.GeneratePrompt(globalSettingsString, blockSettingString);
-
+        var b = await srv.GetService<IGeneratorService>()!.GeneratePrompt(globalSettingsString, blockSettingString);
+        foreach( var t in b.Data){Console.WriteLine($"{t.NewPrompt}");}
         Console.WriteLine("Hello World!");
 
     }
@@ -79,19 +79,19 @@ class Program
     public static string globalSettingsString =
         """
         {
-            "OutputCount": 1,
+            "OutputCount": 2,
             "TrimLastComma": 1,
             "ShuffleSetting": 0,
             "OutputType": 1,
             "GlobalTagStyleSettings": {
                 "IsEnabled": 1,
-                "SelectionScope": 1,
+                "SelectionScope": 2,
                 "GlobalTagStyle": 1
             },
             "GlobalRandomDropSettings": {
-                "IsEnabled": 0,
+                "IsEnabled": 1,
                 "SelectionScope": 1,
-                "GlobalRandomDropChance": 0
+                "GlobalRandomDropChance": 50
             },
             "GlobalAddAdjSettings": {
                 "IsEnabled": 0,
@@ -112,8 +112,8 @@ class Program
                     "SelectCount": 2,
                     "BlockShuffleSetting": 0,
                     "BlockTagStyleSettings": {
-                        "IsEnabled": 0,
-                        "BlockTagStyle": 1
+                        "IsEnabled": 1,
+                        "BlockTagStyle": 2
                     },
                     "BlockRandomDropSettings": {
                         "IsEnabled": 0,
@@ -154,7 +154,7 @@ class Program
                         "BlockTagStyle": 2
                     },
                     "BlockRandomDropSettings": {
-                        "IsEnabled": 0,
+                        "IsEnabled": 1,
                         "BlockRandomDropChance": 0
                     },
                     "BlockAddAdjSettings": {
