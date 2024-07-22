@@ -1,0 +1,61 @@
+{
+    "BlockGenSettings": [
+        {
+            "BlockName": "Cars_Pos",
+            "BlockFlag": 1,
+            "SelectCount": 2,
+            "BlockShuffleSetting": 0,
+            "BlockTagStyleSettings": {
+                "IsEnabled": 0,
+                "BlockTagStyle": 1
+            },
+            "BlockRandomDropSettings": {
+                "IsEnabled": 0,
+                "BlockRandomDropChance": 0
+            },
+            "BlockAddAdjSettings": {
+                "IsEnabled": 0,
+                "BlockAdjtype": 0,
+                "BlockAddAdjChance": 0
+            }
+        },
+        {
+            "BlockName": "Dark_Colors_Neg",
+            "BlockFlag": 2,
+            "SelectCount": 3,
+            "BlockShuffleSetting": 0,
+            "BlockTagStyleSettings": {
+                "IsEnabled": 0,
+                "BlockTagStyle": 1
+            },
+            "BlockRandomDropSettings": {
+                "IsEnabled": 0,
+                "BlockRandomDropChance": 0
+            },
+            "BlockAddAdjSettings": {
+                "IsEnabled": 0,
+                "BlockAdjtype": 0,
+                "BlockAddAdjChance": 0
+            }
+        },
+        {
+            "BlockName": "Computer_Models_pos",
+            "BlockFlag": 1,
+            "SelectCount": 7,
+            "BlockShuffleSetting": 0,
+            "BlockTagStyleSettings": {
+                "IsEnabled": 0,
+                "BlockTagStyle": 2
+            },
+            "BlockRandomDropSettings": {
+                "IsEnabled": 0,
+                "BlockRandomDropChance": 0
+            },
+            "BlockAddAdjSettings": {
+                "IsEnabled": 0,
+                "BlockAdjtype": 0,
+                "BlockAddAdjChance": 0
+            }
+        }
+    ]
+}

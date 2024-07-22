@@ -1,0 +1,22 @@
+{
+    "OutputCount": 1,
+    "TrimLastComma": 1,
+    "ShuffleSetting": 4,
+    "OutputType": 1,
+    "GlobalTagStyle": {
+        "IsEnabled": 0,
+        "selectionScope": 1,
+        "GlobalChance": 0
+    },
+    "GlobalRandomDrop": {
+        "IsEnabled": 0,
+        "selectionScope": 1,
+        "GlobalChance": 0
+    },
+    "GlobalAddAdjectives": {
+        "IsEnabled": 0,
+        "selectionScope": 1,
+        "GlobalAdjtype": 0,
+        "GlobalChance": 0
+    }
+}
