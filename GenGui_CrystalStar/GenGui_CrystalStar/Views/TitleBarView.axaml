@@ -1,0 +1,83 @@
+<!--https://github.com/AvaloniaUI/Avalonia/blob/master/samples/ControlCatalog/DecoratedWindow.xaml-->
+<!--https://github.com/AvaloniaUI/Avalonia/blob/master/samples/ControlCatalog/DecoratedWindow.xaml.cs-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:GenGui_CrystalStar.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
+             x:Class="GenGui_CrystalStar.Views.TitleBarView"
+             x:DataType="vm:MainViewModel">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainViewModel />
+	</Design.DataContext>
+
+	<StackPanel>
+		<Grid>
+			<Panel  Name="TitleBar"
+					Classes="Titlebar"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					PointerPressed="DragWindowView"></Panel>
+			<DockPanel VerticalAlignment="Top"
+					   Width="{ Binding $parent[Window].Width }"
+					   HorizontalAlignment="Stretch"
+					   FlowDirection="RightToLeft">
+				<Button Name="CloseAppBtn"
+						DockPanel.Dock="Left"
+						Width="50"
+						Classes="TitleBar"
+						Command="{ Binding CloseApplication }"
+						CommandParameter="{ Binding $self.Name }"
+						Content=" &#128473;"/>
+				<Button Name="MaximizeAppBtn"
+						DockPanel.Dock="Left"
+						Classes="TitleBar"
+						Width="50"
+						Command="{ Binding MaximizeWindow }"
+						CommandParameter="{ Binding $self.Name }"
+						Content="{ Binding MaximizeAppBtnContent }"></Button>
+				<Button DockPanel.Dock="Left"
+						Width="50"
+						Classes="TitleBar"
+						Command="{ Binding MinimizeWindow}"
+						CommandParameter="{ Binding $self.Name }" >&#9188;</Button>
+				<Menu DockPanel.Dock="Right">
+					<MenuItem Classes="TitleBar" Header="History" Command="{ Binding ChangeHistSidePaneState }" ></MenuItem>
+					<MenuItem FlowDirection="LeftToRight" Classes="TitleBar" Header="Popout"></MenuItem>
+					<MenuItem FlowDirection="LeftToRight" Classes="TitleBar" Header="View">
+						<MenuItem Classes="TitleBar" Header="Deez Nutz"></MenuItem>
+					</MenuItem>
+					<MenuItem FlowDirection="LeftToRight" Classes="TitleBar" Header="Edit">
+						<MenuItem Classes="TitleBar" Header="Cut"></MenuItem>
+						<MenuItem Classes="TitleBar" Header="Copy"></MenuItem>
+						<MenuItem Classes="TitleBar" Header="Paste"></MenuItem>
+					</MenuItem>
+					<MenuItem FlowDirection="LeftToRight" Classes="TitleBar" Header="File">
+						<Separator/>
+						<MenuItem Name="MenuItemExit"
+								  Classes="TitleBar"
+								  Header="Exit"
+								  Command="{Binding CloseApplication}"
+								  CommandParameter="{ Binding $self.Name }">
+						</MenuItem>
+					</MenuItem>
+				</Menu>
+				<Grid></Grid>
+			</DockPanel>
+		</Grid>
+
+
+	<Grid ShowGridLines="False"
+	  ColumnDefinitions="*,*"
+	  RowDefinitions="*,*">
+	</Grid>
+
+
+	</StackPanel>
+
+
+</UserControl>

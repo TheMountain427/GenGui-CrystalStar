@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:GenGui_CrystalStar.ViewModels"
+             xmlns:views="clr-namespace:GenGui_CrystalStar.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GenGui_CrystalStar.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+  <Grid ColumnDefinitions="2*,8*"
+		  ShowGridLines="False"
+		  Height="{ Binding $parent[Window].Height }"
+          Focusable="True"
+          Background="#00000000"
+		  PointerPressed="MainViewGrid_PointerPressed">
+
+			<SplitView Name="BlocksSidePane"
+					   Grid.Column="0"
+					   IsPaneOpen="{ Binding BlocksSidePaneState }"
+					   DisplayMode="Inline"
+					   OpenPaneLength="{ Binding BlocksOpenPaneLength }"
+					   PropertyChanged="BlocksSidePaneOpened">
+				<SplitView.Pane>
+					<ScrollViewer>
+									<views:BlockContainerView />
+					</ScrollViewer>
+				</SplitView.Pane>
+			</SplitView>
+
+
+
+
+
+
+
+		<Grid Grid.Column="1"
+			  Width="{ Binding MainViewWidth }"
+			  ShowGridLines="False"
+			  RowDefinitions="5*,5*"
+			  ColumnDefinitions="*,Auto">
+			<Button HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Content="{ Binding BlocksSidePaneIcon }"
+					Command="{ Binding ChangeBlocksPaneState }"
+					ZIndex="10"
+					Grid.RowSpan="2"
+					Grid.ColumnSpan="2"
+					Margin="-10,0,0,0"></Button>
+
+			<views:GeneratorControls/>
+
+			<SplitView Name="HistSidePane"
+					   Grid.Column="1"
+					   Grid.RowSpan="2"
+					   OpenPaneLength="{ Binding HistOpenPaneLength }"
+					   IsPaneOpen="{ Binding HistSidePaneState }"
+					   DisplayMode="Inline"
+					   PanePlacement="Right"
+					   PropertyChanged="HistSidePaneOpened">
+				<SplitView.Pane>
+					<Grid>
+						<TextBlock Text="History"
+								   FontSize="24"
+								   FontWeight="Bold"
+								   TextDecorations="Underline"
+								   Margin="12,0"/>
+						<StackPanel Margin="0,30,0,0">
+							<ItemsControl ItemsSource="{ Binding PromptHistory }">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<SelectableTextBlock Text="{ Binding Output }"/>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+					</Grid>
+				</SplitView.Pane>
+			</SplitView>
+
+			<Grid Grid.Row="1"
+				  ShowGridLines="False">
+				<StackPanel Spacing="0">
+					<TabStrip>Output</TabStrip>
+					<TextBox VerticalAlignment="Center"
+							 Margin="10"
+							 MinHeight="60"
+							 Text="{ Binding PromptOutput }">TextBox</TextBox>
+				</StackPanel>
+
+			</Grid>
+
+
+		</Grid>
+	</Grid>
+</UserControl>

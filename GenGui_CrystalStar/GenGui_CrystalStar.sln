@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenGui_CrystalStar", "GenGui_CrystalStar\GenGui_CrystalStar.csproj", "{A99C4F24-1F17-4F1B-8533-E0EA63F89491}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenGui_CrystalStar.Desktop", "GenGui_CrystalStar.Desktop\GenGui_CrystalStar.Desktop.csproj", "{21125443-23DB-423A-86C9-3E6A1B8CD30B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A99C4F24-1F17-4F1B-8533-E0EA63F89491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99C4F24-1F17-4F1B-8533-E0EA63F89491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99C4F24-1F17-4F1B-8533-E0EA63F89491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99C4F24-1F17-4F1B-8533-E0EA63F89491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21125443-23DB-423A-86C9-3E6A1B8CD30B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21125443-23DB-423A-86C9-3E6A1B8CD30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21125443-23DB-423A-86C9-3E6A1B8CD30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21125443-23DB-423A-86C9-3E6A1B8CD30B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {964E171B-A560-45EB-8EB4-5525F3D801F8}
+	EndGlobalSection
+EndGlobal

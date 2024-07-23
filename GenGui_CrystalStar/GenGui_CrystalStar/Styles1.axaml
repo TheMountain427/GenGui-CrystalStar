@@ -1,0 +1,212 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+			<Grid ColumnDefinitions="*,*,*" ShowGridLines="True">
+				<StackPanel Grid.Column="0">
+					<Border>
+						<Button Classes="TitleBar" Margin="5">Button</Button>
+					</Border>
+					<ButtonSpinner Margin="5">ButtonSpinner</ButtonSpinner>
+					<RadioButton Margin="5">RadioButton</RadioButton>
+					<RepeatButton Margin="5">RepeatButton</RepeatButton>
+					<SplitButton Margin="5">SplitButton</SplitButton>
+					<ToggleButton Margin="5">ToggleButton</ToggleButton>
+					<ToggleSplitButton Margin="5">ToggleSplitButton</ToggleSplitButton>
+					<Canvas Margin="5"></Canvas>
+					<Carousel Margin="5">Carousel</Carousel>
+					<ColorSpectrum Margin="5"></ColorSpectrum>
+					<ColorSlider Margin="5"></ColorSlider>
+					<ColorPreviewer Margin="5"></ColorPreviewer>
+					<ColorView Margin="5"></ColorView>
+				</StackPanel>
+				<StackPanel Grid.Column="1">
+					<ColorPicker Margin="5"></ColorPicker>
+					<CheckBox Margin="5">CheckBox</CheckBox>
+					<ComboBox Margin="5">ComboBox</ComboBox>
+					<ContentControl Margin="5">ContentControl</ContentControl>
+					<ContextMenu Margin="5">ContextMenu</ContextMenu>
+					<DataGrid Margin="5" GridLinesVisibility="All">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Header" Binding=""></DataGridTextColumn>
+							<DataGridTextColumn Header="Header" Binding=""></DataGridTextColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+					<!--<Decorator Margin="5"></Decorator>-->
+					<DockPanel Margin="5"></DockPanel>
+					<!--<Expander Margin="5"></Expander>-->
+					<!--<Flyout Margin="5"></Flyout>-->
+					<Grid ColumnDefinitions="*, 4, *" ShowGridLines="False" Margin="5">
+						<Rectangle Grid.Column="0" Fill="Blue"/>
+						<GridSplitter Grid.Column="1" Background="Black" ResizeDirection="Columns"/>
+						<Rectangle Grid.Column="2" Fill="Red"/>
+					</Grid>
+					<!--<Image Margin="5"></Image>-->
+					<ItemsControl Margin="5"> ItemsControl</ItemsControl>
+					<ListBox Margin="5">ListBox</ListBox>
+					<Menu Margin="5">Menu
+						<MenuItem Classes="TitleBar" Header="MenuItem">
+							<MenuItem Classes="TitleBar" Header="SubMenu"></MenuItem>
+						</MenuItem>
+					</Menu>
+					<TabStrip>TabStrip</TabStrip>
+					<!--<NativeMenu></NativeMenu>-->
+					<NumericUpDown Margin="5"></NumericUpDown>
+					<!--<Panel Margin="5"></Panel>-->
+					<!--<ToolTip>ToolTip</ToolTip>-->
+					<ProgressBar Margin="5"></ProgressBar>
+					<RefreshContainer Margin="5">RefreshContainer</RefreshContainer>
+					<!--<RelativePanel></RelativePanel>-->
+					<ScrollBar Margin="5"></ScrollBar>
+					<ScrollViewer Margin="5">ScrollViewer</ScrollViewer>
+					<Separator Margin="5"></Separator>
+					<Slider Margin="5"></Slider>
+					<SplitView Margin="5">SplitView</SplitView>
+					</StackPanel>
+				<StackPanel Grid.Column="2">
+					<AutoCompleteBox Margin="5" Text="AutoCompleteBox"></AutoCompleteBox>
+					<TextBlock Margin="5">TextBlock</TextBlock>
+					<SelectableTextBlock Margin="5">SelectableTextBlock</SelectableTextBlock>
+					<TextBox Margin="5">TextBox</TextBox>
+					<MaskedTextBox Margin="5">MaskedTextBox</MaskedTextBox>
+					<Calendar Margin="5"></Calendar>
+					<CalendarDatePicker Margin="5"></CalendarDatePicker>
+					<DatePicker Margin="5"></DatePicker>
+					<TimePicker Margin="5"></TimePicker>
+					<AccessText Margin="5">AccessText</AccessText>
+
+					<StackPanel Orientation="Horizontal">
+						<StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="#2a2e38"/>
+								<SelectableTextBlock Text="2a2e38 - Main Background + Button"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="#4a4d57"/>
+								<SelectableTextBlock Text="4a4d57 - Border Background"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="#5d5e66"/>
+								<SelectableTextBlock Text="5d5e66 - Button Hover "/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="#18181A"/>
+								<SelectableTextBlock Text="18181A - Border"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="#dadce0"/>
+								<SelectableTextBlock Text="dadce0 - Text"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="White"/>
+								<SelectableTextBlock Text="White - Hover Text"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Panel Height="40" Width="40" Background="#30333b"/>
+								<SelectableTextBlock Text="30333b - SidePane Background"/>
+							</StackPanel>
+						</StackPanel>
+				</StackPanel>
+					
+				</StackPanel>
+				
+				
+			</Grid>
+        </Border>
+
+    </Design.PreviewWith>
+
+
+
+	<!-- Add Styles Here -->
+	
+	<Style Selector="Button">
+	    <Setter Property="Background" Value="#2a2e38"/>
+		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="CornerRadius" Value="2"/>
+	</Style>
+	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background"
+            Value="#5d5e66" />
+		<Setter Property="TextBlock.Foreground"
+            Value="White" />
+	</Style>
+	<Style Selector="RepeatButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background"
+            Value="#5d5e66" />
+		<Setter Property="TextBlock.Foreground"
+            Value="White" />
+	</Style>
+
+	
+	
+	<Style Selector="Button.TitleBar">
+		<Setter Property="Background" Value="#2a2e38"/>
+		<Setter Property="Foreground" Value="#dadce0"/>
+		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="0"/>
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="Button.TitleBar:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background"
+            Value="#5d5e66" />
+		<Setter Property="TextBlock.Foreground"
+            Value="White" />
+	</Style>
+
+	<Style Selector="Panel.Titlebar">
+		<Setter Property="Background" Value="#2a2e38"/>
+	</Style>
+	
+	<Style Selector="MenuItem.TitleBar">
+		<Setter Property="Background" Value="#2a2e38"/>
+		<Setter Property="Foreground" Value="#dadce0"/>
+		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+	</Style>
+	<Style Selector="MenuItem.TitleBar:selected /template/ Border#PART_LayoutRoot">
+		<Setter Property="Background"
+            Value="#5d5e66" />
+	</Style>
+	<Style Selector="MenuItem.TitleBar:selected /template/ ContentPresenter#PART_HeaderPresenter">
+		<Setter Property="TextBlock.Foreground"
+            Value="White" />
+	</Style>
+	<Style Selector="MenuItem.TitleBar:pressed  /template/ Border#PART_LayoutRoot:pointerover">
+		<Setter Property="TextBlock.Foreground"
+            Value="White" />
+	</Style>
+	<Style Selector="MenuItem.TitleBar:open /template/ Popup#PART_Popup > Border">
+		<Setter Property="BorderBrush" Value="Black" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="CornerRadius" Value="0" />
+		<Setter Property="Background" Value="#2a2e38"/>
+	</Style>
+
+	<Style Selector="Border.Gen">
+		<Setter	Property="BorderThickness" Value="2"/>
+		<Setter Property="BorderBrush" Value="#18181A"/>
+		<Setter Property="CornerRadius" Value="4"/>
+		<Setter Property="Background" Value="#4a4d57"/>
+		<Setter Property="Margin" Value="10,5"/>
+	</Style>
+
+	<Style Selector="SplitView">
+		<Setter Property="PaneBackground" Value="#30333b"/>
+	</Style>
+
+	<Style Selector="Expander">
+		<Setter Property="Background" Value="#30333b"/>	
+	</Style>
+
+	<Style Selector="TextBlock">
+		<Setter Property="Foreground" Value="#dadce0"/>
+	</Style>
+	
+</Styles>
