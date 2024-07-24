@@ -50,13 +50,15 @@
 							Margin="0,0"
 							Spacing="13">
 
-					<ComboBox ItemsSource="{Binding ShuffleOptionsList}"
-							  SelectedItem="{Binding SelectedShuffleOption, Mode=TwoWay}"
+					<ComboBox ItemsSource="{Binding GlobalShuffleOptionsList}"
+							  SelectedItem="{Binding SelectedGlobalShuffleOption, Mode=TwoWay}"
 							  HorizontalAlignment="Center"
 							  HorizontalContentAlignment="Center">
 						<ComboBox.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
+								<TextBlock Text="{Binding}"
+										   TextAlignment="Center"
+										   HorizontalAlignment="Center"/>
 							</DataTemplate>
 						</ComboBox.ItemTemplate>
 					</ComboBox>
@@ -75,29 +77,8 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Left"
 					Margin="20,0,0,0">
-			
+
 			<Border Classes="Gen"
-					HorizontalAlignment="Center"
-					Height="110"
-					Width="{ Binding GeneratorControlsWidth }">
-				<StackPanel VerticalAlignment="Center"
-							Margin="0,0"
-							Spacing="13">
-					<Button HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Content="Generate"
-							Command="{ Binding Generate }"
-							Width="90"/>
-					<Button HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Content="Copy"
-							Command="{ Binding CopyOutput }"
-							Width="90"/>
-				</StackPanel>
-			</Border>
-			
-			<Border Classes="Gen"
-					BorderBrush="Black"
 					HorizontalAlignment="Center"
 					Height="110"
 					Width="{ Binding GeneratorControlsWidth }"
@@ -125,6 +106,27 @@
 							FlowDirection="LeftToRight"/>
 				</StackPanel>
 			</Border>
+			
+			<Border Classes="Gen"
+					HorizontalAlignment="Center"
+					Height="110"
+					Width="{ Binding GeneratorControlsWidth }">
+				<StackPanel VerticalAlignment="Center"
+							Margin="0,0"
+							Spacing="13">
+					<Button HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center"
+							Content="Generate"
+							Command="{ Binding Generate }"
+							Width="90"/>
+					<Button HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center"
+							Content="Copy"
+							Command="{ Binding CopyOutput }"
+							Width="90"/>
+				</StackPanel>
+			</Border>
+			
 			
 		</WrapPanel>
 	</Grid>

@@ -115,7 +115,7 @@ public partial class MainViewModel : ViewModelBase
         {
             OutputCount = PromptCount,
             TrimLastComma = TrimLastComma.True, // add setting
-            ShuffleSetting = SelectedShuffleOption,
+            ShuffleSetting = SelectedGlobalShuffleOption,
             OutputType = OutputType.Positive, // add setting or binding ?
             GlobalTagStyleSettings =                          // add all below
             {
@@ -194,18 +194,7 @@ public partial class MainViewModel : ViewModelBase
 
     }
 
-    [ObservableProperty]
-    private GlobalShuffleSetting _selectedShuffleOption;
-
-    public IList<GlobalShuffleSetting> ShuffleOptionsList { get; } = new List<GlobalShuffleSetting>
-    {
-        GlobalShuffleSetting.Full,
-        GlobalShuffleSetting.None,
-        GlobalShuffleSetting.WithinBlocks,
-        GlobalShuffleSetting.WholeBlocks
-    };
-
-    partial void OnSelectedShuffleOptionChanged(GlobalShuffleSetting value)
+    partial void OnSelectedGlobalShuffleOptionChanged(GlobalShuffleSetting value)
     {
         Debug.WriteLine($"ShuffleOption changed to {value}");
     }

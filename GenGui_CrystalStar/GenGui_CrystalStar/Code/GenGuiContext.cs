@@ -32,7 +32,12 @@ public class GenGuiContext : DbContext
     public GenGuiContext(DbContextOptions<GenGuiContext> options)
         : base(options)
     {
-        var path = Environment.CurrentDirectory;
+        //var path = Environment.CurrentDirectory;
+
+        // fucking retarded visual studio bug with ava previewer, hard code path for testing
+        var path = @"C:\Users\sbker\OneDrive\Desktop\(WS)-GenGui-CrystalStar\GenGui-CrystalStar\GenGui_CrystalStar\GenGui_CrystalStar.Desktop\bin\Debug\net8.0\";
+
+
         DatabasePath = System.IO.Path.Join(path, "GenGui.db");
     }
 

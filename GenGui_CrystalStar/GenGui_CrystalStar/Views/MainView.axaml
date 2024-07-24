@@ -10,7 +10,7 @@
 
   <Grid ColumnDefinitions="2*,8*"
 		  ShowGridLines="False"
-		  Height="{ Binding $parent[Window].Height }"
+		  Height="{ Binding MainViewGridHeight }"
           Focusable="True"
           Background="#00000000"
 		  PointerPressed="MainViewGrid_PointerPressed">
@@ -22,7 +22,7 @@
 					   OpenPaneLength="{ Binding BlocksOpenPaneLength }"
 					   PropertyChanged="BlocksSidePaneOpened">
 				<SplitView.Pane>
-					<ScrollViewer>
+					<ScrollViewer >
 									<views:BlockContainerView />
 					</ScrollViewer>
 				</SplitView.Pane>

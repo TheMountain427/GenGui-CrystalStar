@@ -26,6 +26,95 @@ namespace GenGui_CrystalStar.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    public IList<Enabled> EnabledOptionsList { get; } = new List<Enabled>
+    {
+        Enabled.Enabled,
+        Enabled.Disabled
+    };
+
+    public IList<SelectionScope> SelectionScopeOptionsList { get; } = new List<SelectionScope>
+    {
+        SelectionScope.Global,
+        SelectionScope.IndividualBlocks
+    };
+
+
+
+    [ObservableProperty]
+    private GlobalShuffleSetting _selectedGlobalShuffleOption;
+
+    public IList<GlobalShuffleSetting> GlobalShuffleOptionsList { get; } = new List<GlobalShuffleSetting>
+    {
+        GlobalShuffleSetting.Full,
+        GlobalShuffleSetting.None,
+        GlobalShuffleSetting.WithinBlocks,
+        GlobalShuffleSetting.WholeBlocks
+    };
+
+
+
+    [ObservableProperty]
+    private TrimLastComma _selectedTrimLastCommaOption;
+
+    public IList<TrimLastComma> TrimLastCommaOptionsList { get; } = new List<TrimLastComma>
+    {
+        TrimLastComma.True,
+        TrimLastComma.False
+    };
+
+
+
+    [ObservableProperty]
+    private Enabled _globalTagStyleEnabledOption;
+
+    [ObservableProperty]
+    private SelectionScope _globalTagStyleSelectionScopeOption;
+
+    [ObservableProperty]
+    private GlobalAddAdjectivesSettings _selectedTagStyleDropOption;
+
+    public IList<TagStyle> GlobalTagStyleOptionsList { get; } = new List<TagStyle>
+    {
+        TagStyle.Clean,
+        TagStyle.Underscore,
+        TagStyle.Random
+    };
+
+
+
+    [ObservableProperty]
+    private Enabled _globalRandomDropEnabledOption;
+
+    [ObservableProperty]
+    private SelectionScope _globalRandomDropSelectionScopeOption;
+
+    [ObservableProperty]
+    private int _globalRandomDropChance;
+
+
+
+    [ObservableProperty]
+    private Enabled _globalAdjTypeEnabledOption;
+
+    [ObservableProperty]
+    private SelectionScope _globalAdjTypeSelectionScopeOption;
+
+    [ObservableProperty]
+    private AdjType _selectedGlobalAddAdjOption;
+
+    public IList<AdjType> GlobalAddAdjectivesOptionsList { get; } = new List<AdjType>
+    {
+        AdjType.All,
+        AdjType.Color,
+        AdjType.Size,
+        AdjType.Other
+    };
+
+    [ObservableProperty]
+    private int _globalAdjTypeChance;
+
+
+
     private IList<BlockFlag> _blockFlagsList { get; } = new List<BlockFlag>
     {
         BlockFlag.positive,

@@ -29,6 +29,14 @@ public partial class MainWindow : Window
                 //Debug.WriteLine($"New MainWindow width: {e.NewValue}");
             }
         }
+
+        if(e.Property == HeightProperty)
+        {
+            if (DataContext is MainViewModel vm)
+            {
+                vm.MainWindowHeight = (double)e.NewValue;
+            }
+        }
     }
 
     void SetupSide(string name, StandardCursorType cursor, WindowEdge edge)

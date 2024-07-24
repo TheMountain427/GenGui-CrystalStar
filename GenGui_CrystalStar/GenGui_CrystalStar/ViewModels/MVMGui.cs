@@ -72,7 +72,16 @@ public partial class MainViewModel : ViewModelBase
 
     partial void OnMainWindowHeightChanged(double value)
     {
-        //Debug.WriteLine($"MainWindowHeight changed to {value}");
+        Debug.WriteLine($"MainWindowHeight changed to {value}");
+        MainViewGridHeight = MainWindowHeight - 35;
+    }
+
+    [ObservableProperty] // fix for scroll viewer not going to end
+    private double _mainViewGridHeight = 600-35;
+
+    partial void OnMainViewGridHeightChanged(double value)
+    {
+        Debug.WriteLine($"MainGridWindowHeight changed to {value}");
     }
 
     [ObservableProperty]

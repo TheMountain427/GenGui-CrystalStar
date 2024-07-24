@@ -24,7 +24,10 @@
 				<StackPanel Grid.Column="1">
 					<ColorPicker Margin="5"></ColorPicker>
 					<CheckBox Margin="5">CheckBox</CheckBox>
-					<ComboBox Margin="5">ComboBox</ComboBox>
+					<ComboBox Margin="5">
+						<TextBlock>text</TextBlock>
+						<TextBlock>text</TextBlock>
+					</ComboBox>
 					<ContentControl Margin="5">ContentControl</ContentControl>
 					<ContextMenu Margin="5">ContextMenu</ContextMenu>
 					<DataGrid Margin="5" GridLinesVisibility="All">
@@ -35,7 +38,11 @@
 					</DataGrid>
 					<!--<Decorator Margin="5"></Decorator>-->
 					<DockPanel Margin="5"></DockPanel>
-					<!--<Expander Margin="5"></Expander>-->
+					<Expander Margin="5">
+						<Expander.Header>
+							<TextBlock>Expander</TextBlock>
+						</Expander.Header>
+					</Expander>
 					<!--<Flyout Margin="5"></Flyout>-->
 					<Grid ColumnDefinitions="*, 4, *" ShowGridLines="False" Margin="5">
 						<Rectangle Grid.Column="0" Fill="Blue"/>
@@ -61,7 +68,7 @@
 					<ScrollBar Margin="5"></ScrollBar>
 					<ScrollViewer Margin="5">ScrollViewer</ScrollViewer>
 					<Separator Margin="5"></Separator>
-					<Slider Margin="5"></Slider>
+					<Slider Margin="5" ></Slider>
 					<SplitView Margin="5">SplitView</SplitView>
 					</StackPanel>
 				<StackPanel Grid.Column="2">
@@ -120,29 +127,26 @@
 
 
 	<!-- Add Styles Here -->
-	
+								<!--General Buttons-->
 	<Style Selector="Button">
 	    <Setter Property="Background" Value="#2a2e38"/>
 		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="BorderBrush" Value="#18181A"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="CornerRadius" Value="2"/>
 	</Style>
 	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background"
-            Value="#5d5e66" />
-		<Setter Property="TextBlock.Foreground"
-            Value="White" />
+		<Setter Property="Background" Value="#5d5e66" />
+		<Setter Property="TextBlock.Foreground" Value="White" />
+		<Setter Property="BorderBrush" Value="#18181A"/>
 	</Style>
 	<Style Selector="RepeatButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background"
-            Value="#5d5e66" />
-		<Setter Property="TextBlock.Foreground"
-            Value="White" />
+		<Setter Property="Background" Value="#5d5e66" />
+		<Setter Property="TextBlock.Foreground" Value="White" />
 	</Style>
-
+								<!--End General Buttons-->
 	
-	
+								<!--TitleBar Buttons-->
 	<Style Selector="Button.TitleBar">
 		<Setter Property="Background" Value="#2a2e38"/>
 		<Setter Property="Foreground" Value="#dadce0"/>
@@ -153,10 +157,8 @@
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 	</Style>
 	<Style Selector="Button.TitleBar:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background"
-            Value="#5d5e66" />
-		<Setter Property="TextBlock.Foreground"
-            Value="White" />
+		<Setter Property="Background" Value="#5d5e66" />
+		<Setter Property="TextBlock.Foreground" Value="White" />
 	</Style>
 
 	<Style Selector="Panel.Titlebar">
@@ -188,7 +190,8 @@
 		<Setter Property="CornerRadius" Value="0" />
 		<Setter Property="Background" Value="#2a2e38"/>
 	</Style>
-
+							<!--End TitleBar Buttons-->
+	
 	<Style Selector="Border.Gen">
 		<Setter	Property="BorderThickness" Value="2"/>
 		<Setter Property="BorderBrush" Value="#18181A"/>
@@ -202,11 +205,220 @@
 	</Style>
 
 	<Style Selector="Expander">
-		<Setter Property="Background" Value="#30333b"/>	
+		<Setter Property="Background" Value="#30333b"/>
+		<Setter Property="CornerRadius" Value="0"/>
 	</Style>
 
 	<Style Selector="TextBlock">
 		<Setter Property="Foreground" Value="#dadce0"/>
 	</Style>
 	
+							
+	
+	
+	
+	
+	
+	
+	
+									<!--Expander-->
+	<Styles.Resources>
+		<Thickness x:Key="ExpanderHeaderBorderThickness">1</Thickness>
+		<SolidColorBrush x:Key="ExpanderHeaderBorderBrush" Color="#18181A"/>
+		<SolidColorBrush x:Key="ExpanderHeaderBorderBrushPointerOver" Color="#18181A"/>
+		<SolidColorBrush x:Key="ExpanderHeaderBorderBrushPressed" Color="#18181A"/>
+		<SolidColorBrush x:Key="ExpanderHeaderBorderBrushDisabled" Color="Lime"/>
+		<SolidColorBrush x:Key="ExpanderHeaderBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ExpanderHeaderBackgroundDisabled" Color="Lime" />
+		<SolidColorBrush x:Key="ExpanderHeaderForeground" Color="Azure" />
+		<SolidColorBrush x:Key="ExpanderHeaderForegroundPointerOver" Color="Azure" />
+		<SolidColorBrush x:Key="ExpanderHeaderForegroundPressed" Color="White" />
+		<SolidColorBrush x:Key="ExpanderHeaderForegroundDisabled" Color="Indigo" />
+		
+		<SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronBackgroundPointerOver" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronBackgroundPressed" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronBackgroundDisabled" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="ExpanderChevronForegroundPointerOver" Color="#dadce0" />
+		<SolidColorBrush x:Key="ExpanderChevronForegroundPressed" Color="#dadce0" />
+		<SolidColorBrush x:Key="ExpanderChevronForegroundDisabled" Color="Lime" />
+		<SolidColorBrush x:Key="ExpanderChevronBorderBrush" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronBorderBrushPointerOver" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronBorderBrushPressed" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronBorderBrushDisabled" Color="Transparent" />
+	</Styles.Resources>
+								<!--End Expander-->
+
+	<!-- Resources for ComboBox.xaml -->
+	<Styles.Resources>
+	<x:Double x:Key="ComboBoxThemeMinWidth">64</x:Double>
+		<Thickness x:Key="ComboBoxBorderThemeThickness">1</Thickness>
+		<Thickness x:Key="ComboBoxDropdownBorderThickness">1</Thickness>
+		<Thickness x:Key="ComboBoxItemThemePadding">11,5,11,7</Thickness>
+		<FontWeight x:Key="ComboBoxHeaderThemeFontWeight">Normal</FontWeight>
+		<Thickness x:Key="ComboBoxDropdownBorderPadding">0</Thickness>
+		<Thickness x:Key="ComboBoxDropdownContentMargin">0,4,0,4</Thickness>
+
+		<SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="#18181A" />
+		<SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="ComboBoxBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#5d5e66" />
+
+		<SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="#4a4d57" />
+		<SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="#5d5e66" />
+
+		<SolidColorBrush x:Key="ComboBoxItemBackground" Color="#30333b" />
+		<SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#30333b" />
+		<SolidColorBrush x:Key="ComboBoxItemBackgroundPressed" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="#5d5e66" />
+
+		<SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="#dadce0" />
+	</Styles.Resources>
+	
+	<!-- Resources for ToggleButton.xaml -->
+	<Styles.Resources>
+		<Thickness x:Key="ToggleButtonBorderThemeThickness">1</Thickness>
+		<SolidColorBrush x:Key="ToggleButtonBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="#5d5e66"/>
+		<SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="#4a4d57" />
+		
+		<SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#4a4d57" />
+		<SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#4a4d57" />
+		
+		<SolidColorBrush x:Key="ToggleButtonForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="White" />
+		
+		<SolidColorBrush x:Key="ToggleButtonForegroundChecked" Color="#dadce0" />
+		<SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="White" />
+		<SolidColorBrush x:Key="ToggleButtonForegroundCheckedPressed" Color="White" />
+		
+		
+		<SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="ToggleButtonBorderBrushChecked" Color="#18181A" />
+		<SolidColorBrush x:Key="ToggleButtonBorderBrushCheckedPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="ToggleButtonBorderBrushCheckedPressed" Color="#18181A" />
+	</Styles.Resources>
+
+	
+	<!-- Resources for Slider.xaml -->
+	<Styles.Resources>
+		<x:Double x:Key="SliderOutsideTickBarThemeHeight">4</x:Double>
+		<x:Double x:Key="SliderTrackThemeHeight">2</x:Double>
+		<Thickness x:Key="SliderBorderThemeThickness">0</Thickness>	
+		
+		<SolidColorBrush x:Key="SliderThumbBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="SliderThumbBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="SliderThumbBackgroundPressed" Color="#2a2e38"/>
+		
+		<SolidColorBrush x:Key="SliderTrackFill" Color="#dadce0" />
+		<SolidColorBrush x:Key="SliderTrackFillPointerOver" Color="#dadce0" />
+		<SolidColorBrush x:Key="SliderTrackFillPressed" Color="#dadce0" />
+		
+		<SolidColorBrush x:Key="SliderTrackValueFill" Color="#18181A" />
+		<SolidColorBrush x:Key="SliderTrackValueFillPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="SliderTrackValueFillPressed" Color="#5d5e66" />
+		
+		<SolidColorBrush x:Key="SliderTickBarFill" Color="#18181A" />
+		<SolidColorBrush x:Key="SliderInlineTickBarFill" Color="#18181A" />
+	</Styles.Resources>
+
+
+	<!-- Resources for Button.xaml -->
+	<Styles.Resources>
+	<StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlBackgroundAccentBrush" />
+	<SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{DynamicResource SystemAccentColorLight1}" />
+	<SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{DynamicResource SystemAccentColorDark1}" />
+	<StaticResource x:Key="AccentButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
+	<StaticResource x:Key="AccentButtonForeground" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+	<StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+	<StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+	<StaticResource x:Key="AccentButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+	<StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
+	<StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
+	<StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+	<StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+	<Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
+	<StaticResource x:Key="ButtonBackground" ResourceKey="SystemControlBackgroundBaseLowBrush" />
+	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource SystemBaseHighColor}" Opacity="0.1" />
+	<StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemControlBackgroundBaseMediumLowBrush" />
+	<StaticResource x:Key="ButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
+	<StaticResource x:Key="ButtonForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+	<StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SystemControlHighlightBaseHighBrush" />
+	<StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SystemControlHighlightBaseHighBrush" />
+	<StaticResource x:Key="ButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+	<StaticResource x:Key="ButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
+	<StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
+	<StaticResource x:Key="ButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+	<StaticResource x:Key="ButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+	</Styles.Resources>
+
+
+	<!-- Resources for TextBox.xaml -->
+	<Styles.Resources>
+		<SolidColorBrush x:Key="TextControlForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="White" />
+		
+		<SolidColorBrush x:Key="TextControlBackground" Color="#4a4d57" />
+		<SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#4a4d57" />
+		
+		<SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#18181A" />
+				
+		<SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="TextControlButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="TextControlButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="TextControlButtonBorderBrushPressed" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="TextControlButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="TextControlButtonForegroundPressed" Color="White" />
+		<SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#4a4d57" />
+		
+		<SolidColorBrush x:Key="TextControlBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="TextControlButtonForeground" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="TextControlForegroundFocused" Color="White" />
+	</Styles.Resources>
+
+	
+	<!-- Resources for ToolTip.xaml -->
+	<Styles.Resources>
+		<x:Double x:Key="ToolTipContentThemeFontSize">12</x:Double>
+		<Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
+		<StaticResource x:Key="ToolTipForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+		<StaticResource x:Key="ToolTipBackground" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
+		<StaticResource x:Key="ToolTipBorderBrush" ResourceKey="SystemControlTransientBorderBrush" />
+		<Thickness x:Key="ToolTipBorderThemePadding">8,5,8,7</Thickness>
+	</Styles.Resources>	
+	
+	
+	<Styles.Resources>
+	</Styles.Resources>	
+	
+	
+	<Styles.Resources>
+	</Styles.Resources>	
+	
+	
+	<Styles.Resources>
+	</Styles.Resources>	
+	
+	
+	<Styles.Resources>
+	</Styles.Resources>
 </Styles>
+
