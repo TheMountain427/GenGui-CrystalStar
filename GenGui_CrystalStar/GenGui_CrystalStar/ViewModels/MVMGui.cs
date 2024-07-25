@@ -45,8 +45,10 @@ public partial class MainViewModel : ViewModelBase
     {
         //Debug.WriteLine($"OnHistPaneRectWidth changing MainViewWidth by {value}");
         // hide certain controls when window gets small enough
-        bool willGeneratorControlsStack = (GeneratorControlsWidth * 2) + 60 > MainViewWidth - HistPaneRectWidth;
-        GeneratorControlVisible = !willGeneratorControlsStack;
+        bool willGeneratorControlsStackGroup1 = (GeneratorControlsWidth * 2) + 60 > MainViewWidth - HistPaneRectWidth;
+        GeneratorControlVisibleGroup1 = !willGeneratorControlsStackGroup1;
+        bool willGeneratorControlsStackGroup2 = (GeneratorControlsWidth * 3) + 80 > MainViewWidth - HistPaneRectWidth;
+        GeneratorControlVisibleGroup2 = !willGeneratorControlsStackGroup2;
     }
 
     // Main Window Width set here
@@ -96,8 +98,10 @@ public partial class MainViewModel : ViewModelBase
         MainViewWidth = MainViewWidth <= 0 ? 0 : _tempMainViewWidth;
 
         // hide certain controls when window gets small enough
-        bool willGeneratorControlsStack = (GeneratorControlsWidth * 2) + 60 > MainViewWidth - HistPaneRectWidth;
-        GeneratorControlVisible = !willGeneratorControlsStack;
+        bool willGeneratorControlsStackGroup1 = (GeneratorControlsWidth * 2) + 60 > MainViewWidth - HistPaneRectWidth;
+        GeneratorControlVisibleGroup1 = !willGeneratorControlsStackGroup1;
+        bool willGeneratorControlsStackGroup2 = (GeneratorControlsWidth * 3) + 80 > MainViewWidth - HistPaneRectWidth;
+        GeneratorControlVisibleGroup2 = !willGeneratorControlsStackGroup2;
     }
 
     [ObservableProperty]
@@ -165,11 +169,19 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [ObservableProperty]
-    private bool _generatorControlVisible;
+    private bool _generatorControlVisibleGroup1;
 
-    partial void OnGeneratorControlVisibleChanged(bool value)
+    partial void OnGeneratorControlVisibleGroup1Changed(bool value)
     {
-        Debug.WriteLine($"GeneratorControlVisible changed to {value}");
+        Debug.WriteLine($"GeneratorControlVisibleGroup1 changed to {value}");
+    }
+
+    [ObservableProperty]
+    private bool _generatorControlVisibleGroup2;
+
+    partial void OnGeneratorControlVisibleGroup2Changed(bool value)
+    {
+        Debug.WriteLine($"GeneratorControlVisibleGroup2 changed to {value}");
     }
 
     [ObservableProperty]

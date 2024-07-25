@@ -6,14 +6,27 @@
 			<Grid ColumnDefinitions="*,*,*" ShowGridLines="True">
 				<StackPanel Grid.Column="0">
 					<Border>
-						<Button Classes="TitleBar" Margin="5">Button</Button>
+						<Button Classes="TitleBar" Margin="5">TitleButton</Button>
 					</Border>
+					<Button>GeneralButton</Button>
 					<ButtonSpinner Margin="5">ButtonSpinner</ButtonSpinner>
 					<RadioButton Margin="5">RadioButton</RadioButton>
 					<RepeatButton Margin="5">RepeatButton</RepeatButton>
 					<SplitButton Margin="5">SplitButton</SplitButton>
 					<ToggleButton Margin="5">ToggleButton</ToggleButton>
-					<ToggleSplitButton Margin="5">ToggleSplitButton</ToggleSplitButton>
+					<ToggleSplitButton Margin="5">
+						<ToggleSplitButton.Content>
+							<TextBlock>text</TextBlock>
+						</ToggleSplitButton.Content>
+						<ToggleSplitButton.Flyout>
+							<Flyout Placement="Bottom">
+								<ListBox>
+									<ListBoxItem>text</ListBoxItem>
+									<ListBoxItem>text</ListBoxItem>
+								</ListBox>
+							</Flyout>
+						</ToggleSplitButton.Flyout>
+					</ToggleSplitButton>
 					<Canvas Margin="5"></Canvas>
 					<Carousel Margin="5">Carousel</Carousel>
 					<ColorSpectrum Margin="5"></ColorSpectrum>
@@ -128,22 +141,7 @@
 
 	<!-- Add Styles Here -->
 								<!--General Buttons-->
-	<Style Selector="Button">
-	    <Setter Property="Background" Value="#2a2e38"/>
-		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="BorderBrush" Value="#18181A"/>
-		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="CornerRadius" Value="2"/>
-	</Style>
-	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#5d5e66" />
-		<Setter Property="TextBlock.Foreground" Value="White" />
-		<Setter Property="BorderBrush" Value="#18181A"/>
-	</Style>
-	<Style Selector="RepeatButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#5d5e66" />
-		<Setter Property="TextBlock.Foreground" Value="White" />
-	</Style>
+
 								<!--End General Buttons-->
 	
 								<!--TitleBar Buttons-->
@@ -338,32 +336,35 @@
 
 
 	<!-- Resources for Button.xaml -->
+	<Style Selector="Button">
+		<Setter Property="CornerRadius" Value="2"/>
+	</Style>
 	<Styles.Resources>
-	<StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlBackgroundAccentBrush" />
-	<SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{DynamicResource SystemAccentColorLight1}" />
-	<SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{DynamicResource SystemAccentColorDark1}" />
-	<StaticResource x:Key="AccentButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-	<StaticResource x:Key="AccentButtonForeground" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
-	<StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
-	<StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
-	<StaticResource x:Key="AccentButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-	<StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
-	<StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
-	<StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
-	<StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-	<Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
-	<StaticResource x:Key="ButtonBackground" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource SystemBaseHighColor}" Opacity="0.1" />
-	<StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemControlBackgroundBaseMediumLowBrush" />
-	<StaticResource x:Key="ButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-	<StaticResource x:Key="ButtonForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
-	<StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SystemControlHighlightBaseHighBrush" />
-	<StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SystemControlHighlightBaseHighBrush" />
-	<StaticResource x:Key="ButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-	<StaticResource x:Key="ButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
-	<StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
-	<StaticResource x:Key="ButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
-	<StaticResource x:Key="ButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+		<Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
+		
+		<SolidColorBrush x:Key="AccentButtonBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="#5d5e66" />
+		
+		<SolidColorBrush x:Key="AccentButtonForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="White" />
+		
+		<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="ButtonBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#5d5e66" />
+		
+		<SolidColorBrush x:Key="ButtonForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="ButtonForegroundPressed" Color="White" />
+		
+		<SolidColorBrush x:Key="ButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="#18181A" />
 	</Styles.Resources>
 
 
@@ -407,16 +408,127 @@
 	
 	
 	<Styles.Resources>
+		<!-- Resources for SplitButton.xaml (shared with ToggleSplitButton) -->
+		<Thickness x:Key="SplitButtonBorderThemeThickness">1</Thickness>
+		
+		<SolidColorBrush x:Key="SplitButtonBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="SplitButtonBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="SplitButtonBackgroundPressed" Color="#5d5e66" />
+		
+		<SolidColorBrush x:Key="SplitButtonBackgroundChecked" Color="#4a4d57" />
+		<SolidColorBrush x:Key="SplitButtonBackgroundCheckedPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="SplitButtonBackgroundCheckedPressed" Color="#4a4d57" />
+		
+		<SolidColorBrush x:Key="SplitButtonForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="SplitButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="SplitButtonForegroundPressed" Color="White" />
+		
+		<SolidColorBrush x:Key="SplitButtonForegroundChecked" Color="#dadce0" />
+		<SolidColorBrush x:Key="SplitButtonForegroundCheckedPointerOver" Color="White" />
+		<SolidColorBrush x:Key="SplitButtonForegroundCheckedPressed" Color="White" />
+		
+		<SolidColorBrush x:Key="SplitButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="SplitButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="SplitButtonBorderBrushPressed" Color="#18181A" />
+		
+		<SolidColorBrush x:Key="SplitButtonBorderBrushChecked" Color="#18181A" />
+		<SolidColorBrush x:Key="SplitButtonBorderBrushCheckedPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="SplitButtonBorderBrushCheckedPressed" Color="#18181A" />
 	</Styles.Resources>	
 	
 	
 	<Styles.Resources>
+		<!-- Resources for ListBox.xaml -->
+		<Thickness x:Key="ListBoxBorderThemeThickness">0</Thickness>
+	</Styles.Resources>
+	<Style Selector="ListBoxItem">
+		<Style Selector="^">
+			<Setter Property="Background" Value="#2a2e38"/>
+			<Setter Property="BorderBrush" Value="#18181A"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+		<!--  PointerOver State  -->
+		<Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#5d5e66" />
+			<Setter Property="Foreground" Value="White" />
+		</Style>
+
+		<!--  Pressed State  -->
+		<Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#5d5e66" />
+			<Setter Property="Foreground" Value="White" />
+		</Style>
+	</Style>
+
+	<!--  Selected State  -->
+	<Style Selector="ListBoxItem:selected">
+		
+		<Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#4a4d57" />
+			<Setter Property="Foreground" Value="#dadce0" />
+		</Style>
+
+		<!--  Selected Unfocused State  -->
+		<Style Selector="^:not(:focus) /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#4a4d57" />
+			<Setter Property="Foreground" Value="#dadce0" />
+		</Style>
+
+		<!--  Selected PointerOver State  -->
+		<Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#5d5e66" />
+			<Setter Property="Foreground" Value="White" />
+		</Style>
+
+		<!--  Selected Pressed State  -->
+		<Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#5d5e66" />
+			<Setter Property="Foreground" Value="White" />
+		</Style>
+	</Style>
+	
+	
+	
+	<Styles.Resources>
+		<!-- Resources for MenuFlyout.xaml (Menu, ContextMenu, etc) -->
+		<x:Double x:Key="MenuFlyoutSeparatorThemeHeight">1</x:Double>
+		<x:Double x:Key="MenuFlyoutThemeMinHeight">32</x:Double>
+		<Thickness x:Key="MenuFlyoutPresenterThemePadding">0,0</Thickness>
+		<Thickness x:Key="MenuFlyoutItemChevronMargin">12,0,0,0</Thickness>
+		<Thickness x:Key="MenuFlyoutSeparatorThemePadding">12,4,12,4</Thickness>
+		<Thickness x:Key="MenuFlyoutItemThemePadding">11,9,11,10</Thickness>
+		<Thickness x:Key="MenuFlyoutItemThemePaddingNarrow">11,4,11,7</Thickness>
+		<Thickness x:Key="MenuFlyoutPresenterBorderThemeThickness">1</Thickness>
+		<SolidColorBrush x:Key="MenuFlyoutItemBackground" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemBackgroundPointerOver" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemBackgroundPressed" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemBackgroundDisabled" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemForeground" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemForegroundPointerOver" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemForegroundPressed" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemForegroundDisabled" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutSubItemChevron" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutSubItemChevronPointerOver" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutSubItemChevronPressed" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutSubItemChevronSubMenuOpened" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutSubItemChevronDisabled" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemKeyboardAcceleratorTextForeground" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemKeyboardAcceleratorTextForegroundPointerOver" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemKeyboardAcceleratorTextForegroundPressed" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutItemKeyboardAcceleratorTextForegroundDisabled" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutPresenterBackground" Color="Lime" />
+		<SolidColorBrush x:Key="MenuFlyoutPresenterBorderBrush" Color="Lime" />
 	</Styles.Resources>	
 	
 	
 	<Styles.Resources>
-	</Styles.Resources>	
+		<!-- Resources for FlyoutPresenter.xaml -->
+		<SolidColorBrush x:Key="FlyoutPresenterBackground" Color="#30333b" />
+		<SolidColorBrush x:Key="FlyoutBorderThemeBrush" Color="#18181A" />
+	</Styles.Resources>
 	
+	<Styles.Resources>
+	</Styles.Resources>
 	
 	<Styles.Resources>
 	</Styles.Resources>

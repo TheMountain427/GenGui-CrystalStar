@@ -21,11 +21,59 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Left"
 					Margin="20,0,0,0">
+			
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
 					Height="110"
 					Width="{ Binding GeneratorControlsWidth }"
-					IsVisible="{ Binding GeneratorControlVisible }">
+					IsVisible="{ Binding GeneratorControlVisibleGroup2 }">
+				<StackPanel VerticalAlignment="Center"
+							Margin="0,0"
+							Spacing="13">
+
+					<ToggleSplitButton Content="RandomDrop"
+									   IsChecked="{ Binding GlobalRandomDropEnabledOption, Mode=TwoWay }"
+									   HorizontalAlignment="Center"
+									   HorizontalContentAlignment="Center">
+						<ToggleSplitButton.Flyout>
+							<Flyout Placement="Bottom">
+								<StackPanel Width="100">
+									<TextBox Name="GlobalRandomDropChanceNumber"
+											 Text="{ Binding GlobalRandomDropChance}"
+											 HorizontalContentAlignment="Center"/>
+									<Slider Value="{ Binding #GlobalRandomDropChanceNumber.Text }"
+											Maximum="100"
+											SmallChange="1"
+											TickFrequency="1"
+											IsSnapToTickEnabled="True"
+											FlowDirection="LeftToRight"/>
+								</StackPanel>
+								
+							</Flyout>
+						</ToggleSplitButton.Flyout>
+					</ToggleSplitButton>
+
+					<ComboBox ItemsSource="{Binding SelectionScopeOptionsList}"
+							  SelectedItem="{Binding GlobalRandomDropSelectionScopeOption, Mode=TwoWay}"
+							  HorizontalAlignment="Center"
+							  HorizontalContentAlignment="Center"
+							  IsEnabled="{ Binding GlobalRandomDropEnabledOption }">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"
+										   TextAlignment="Center"
+										   HorizontalAlignment="Center"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
+			</Border>
+			
+			<Border Classes="Gen"
+					HorizontalAlignment="Center"
+					Height="110"
+					Width="{ Binding GeneratorControlsWidth }"
+					IsVisible="{ Binding GeneratorControlVisibleGroup1 }">
 				<StackPanel VerticalAlignment="Center"
 							Margin="00,0"
 							Spacing="13">
@@ -78,16 +126,62 @@
 					HorizontalAlignment="Left"
 					Margin="20,0,0,0">
 
+
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
 					Height="110"
 					Width="{ Binding GeneratorControlsWidth }"
-					IsVisible="{ Binding GeneratorControlVisible }">
+					IsVisible="{ Binding GeneratorControlVisibleGroup2 }">
+				<StackPanel VerticalAlignment="Center"
+							Margin="0,0"
+							Spacing="13">
+					
+					<ToggleSplitButton Content="TagStyle" 
+									   IsChecked="{ Binding GlobalTagStyleEnabledOption, Mode=TwoWay }" 
+									   HorizontalAlignment="Center"
+									   HorizontalContentAlignment="Center">
+						<ToggleSplitButton.Flyout>
+							<Flyout Placement="Bottom">
+								<ListBox SelectionMode="Single" 
+										 ItemsSource="{ Binding GlobalTagStyleOptionsList}"
+										 SelectedItem="{ Binding SelectedGlobalTagStyleOption, Mode=TwoWay }"
+										 Margin="0" Padding="0">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+							</Flyout>
+						</ToggleSplitButton.Flyout>
+					</ToggleSplitButton>
+					
+					<ComboBox ItemsSource="{Binding SelectionScopeOptionsList}"
+							  SelectedItem="{Binding GlobalTagStyleSelectionScopeOption, Mode=TwoWay}"
+							  HorizontalAlignment="Center"
+							  HorizontalContentAlignment="Center"
+							  IsEnabled="{ Binding GlobalTagStyleEnabledOption }">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"
+										   TextAlignment="Center"
+										   HorizontalAlignment="Center"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
+			</Border>
+			
+			<Border Classes="Gen"
+					HorizontalAlignment="Center"
+					Height="110"
+					Width="{ Binding GeneratorControlsWidth }"
+					IsVisible="{ Binding GeneratorControlVisibleGroup1 }">
 				<StackPanel Margin="5">
 					<Grid>
 						<StackPanel VerticalAlignment="Center"
 									HorizontalAlignment="Center">
-							<Label>Num of Prompts to Gen</Label>
+							<Label Foreground="#dadce0">Num of Prompts to Gen</Label>
 							<NumericUpDown Name="PromptNumBox"
 										   Value="{ Binding PromptCount, Mode=TwoWay }"
 										   Increment="1"
@@ -116,17 +210,16 @@
 							Spacing="13">
 					<Button HorizontalAlignment="Center"
 							HorizontalContentAlignment="Center"
-							Content="Generate"
-							Command="{ Binding Generate }"
-							Width="90"/>
-					<Button HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
 							Content="Copy"
 							Command="{ Binding CopyOutput }"
 							Width="90"/>
+					<Button HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center"
+							Content="Generate"
+							Command="{ Binding Generate }"
+							Width="90"/>
 				</StackPanel>
 			</Border>
-			
 			
 		</WrapPanel>
 	</Grid>

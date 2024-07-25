@@ -117,21 +117,21 @@ public partial class MainViewModel : ViewModelBase
             TrimLastComma = TrimLastComma.True, // add setting
             ShuffleSetting = SelectedGlobalShuffleOption,
             OutputType = OutputType.Positive, // add setting or binding ?
-            GlobalTagStyleSettings =                          // add all below
+            GlobalTagStyleSettings =                          
             {
-                IsEnabled = Enabled.Enabled,
-                SelectionScope = SelectionScope.Global,
-                GlobalTagStyle = TagStyle.Clean
+                IsEnabled = GlobalTagStyleEnabledOption ? Enabled.Enabled : Enabled.Disabled,
+                SelectionScope = GlobalTagStyleSelectionScopeOption,
+                GlobalTagStyle = SelectedGlobalTagStyleOption
             },
             GlobalRandomDropSettings =
             {
-                IsEnabled = Enabled.Disabled,
-                SelectionScope = SelectionScope.Global,
-                GlobalRandomDropChance = 0
+                IsEnabled = GlobalRandomDropEnabledOption ? Enabled.Enabled : Enabled.Disabled,
+                SelectionScope = GlobalRandomDropSelectionScopeOption,
+                GlobalRandomDropChance = (int)GlobalRandomDropChance
             },
             GlobalAddAdjSettings =
             {
-                IsEnabled = Enabled.Disabled,
+                IsEnabled = Enabled.Disabled,               // add all below
                 SelectionScope = SelectionScope.Global,
                 GlobalAdjType = AdjType.All,
                 GlobalAddAdjChance = 0                        // To here
@@ -194,10 +194,6 @@ public partial class MainViewModel : ViewModelBase
 
     }
 
-    partial void OnSelectedGlobalShuffleOptionChanged(GlobalShuffleSetting value)
-    {
-        Debug.WriteLine($"ShuffleOption changed to {value}");
-    }
 
     [ObservableProperty]
     private string _promptOutput;

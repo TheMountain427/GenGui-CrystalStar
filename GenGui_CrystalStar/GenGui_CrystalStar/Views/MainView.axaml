@@ -82,9 +82,14 @@
 				  ShowGridLines="False">
 				<StackPanel Spacing="0">
 					<TabStrip>Output</TabStrip>
+					<Button HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center"
+							Content="Generate"
+							Command="{ Binding Generate }"
+							Width="90"/>
 					<TextBox VerticalAlignment="Center"
 							 Margin="10"
-							 MinHeight="60"
+							 MinHeight="90"
 							 Text="{ Binding PromptOutput }">TextBox</TextBox>
 				</StackPanel>
 

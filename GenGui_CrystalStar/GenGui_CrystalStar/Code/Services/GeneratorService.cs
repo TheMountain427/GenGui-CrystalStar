@@ -199,6 +199,7 @@ public class GeneratorService : IGeneratorService
         }
         catch (Exception e)
         {
+            //throw e;
             Console.WriteLine($"{e.Message}");
             return new Response<List<PromptOutput>>(e.Message, ResultCode.Error);
         }

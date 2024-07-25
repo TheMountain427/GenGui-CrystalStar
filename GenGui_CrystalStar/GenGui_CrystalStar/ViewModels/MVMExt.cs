@@ -41,7 +41,7 @@ public partial class MainViewModel : ViewModelBase
 
 
     [ObservableProperty]
-    private GlobalShuffleSetting _selectedGlobalShuffleOption;
+    private GlobalShuffleSetting _selectedGlobalShuffleOption = GlobalShuffleSetting.None;
 
     public IList<GlobalShuffleSetting> GlobalShuffleOptionsList { get; } = new List<GlobalShuffleSetting>
     {
@@ -51,10 +51,14 @@ public partial class MainViewModel : ViewModelBase
         GlobalShuffleSetting.WholeBlocks
     };
 
+    partial void OnSelectedGlobalShuffleOptionChanged(GlobalShuffleSetting value)
+    {
+        Debug.WriteLine($"ShuffleOption changed to {value}");
+    }
 
 
     [ObservableProperty]
-    private TrimLastComma _selectedTrimLastCommaOption;
+    private TrimLastComma _selectedTrimLastCommaOption = TrimLastComma.True;
 
     public IList<TrimLastComma> TrimLastCommaOptionsList { get; } = new List<TrimLastComma>
     {
@@ -65,13 +69,13 @@ public partial class MainViewModel : ViewModelBase
 
 
     [ObservableProperty]
-    private Enabled _globalTagStyleEnabledOption;
+    private bool _globalTagStyleEnabledOption; // has to be bool :( cant be Enabled enum
 
     [ObservableProperty]
-    private SelectionScope _globalTagStyleSelectionScopeOption;
+    private SelectionScope _globalTagStyleSelectionScopeOption = SelectionScope.Global;
 
     [ObservableProperty]
-    private GlobalAddAdjectivesSettings _selectedTagStyleDropOption;
+    private TagStyle _selectedGlobalTagStyleOption = TagStyle.Clean;
 
     public IList<TagStyle> GlobalTagStyleOptionsList { get; } = new List<TagStyle>
     {
@@ -81,26 +85,56 @@ public partial class MainViewModel : ViewModelBase
     };
 
 
+    partial void OnGlobalTagStyleEnabledOptionChanged(bool value)
+    {
+        Debug.WriteLine($"GlobalTagStyleEnabledOption changed to {value}");
+    }
+
+    partial void OnGlobalTagStyleSelectionScopeOptionChanged(SelectionScope value)
+    {
+        Debug.WriteLine($"GlobalTagStyleSelectionScopeOption changed to {value}");
+    }
+
+    partial void OnSelectedGlobalTagStyleOptionChanged(TagStyle value)
+    {
+        Debug.WriteLine($"GlobalSelectedTagStyleOption changed to {value}");
+    }
+
+
 
     [ObservableProperty]
-    private Enabled _globalRandomDropEnabledOption;
+    private bool _globalRandomDropEnabledOption;
 
     [ObservableProperty]
-    private SelectionScope _globalRandomDropSelectionScopeOption;
+    private SelectionScope _globalRandomDropSelectionScopeOption = SelectionScope.Global;
 
     [ObservableProperty]
-    private int _globalRandomDropChance;
+    private double _globalRandomDropChance = 0;
 
+    partial void OnGlobalRandomDropEnabledOptionChanged(bool value)
+    {
+        Debug.WriteLine($"GlobalRandomDropEnabledOption changed to {value}");
+    }
+
+    partial void OnGlobalRandomDropSelectionScopeOptionChanged(SelectionScope value)
+    {
+        Debug.WriteLine($"GlobalRandomDropSelection changed to {value}");
+    }
+
+    partial void OnGlobalRandomDropChanceChanging(double value)
+    {
+        Debug.WriteLine($"GlobalRandomDropChance changed to {value}");
+    }
 
 
     [ObservableProperty]
-    private Enabled _globalAdjTypeEnabledOption;
+    private bool _globalAdjTypeEnabledOption;
 
     [ObservableProperty]
-    private SelectionScope _globalAdjTypeSelectionScopeOption;
+    private SelectionScope _globalAdjTypeSelectionScopeOption = SelectionScope.Global;
 
     [ObservableProperty]
-    private AdjType _selectedGlobalAddAdjOption;
+    private AdjType _selectedGlobalAddAdjOption = AdjType.All;
 
     public IList<AdjType> GlobalAddAdjectivesOptionsList { get; } = new List<AdjType>
     {
