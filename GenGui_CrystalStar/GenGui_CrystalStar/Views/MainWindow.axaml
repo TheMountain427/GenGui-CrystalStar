@@ -6,7 +6,6 @@
         xmlns:views="clr-namespace:GenGui_CrystalStar.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GenGui_CrystalStar.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
         Title="GenGui_CrystalStar"
 		Name="GenGuiCrystalStar"
 		SystemDecorations="None"

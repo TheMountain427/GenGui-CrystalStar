@@ -14,6 +14,7 @@ public partial class BlockContainerView : UserControl
         InitializeComponent();
     }
 
+   
 
     public void ResetSelectCountBox(object sender, RoutedEventArgs e)
     {

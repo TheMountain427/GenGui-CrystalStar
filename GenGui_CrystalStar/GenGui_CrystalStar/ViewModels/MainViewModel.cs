@@ -104,9 +104,13 @@ public partial class MainViewModel : ViewModelBase
 
     }
 
-    public void CopyOutput()
+    public async void CopyOutput()
     {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+        {
+            await window.Clipboard!.SetTextAsync(PromptOutput);
 
+        }
     }
 
     public async void Generate()
@@ -114,9 +118,9 @@ public partial class MainViewModel : ViewModelBase
         var globalSettings = new GlobalGenerationSettings
         {
             OutputCount = PromptCount,
-            TrimLastComma = TrimLastComma.True, // add setting
+            TrimLastComma = TrimLastCommaToggle ? TrimLastComma.True : TrimLastComma.False,
             ShuffleSetting = SelectedGlobalShuffleOption,
-            OutputType = OutputType.Positive, // add setting or binding ?
+            OutputType = SelectedPromptOutputType,
             GlobalTagStyleSettings =                          
             {
                 IsEnabled = GlobalTagStyleEnabledOption ? Enabled.Enabled : Enabled.Disabled,
@@ -131,10 +135,10 @@ public partial class MainViewModel : ViewModelBase
             },
             GlobalAddAdjSettings =
             {
-                IsEnabled = Enabled.Disabled,               // add all below
-                SelectionScope = SelectionScope.Global,
-                GlobalAdjType = AdjType.All,
-                GlobalAddAdjChance = 0                        // To here
+                IsEnabled = Enabled.Disabled,             //GlobalAddAdjTypeEnabledOption      // add in code below
+                SelectionScope = SelectionScope.Global,   //GlobalAddAdjTypeSelectionScopeOption
+                GlobalAdjType = AdjType.All,              //SelectedGlobalAddAdjOption
+                GlobalAddAdjChance = 0                    //GlobalAddAdjChance              // To here
             }
         };
 
@@ -164,9 +168,17 @@ public partial class MainViewModel : ViewModelBase
         string prompt = "";
         if (promptList.Data is not null)
             prompt = string.Join("\n", promptList.Data.Select(x => x.NewPrompt).ToArray());
-
+        
         PromptOutput = prompt;
 
+        if (AutoCopy == true)
+        {
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+            {
+                await window.Clipboard.SetTextAsync(prompt);
+
+            }
+        }
     }
 
     private List<BlockGenerationSettings> GenerateBlockSettings(List<Blocks> blocks)
@@ -180,7 +192,25 @@ public partial class MainViewModel : ViewModelBase
                 {
                     BlockName = block.BlockName,
                     BlockFlag = block.BlockFlag,
-                    SelectCount = block.SelectCount
+                    SelectCount = block.SelectCount,
+                    BlockShuffleSetting = block.ShuffleEnabled,             // V this shit don't work :( V
+                    BlockTagStyleSettings = new BlockTagStyleSettings
+                    {
+                        IsEnabled = block.TagStyleEnabled,
+                        BlockTagStyle = block.TagStyleOption
+                    },
+                    BlockRandomDropSettings = new BlockRandomDropSettings
+                    {
+                        IsEnabled = block.RandomDropEnabled,
+                        BlockRandomDropChance = block.RandomDropChance
+                    },
+                    BlockAddAdjSettings = new BlockAddAdjectivesSettings
+                    {
+                        IsEnabled = block.AddAdjEnabled,
+                        BlockAdjType = block.AddAdjTypeOption,
+                        BlockAddAdjChance = block.AddAdjChance
+                    }
+
                     // add the rest of the settings
                 };
                 blockSettings.Add(blockSetting);

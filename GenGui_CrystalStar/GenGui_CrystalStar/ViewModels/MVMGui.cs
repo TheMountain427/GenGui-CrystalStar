@@ -49,6 +49,8 @@ public partial class MainViewModel : ViewModelBase
         GeneratorControlVisibleGroup1 = !willGeneratorControlsStackGroup1;
         bool willGeneratorControlsStackGroup2 = (GeneratorControlsWidth * 3) + 80 > MainViewWidth - HistPaneRectWidth;
         GeneratorControlVisibleGroup2 = !willGeneratorControlsStackGroup2;
+        bool willGeneratorControlsStackGroup3 = (GeneratorControlsWidth * 4) + 100 > MainViewWidth - HistPaneRectWidth;
+        GeneratorControlVisibleGroup3 = !willGeneratorControlsStackGroup3;
     }
 
     // Main Window Width set here
@@ -102,6 +104,8 @@ public partial class MainViewModel : ViewModelBase
         GeneratorControlVisibleGroup1 = !willGeneratorControlsStackGroup1;
         bool willGeneratorControlsStackGroup2 = (GeneratorControlsWidth * 3) + 80 > MainViewWidth - HistPaneRectWidth;
         GeneratorControlVisibleGroup2 = !willGeneratorControlsStackGroup2;
+        bool willGeneratorControlsStackGroup3 = (GeneratorControlsWidth * 4) + 100 > MainViewWidth - HistPaneRectWidth;
+        GeneratorControlVisibleGroup3 = !willGeneratorControlsStackGroup3;
     }
 
     [ObservableProperty]
@@ -182,6 +186,14 @@ public partial class MainViewModel : ViewModelBase
     partial void OnGeneratorControlVisibleGroup2Changed(bool value)
     {
         Debug.WriteLine($"GeneratorControlVisibleGroup2 changed to {value}");
+    }
+
+    [ObservableProperty]
+    private bool _generatorControlVisibleGroup3;
+
+    partial void OnGeneratorControlVisibleGroup3Changed(bool value)
+    {
+        Debug.WriteLine($"GeneratorControlVisibleGroup3 changed to {value}");
     }
 
     [ObservableProperty]

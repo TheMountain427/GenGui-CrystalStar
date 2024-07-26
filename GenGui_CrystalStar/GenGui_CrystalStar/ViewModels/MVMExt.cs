@@ -26,6 +26,24 @@ namespace GenGui_CrystalStar.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    public IList<OutputType> PromptOutputType { get; } = new List<OutputType>
+    {
+        OutputType.Positive,
+        OutputType.Api
+    };
+
+    [ObservableProperty]
+    private OutputType _selectedPromptOutputType = OutputType.Positive;
+
+    [ObservableProperty]
+    private bool _trimLastCommaToggle = false;
+
+    partial void OnTrimLastCommaToggleChanged(bool value)
+    {
+        Debug.WriteLine($"TrimLastCommaToggle changed to {value}");
+    }
+
+
     public IList<Enabled> EnabledOptionsList { get; } = new List<Enabled>
     {
         Enabled.Enabled,
@@ -128,10 +146,10 @@ public partial class MainViewModel : ViewModelBase
 
 
     [ObservableProperty]
-    private bool _globalAdjTypeEnabledOption;
+    private bool _globalAddAdjTypeEnabledOption;
 
     [ObservableProperty]
-    private SelectionScope _globalAdjTypeSelectionScopeOption = SelectionScope.Global;
+    private SelectionScope _globalAddAdjTypeSelectionScopeOption = SelectionScope.Global;
 
     [ObservableProperty]
     private AdjType _selectedGlobalAddAdjOption = AdjType.All;
@@ -145,7 +163,7 @@ public partial class MainViewModel : ViewModelBase
     };
 
     [ObservableProperty]
-    private int _globalAdjTypeChance;
+    private int _globalAddAdjChance;
 
 
 

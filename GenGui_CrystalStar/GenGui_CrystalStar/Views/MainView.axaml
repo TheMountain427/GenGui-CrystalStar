@@ -28,17 +28,12 @@
 				</SplitView.Pane>
 			</SplitView>
 
-
-
-
-
-
-
 		<Grid Grid.Column="1"
 			  Width="{ Binding MainViewWidth }"
 			  ShowGridLines="False"
 			  RowDefinitions="5*,5*"
 			  ColumnDefinitions="*,Auto">
+			
 			<Button HorizontalAlignment="Left"
 					VerticalAlignment="Center"
 					Content="{ Binding BlocksSidePaneIcon }"
@@ -46,7 +41,7 @@
 					ZIndex="10"
 					Grid.RowSpan="2"
 					Grid.ColumnSpan="2"
-					Margin="-10,0,0,0"></Button>
+					Margin="-10,-30,0,0"></Button>
 
 			<views:GeneratorControls/>
 
@@ -69,7 +64,9 @@
 							<ItemsControl ItemsSource="{ Binding PromptHistory }">
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<SelectableTextBlock Text="{ Binding Output }"/>
+										<SelectableTextBlock Text="{ Binding Output }"
+															 TextWrapping="Wrap"
+															 Foreground="#dadce0"/>
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
@@ -81,12 +78,29 @@
 			<Grid Grid.Row="1"
 				  ShowGridLines="False">
 				<StackPanel Spacing="0">
+					<Border Classes="Gen"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Height="55"
+							Width="250"
+							Margin="0,20,0,0"
+							Padding="0">
+						<StackPanel Orientation="Horizontal"
+									Spacing="10"
+									HorizontalAlignment="Center">
+							<Button HorizontalAlignment="Center"
+									HorizontalContentAlignment="Center"
+									Content="Generate"
+									Command="{ Binding Generate }"
+									Width="90"/>
+							<Button HorizontalAlignment="Center"
+									HorizontalContentAlignment="Center"
+									Content="Copy"
+									Command="{ Binding CopyOutput }"
+									Width="90"/>
+						</StackPanel>
+					</Border>
 					<TabStrip>Output</TabStrip>
-					<Button HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Content="Generate"
-							Command="{ Binding Generate }"
-							Width="90"/>
 					<TextBox VerticalAlignment="Center"
 							 Margin="10"
 							 MinHeight="90"

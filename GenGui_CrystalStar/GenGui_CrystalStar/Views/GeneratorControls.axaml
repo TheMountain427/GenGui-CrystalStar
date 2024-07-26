@@ -21,7 +21,29 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Left"
 					Margin="20,0,0,0">
-			
+
+			<Border Classes="Gen"
+					HorizontalAlignment="Center"
+					Height="110"
+					Width="{ Binding GeneratorControlsWidth }"
+					IsVisible="{ Binding GeneratorControlVisibleGroup3 }">
+				<StackPanel VerticalAlignment="Center"
+							Margin="00,0"
+							Spacing="13">
+					<Button Content="Refresh Blocks"
+							HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center"
+							Width="125"
+							Command="{ Binding RefreshBlocks }"/>
+					<Button Content="Reset DataBase"
+							HorizontalAlignment="Center"
+							Width="125"
+							HorizontalContentAlignment="Center"
+							Command="{ Binding ResetDatabase }"/>
+				</StackPanel>
+			</Border>
+
+
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
 					Height="110"
@@ -48,7 +70,7 @@
 											IsSnapToTickEnabled="True"
 											FlowDirection="LeftToRight"/>
 								</StackPanel>
-								
+
 							</Flyout>
 						</ToggleSplitButton.Flyout>
 					</ToggleSplitButton>
@@ -68,27 +90,52 @@
 					</ComboBox>
 				</StackPanel>
 			</Border>
-			
+
 			<Border Classes="Gen"
-					HorizontalAlignment="Center"
-					Height="110"
-					Width="{ Binding GeneratorControlsWidth }"
-					IsVisible="{ Binding GeneratorControlVisibleGroup1 }">
+		HorizontalAlignment="Center"
+		Height="110"
+		Width="{ Binding GeneratorControlsWidth }"
+		IsVisible="{ Binding GeneratorControlVisibleGroup1 }">
 				<StackPanel VerticalAlignment="Center"
-							Margin="00,0"
+							Margin="0,0"
 							Spacing="13">
-					<Button Content="Refresh Blocks"
-							HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Width="125"
-							Command="{ Binding RefreshBlocks }"/>
-					<Button Content="Reset DataBase"
-							HorizontalAlignment="Center"
-							Width="125"
-							HorizontalContentAlignment="Center"
-							Command="{ Binding ResetDatabase }"/>
+
+					<ToggleSplitButton Content="{ Binding SelectedGlobalTagStyleOption }"
+									   IsChecked="{ Binding GlobalTagStyleEnabledOption, Mode=TwoWay }"
+									   HorizontalAlignment="Center"
+									   HorizontalContentAlignment="Center">
+						<ToggleSplitButton.Flyout>
+							<Flyout Placement="Bottom">
+								<ListBox SelectionMode="Single"
+										 ItemsSource="{ Binding GlobalTagStyleOptionsList}"
+										 SelectedItem="{ Binding SelectedGlobalTagStyleOption, Mode=TwoWay }"
+										 Margin="0" Padding="0">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+							</Flyout>
+						</ToggleSplitButton.Flyout>
+					</ToggleSplitButton>
+
+					<ComboBox ItemsSource="{ Binding SelectionScopeOptionsList }"
+							  SelectedItem="{ Binding GlobalTagStyleSelectionScopeOption, Mode=TwoWay }"
+							  HorizontalAlignment="Center"
+							  HorizontalContentAlignment="Center"
+							  IsEnabled="{ Binding GlobalTagStyleEnabledOption }">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"
+										   TextAlignment="Center"
+										   HorizontalAlignment="Center"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
 				</StackPanel>
 			</Border>
+
 
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
@@ -110,22 +157,21 @@
 							</DataTemplate>
 						</ComboBox.ItemTemplate>
 					</ComboBox>
-					<ToggleButton IsChecked="{ Binding AutoCopy }"
-								  Content="AutoCopy"
+					<ToggleButton IsChecked="{ Binding TrimLastCommaToggle, Mode=TwoWay }"
+								  Content="CommaTrim"
 								  HorizontalAlignment="Center"
 								  HorizontalContentAlignment="Center"
 								  Width="110"/>
 				</StackPanel>
 			</Border>
 		</WrapPanel>
-			
+
 		<WrapPanel  Orientation="Horizontal"
 					FlowDirection="RightToLeft"
 					Grid.Row="1"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Left"
 					Margin="20,0,0,0">
-
 
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
@@ -135,32 +181,45 @@
 				<StackPanel VerticalAlignment="Center"
 							Margin="0,0"
 							Spacing="13">
-					
-					<ToggleSplitButton Content="TagStyle" 
-									   IsChecked="{ Binding GlobalTagStyleEnabledOption, Mode=TwoWay }" 
+
+					<ToggleSplitButton Content="{ Binding SelectedGlobalAddAdjOption }"
+									   IsChecked="{ Binding GlobalAddAdjTypeEnabledOption, Mode=TwoWay }"
 									   HorizontalAlignment="Center"
 									   HorizontalContentAlignment="Center">
 						<ToggleSplitButton.Flyout>
 							<Flyout Placement="Bottom">
-								<ListBox SelectionMode="Single" 
-										 ItemsSource="{ Binding GlobalTagStyleOptionsList}"
-										 SelectedItem="{ Binding SelectedGlobalTagStyleOption, Mode=TwoWay }"
-										 Margin="0" Padding="0">
-									<ListBox.ItemTemplate>
-										<DataTemplate>
-											<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-										</DataTemplate>
-									</ListBox.ItemTemplate>
-								</ListBox>
+								<StackPanel Width="100">
+									<TextBox Name="GlobalAddAdjChanceNumber"
+											 Text="{ Binding GlobalAddAdjChance}"
+											 HorizontalContentAlignment="Center"/>
+									<Slider Value="{ Binding #GlobalAddAdjChanceNumber.Text }"
+											Maximum="100"
+											SmallChange="1"
+											TickFrequency="1"
+											IsSnapToTickEnabled="True"
+											FlowDirection="LeftToRight"/>
+									<ComboBox ItemsSource="{Binding GlobalAddAdjectivesOptionsList}"
+											  SelectedItem="{Binding SelectedGlobalAddAdjOption, Mode=TwoWay}"
+											  HorizontalAlignment="Center"
+											  HorizontalContentAlignment="Center">
+										<ComboBox.ItemTemplate>
+											<DataTemplate>
+												<TextBlock Text="{Binding}"
+														   TextAlignment="Center"
+														   HorizontalAlignment="Center"/>
+											</DataTemplate>
+										</ComboBox.ItemTemplate>
+									</ComboBox>
+								</StackPanel>
 							</Flyout>
 						</ToggleSplitButton.Flyout>
 					</ToggleSplitButton>
-					
-					<ComboBox ItemsSource="{Binding SelectionScopeOptionsList}"
-							  SelectedItem="{Binding GlobalTagStyleSelectionScopeOption, Mode=TwoWay}"
+
+					<ComboBox ItemsSource="{ Binding SelectionScopeOptionsList }"
+							  SelectedItem="{ Binding GlobalAddAdjTypeSelectionScopeOption, Mode=TwoWay }"
 							  HorizontalAlignment="Center"
 							  HorizontalContentAlignment="Center"
-							  IsEnabled="{ Binding GlobalTagStyleEnabledOption }">
+							  IsEnabled="{ Binding GlobalAddAdjTypeEnabledOption }">
 						<ComboBox.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding}"
@@ -171,7 +230,6 @@
 					</ComboBox>
 				</StackPanel>
 			</Border>
-			
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
 					Height="110"
@@ -200,7 +258,7 @@
 							FlowDirection="LeftToRight"/>
 				</StackPanel>
 			</Border>
-			
+
 			<Border Classes="Gen"
 					HorizontalAlignment="Center"
 					Height="110"
@@ -208,20 +266,27 @@
 				<StackPanel VerticalAlignment="Center"
 							Margin="0,0"
 							Spacing="13">
-					<Button HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Content="Copy"
-							Command="{ Binding CopyOutput }"
-							Width="90"/>
-					<Button HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Content="Generate"
-							Command="{ Binding Generate }"
-							Width="90"/>
+					<ComboBox ItemsSource="{ Binding PromptOutputType }"
+							  SelectedItem="{Binding SelectedPromptOutputType, Mode=TwoWay}"
+							  HorizontalAlignment="Center"
+							  HorizontalContentAlignment="Center">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"
+										   TextAlignment="Center"
+										   HorizontalAlignment="Center"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+					<ToggleButton IsChecked="{ Binding AutoCopy }"
+								  Content="AutoCopy"
+								  HorizontalAlignment="Center"
+								  HorizontalContentAlignment="Center"
+								  Width="110"/>
 				</StackPanel>
 			</Border>
-			
+
 		</WrapPanel>
 	</Grid>
-	
+
 </UserControl>

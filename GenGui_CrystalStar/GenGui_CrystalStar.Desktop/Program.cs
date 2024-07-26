@@ -13,15 +13,7 @@ class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        try
-        {
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        }
-        catch (Exception e)
-        {
-            // here we can work with the exception, for example add it to our log file
-            Console.WriteLine(e.Message, "Something very bad happened");
-        }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

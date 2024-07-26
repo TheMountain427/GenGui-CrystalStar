@@ -1,14 +1,13 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
+        <!--<Border Padding="20">
 			<Grid ColumnDefinitions="*,*,*" ShowGridLines="True">
 				<StackPanel Grid.Column="0">
 					<Border>
 						<Button Classes="TitleBar" Margin="5">TitleButton</Button>
 					</Border>
-					<Button>GeneralButton</Button>
+					<Button ToolTip.Tip="ToolTip">GeneralButton</Button>
 					<ButtonSpinner Margin="5">ButtonSpinner</ButtonSpinner>
 					<RadioButton Margin="5">RadioButton</RadioButton>
 					<RepeatButton Margin="5">RepeatButton</RepeatButton>
@@ -49,20 +48,20 @@
 							<DataGridTextColumn Header="Header" Binding=""></DataGridTextColumn>
 						</DataGrid.Columns>
 					</DataGrid>
-					<!--<Decorator Margin="5"></Decorator>-->
+					--><!--<Decorator Margin="5"></Decorator>--><!--
 					<DockPanel Margin="5"></DockPanel>
 					<Expander Margin="5">
 						<Expander.Header>
 							<TextBlock>Expander</TextBlock>
 						</Expander.Header>
 					</Expander>
-					<!--<Flyout Margin="5"></Flyout>-->
+					--><!--<Flyout Margin="5"></Flyout>--><!--
 					<Grid ColumnDefinitions="*, 4, *" ShowGridLines="False" Margin="5">
 						<Rectangle Grid.Column="0" Fill="Blue"/>
 						<GridSplitter Grid.Column="1" Background="Black" ResizeDirection="Columns"/>
 						<Rectangle Grid.Column="2" Fill="Red"/>
 					</Grid>
-					<!--<Image Margin="5"></Image>-->
+					--><!--<Image Margin="5"></Image>--><!--
 					<ItemsControl Margin="5"> ItemsControl</ItemsControl>
 					<ListBox Margin="5">ListBox</ListBox>
 					<Menu Margin="5">Menu
@@ -71,13 +70,13 @@
 						</MenuItem>
 					</Menu>
 					<TabStrip>TabStrip</TabStrip>
-					<!--<NativeMenu></NativeMenu>-->
+					--><!--<NativeMenu></NativeMenu>--><!--
 					<NumericUpDown Margin="5"></NumericUpDown>
-					<!--<Panel Margin="5"></Panel>-->
-					<!--<ToolTip>ToolTip</ToolTip>-->
+					--><!--<Panel Margin="5"></Panel>--><!--
+					--><!--<ToolTip>ToolTip</ToolTip>--><!--
 					<ProgressBar Margin="5"></ProgressBar>
 					<RefreshContainer Margin="5">RefreshContainer</RefreshContainer>
-					<!--<RelativePanel></RelativePanel>-->
+					--><!--<RelativePanel></RelativePanel>--><!--
 					<ScrollBar Margin="5"></ScrollBar>
 					<ScrollViewer Margin="5">ScrollViewer</ScrollViewer>
 					<Separator Margin="5"></Separator>
@@ -133,17 +132,13 @@
 				
 				
 			</Grid>
-        </Border>
+        </Border>-->
 
     </Design.PreviewWith>
 
 
 
 	<!-- Add Styles Here -->
-								<!--General Buttons-->
-
-								<!--End General Buttons-->
-	
 								<!--TitleBar Buttons-->
 	<Style Selector="Button.TitleBar">
 		<Setter Property="Background" Value="#2a2e38"/>
@@ -400,11 +395,11 @@
 	<Styles.Resources>
 		<x:Double x:Key="ToolTipContentThemeFontSize">12</x:Double>
 		<Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
-		<StaticResource x:Key="ToolTipForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
-		<StaticResource x:Key="ToolTipBackground" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
+		<SolidColorBrush x:Key="ToolTipForeground" Color="White"/>
+		<SolidColorBrush x:Key="ToolTipBackground" Color="#18181A" />
 		<StaticResource x:Key="ToolTipBorderBrush" ResourceKey="SystemControlTransientBorderBrush" />
 		<Thickness x:Key="ToolTipBorderThemePadding">8,5,8,7</Thickness>
-	</Styles.Resources>	
+	</Styles.Resources>
 	
 	
 	<Styles.Resources>
