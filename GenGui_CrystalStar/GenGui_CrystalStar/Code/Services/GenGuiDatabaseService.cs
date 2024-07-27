@@ -50,7 +50,7 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
         var t = Task.Run(async () =>
             {
                 await _db.DropTableAsync<Tags>();
-                await _db.DropTableAsync<Blocks>();
+                //await _db.DropTableAsync<Blocks>();
                 await _db.DropTableAsync<BlockFiles>();
             });
         // Program finishes before db is created lol
@@ -60,7 +60,7 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
         t = Task.Run(async () =>
             {
                 await _db.CreateTableAsync<Tags>();
-                await _db.CreateTableAsync<Blocks>();
+                //await _db.CreateTableAsync<Blocks>();
                 await _db.CreateTableAsync<BlockFiles>();
 
             });
@@ -73,6 +73,7 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
         var t = Task.Run(async () =>
         {
             await _db.CreateTableAsync<PromptHistory>();
+            await _db.CreateTableAsync<Blocks>();
         });
 
         Task.WaitAll(t);

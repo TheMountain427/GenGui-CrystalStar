@@ -48,7 +48,7 @@ public class GeneratorService : IGeneratorService
             var blockSettingsList = JsonSerializer.Deserialize<BlockGenSettingsList>(blockGenSettingsList)!;
             var globalSettings = JsonSerializer.Deserialize<GlobalGenerationSettings>(globalGenSettings)!;
 
-
+            var updateShit = _dataService.UpdateBlocksSettings(blockSettingsList);
             var PromptOutputs = new List<PromptOutput>();
 
             for (int num = 0; num < globalSettings.OutputCount; num++)
@@ -87,7 +87,7 @@ public class GeneratorService : IGeneratorService
 
                 }
 
-
+                await updateShit;
                 var selectTags = await _dataService.GetTags(blocksToProcess);
                 if (selectTags.Success == false)
                     throw new Exception("dead af");
@@ -208,6 +208,7 @@ public class GeneratorService : IGeneratorService
 
     private async Task<Response<GeneratorSettingFramework>> ConstructSettingsFramework(GlobalGenerationSettings globalSettings, BlockGenerationSettings blkset)
     {   // I am sorry for what I just did, time for bed....
+        // This can actually probably go away now
         try
         {
             var blockSettingFramework = new GeneratorSettingFramework

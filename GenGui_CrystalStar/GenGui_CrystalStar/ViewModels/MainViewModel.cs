@@ -25,6 +25,7 @@ using GenGui_CrystalStar.Code.DatabaseModels;
 using System.Data;
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using GenGui_CrystalStar.Code;
 
 namespace GenGui_CrystalStar.ViewModels;
 
@@ -48,8 +49,8 @@ public partial class MainViewModel : ViewModelBase
         _databaseService.Init();
         _textFileSourceService.Init();
 
-        
-        LoadBlocks();
+        LoadBlockContainers(); // this is hilarious that this works
+        //LoadBlocks();
     }
 
     [ObservableProperty]
@@ -67,9 +68,9 @@ public partial class MainViewModel : ViewModelBase
         Debug.WriteLine($"AutoCopy changed to {value}");
     }
 
-    public void RefreshBlocks()
+    public async void RefreshBlocks()
     {
-
+        await _textFileSourceService.RefreshAllTags();
     }
 
     public void ResetDatabase()
@@ -117,18 +118,25 @@ public partial class MainViewModel : ViewModelBase
 
         var blockSettingsList = new BlockGenSettingsList();
 
-        if (Positive.Any())
-            blockSettingsList.AddRange(GenerateBlockSettings(Positive));
-        if (Negative.Any())
-            blockSettingsList.AddRange(GenerateBlockSettings(Negative));
-        if (Width.Any())
-            blockSettingsList.AddRange(GenerateBlockSettings(Width));
-        if (Height.Any())
-            blockSettingsList.AddRange(GenerateBlockSettings(Height));
-        if (Steps.Any())
-            blockSettingsList.AddRange(GenerateBlockSettings(Steps));
-        if (Cfg_scale.Any())
-            blockSettingsList.AddRange(GenerateBlockSettings(Cfg_scale));
+        foreach (var shittyBlockThing in BlocksContainers)
+        {   // it just works
+            blockSettingsList.AddRange(GenerateBlockSettings(shittyBlockThing.GuiBlocks));
+        }
+
+
+
+        //if (Positive.Any())
+        //    blockSettingsList.AddRange(GenerateBlockSettings(Positive));
+        //if (Negative.Any())
+        //    blockSettingsList.AddRange(GenerateBlockSettings(Negative));
+        //if (Width.Any())
+        //    blockSettingsList.AddRange(GenerateBlockSettings(Width));
+        //if (Height.Any())
+        //    blockSettingsList.AddRange(GenerateBlockSettings(Height));
+        //if (Steps.Any())
+        //    blockSettingsList.AddRange(GenerateBlockSettings(Steps));
+        //if (Cfg_scale.Any())
+        //    blockSettingsList.AddRange(GenerateBlockSettings(Cfg_scale));
         // add the rest later
 
         var jsonGlobalSettings = JsonSerializer.Serialize(globalSettings);
@@ -209,32 +217,38 @@ public partial class MainViewModel : ViewModelBase
     //    throw new NotImplementedException();
     //}
 
-    public async void LoadBlocks()
+    //public async void LoadBlocks()
+    //{
+    //    Positive = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.positive)).Data);
+    //    Negative = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.negative)).Data) ?? [];
+    //    Width = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.width)).Data) ?? [];
+    //    Height = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.height)).Data) ?? [];
+    //    Steps = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.steps)).Data) ?? [];
+    //    Cfg_scale = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.cfg_scale)).Data) ?? [];
+    //    Batch_size = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.batch_size)).Data) ?? [];
+    //    Sd_model = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sd_model)).Data) ?? [];
+    //    Sampler_name = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_name)).Data) ?? [];
+    //    Sampler_index = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_index)).Data) ?? [];
+    //    Seed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed)).Data) ?? [];
+    //    Subseed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed)).Data) ?? [];
+    //    Subseed_strength = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed_strength)).Data) ?? [];
+    //    Outpath_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_samples)).Data) ?? [];
+    //    Outpath_grids = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_grids)).Data) ?? [];
+    //    Prompt_for_display = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.prompt_for_display)).Data) ?? [];
+    //    Styles = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.styles)).Data) ?? [];
+    //    Seed_resize_from_w = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_w)).Data) ?? [];
+    //    Seed_resize_from_h = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_h)).Data) ?? [];
+    //    N_iter = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.n_iter)).Data) ?? [];
+    //    Restore_faces = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.restore_faces)).Data) ?? [];
+    //    Tiling = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.tiling)).Data) ?? [];
+    //    Do_not_save_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_samples)).Data) ?? [];
+    //    Do_not_save_grid = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_grid)).Data) ?? [];
+    //}
+
+    public async void ReloadTagBlock(object args)
     {
-        Positive = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.positive)).Data);
-        Negative = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.negative)).Data) ?? [];
-        Width = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.width)).Data) ?? [];
-        Height = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.height)).Data) ?? [];
-        Steps = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.steps)).Data) ?? [];
-        Cfg_scale = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.cfg_scale)).Data) ?? [];
-        Batch_size = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.batch_size)).Data) ?? [];
-        Sd_model = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sd_model)).Data) ?? [];
-        Sampler_name = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_name)).Data) ?? [];
-        Sampler_index = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_index)).Data) ?? [];
-        Seed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed)).Data) ?? [];
-        Subseed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed)).Data) ?? [];
-        Subseed_strength = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed_strength)).Data) ?? [];
-        Outpath_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_samples)).Data) ?? [];
-        Outpath_grids = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_grids)).Data) ?? [];
-        Prompt_for_display = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.prompt_for_display)).Data) ?? [];
-        Styles = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.styles)).Data) ?? [];
-        Seed_resize_from_w = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_w)).Data) ?? [];
-        Seed_resize_from_h = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_h)).Data) ?? [];
-        N_iter = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.n_iter)).Data) ?? [];
-        Restore_faces = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.restore_faces)).Data) ?? [];
-        Tiling = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.tiling)).Data) ?? [];
-        Do_not_save_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_samples)).Data) ?? [];
-        Do_not_save_grid = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_grid)).Data) ?? [];
+        var blockName = args.ToString();
+        await _textFileSourceService.RefreshTagBlock(blockName);
     }
 }
 

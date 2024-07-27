@@ -51,20 +51,20 @@ public partial class MainWindow : Window
 
     // comment below to make f12 dev tools work, uncomment to make window resizeable again
 
-    //private void InitializeComponent()
-    //{
-    //    AvaloniaXamlLoader.Load(this);
-    //    SetupSide("Left", StandardCursorType.LeftSide, WindowEdge.West);
-    //    SetupSide("Right", StandardCursorType.RightSide, WindowEdge.East);
-    //    SetupSide("Top", StandardCursorType.TopSide, WindowEdge.North);
-    //    SetupSide("Bottom", StandardCursorType.BottomSide, WindowEdge.South);
-    //    SetupSide("TopLeft1", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
-    //    SetupSide("TopLeft2", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
-    //    SetupSide("TopRight1", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
-    //    SetupSide("TopRight2", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
-    //    SetupSide("BottomLeft1", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
-    //    SetupSide("BottomLeft2", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
-    //    SetupSide("BottomRight1", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
-    //    SetupSide("BottomRight2", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
-    //}
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+        SetupSide("Left", StandardCursorType.LeftSide, WindowEdge.West);
+        SetupSide("Right", StandardCursorType.RightSide, WindowEdge.East);
+        SetupSide("Top", StandardCursorType.TopSide, WindowEdge.North);
+        SetupSide("Bottom", StandardCursorType.BottomSide, WindowEdge.South);
+        SetupSide("TopLeft1", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
+        SetupSide("TopLeft2", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
+        SetupSide("TopRight1", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
+        SetupSide("TopRight2", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
+        SetupSide("BottomLeft1", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
+        SetupSide("BottomLeft2", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
+        SetupSide("BottomRight1", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
+        SetupSide("BottomRight2", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
+    }
 }

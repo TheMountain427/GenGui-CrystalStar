@@ -12,785 +12,149 @@
 				   FontSize="24"
 				   VerticalAlignment="Center"
 				   HorizontalAlignment="Center"/>
-		<Expander HorizontalAlignment="Stretch"
-				  IsExpanded="True"
-				  Padding="5">
-			<Expander.Header>
-				<TextBlock Text="Positive"
-						   FontWeight="Bold"
-						   FontSize="20"/>
-			</Expander.Header>
-			<ItemsControl  ItemsSource="{ Binding Positive }">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="Gen"
-							   Margin="0,2"
-							   Padding="5">
+		
+		<!--Be in awe of my nested repeaters-->
+		<ItemsControl  x:CompileBindings="False" ItemsSource="{ Binding BlocksContainers }">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Expander HorizontalAlignment="Stretch"
+							  IsExpanded="False"
+							  Padding="5">
+						<Expander.Header>
+							<TextBlock Text="{ Binding BlockFlagName }"
+									   FontWeight="Bold"
+									   FontSize="20"/>
+						</Expander.Header>
+						<ItemsControl  ItemsSource="{ Binding GuiBlocks }">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border Classes="Gen"
+										   Margin="0,2"
+										   Padding="5">
 
-							<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
-								  ShowGridLines="False">
-								<Button Content="&#8943;"
-										Grid.Column="0"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Open File Location"
-														ToolTip.Tip="Open original data source location for this block"/>
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Reload Data"
-														ToolTip.Tip="Reload the internal database for this block"/>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-								<Button Content="&#8634;"
-										Tag="{ Binding BlockName }"
-										ToolTip.Tip="Reset tag select number"
-										Click="ResetSelectCountBox"
-										Grid.Column="1"
-										Margin="5,0"/>
+										<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
+											  ShowGridLines="False">
+											<Button Content="&#8943;"
+													Grid.Column="0"
+													HorizontalAlignment="Left"
+													Margin="5,0">
+												<Button.Flyout>
+													<Flyout Placement="BottomEdgeAlignedLeft">
+														<StackPanel HorizontalAlignment="Stretch">
+															<Button HorizontalAlignment="Stretch"
+																	HorizontalContentAlignment="Center"
+																	Content="Open File Location"
+																	ToolTip.Tip="Open original data source location for this block"/>
+															<Button HorizontalAlignment="Stretch"
+																	HorizontalContentAlignment="Center"
+																	Content="Reload Data"
+																	Tag="{ Binding BlockName }"
+																	Command="{ Binding $parent[UserControl].DataContext.ReloadTagBlock }"
+																	CommandParameter="{ Binding $self.Tag }"
+																	ToolTip.Tip="Reload the internal database for this block"/>
+														</StackPanel>
+													</Flyout>
+												</Button.Flyout>
+											</Button>
+											<Button Content="&#8634;"
+													Tag="{ Binding BlockName }"
+													ToolTip.Tip="Reset tag select number"
+													Click="ResetSelectCountBox"
+													Grid.Column="1"
+													Margin="5,0"/>
 
-								<Button Content="&#9881;"
-										Grid.Column="2"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<ToggleButton Content="&#8646;"
-															  HorizontalAlignment="Stretch"
-															  IsChecked="{ Binding ShuffleEnabled, Mode=TwoWay }"
-															  HorizontalContentAlignment="Center"
-															  ToolTip.Tip="Shuffle"/>
+											<Button Content="&#9881;"
+													Grid.Column="2"
+													HorizontalAlignment="Left"
+													Margin="5,0">
+												<Button.Flyout>
+													<Flyout Placement="BottomEdgeAlignedLeft">
+														<StackPanel HorizontalAlignment="Stretch">
+															<ToggleButton Content="&#8646;"
+																		  HorizontalAlignment="Stretch"
+																		  IsChecked="{ Binding ShuffleEnabled, Mode=TwoWay }"
+																		  HorizontalContentAlignment="Center"
+																		  ToolTip.Tip="Shuffle"/>
 
-												<ToggleSplitButton Content="TagStyle"
-																   IsChecked="{ Binding TagStyleEnabled, Mode=TwoWay }"
-																   HorizontalAlignment="Center"
-																   HorizontalContentAlignment="Center">
-													<ToggleSplitButton.Flyout>
-														<Flyout Placement="Bottom">
-															<ListBox x:CompileBindings="False"
-																	 SelectionMode="Single"
-																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding $parent[Button].DataContext.SelectedTagStyleOption, Mode=TwoWay }"
-																	 Margin="0" Padding="0">
-																<ListBox.ItemTemplate>
-																	<DataTemplate>
-																		<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-																	</DataTemplate>
-																</ListBox.ItemTemplate>
-															</ListBox>
-														</Flyout>
-													</ToggleSplitButton.Flyout>
-												</ToggleSplitButton>
+															<ToggleSplitButton Content="TagStyle"
+																			   IsChecked="{ Binding TagStyleEnabled, Mode=TwoWay }"
+																			   HorizontalAlignment="Center"
+																			   HorizontalContentAlignment="Center">
+																<ToggleSplitButton.Flyout>
+																	<Flyout Placement="Bottom">
+																		<ListBox x:CompileBindings="False"
+																				 SelectionMode="Single"
+																				 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
+																				 SelectedItem="{ Binding $parent[Button].DataContext.SelectedTagStyleOption, Mode=TwoWay }"
+																				 Margin="0" Padding="0">
+																			<ListBox.ItemTemplate>
+																				<DataTemplate>
+																					<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
+																				</DataTemplate>
+																			</ListBox.ItemTemplate>
+																		</ListBox>
+																	</Flyout>
+																</ToggleSplitButton.Flyout>
+															</ToggleSplitButton>
 
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Ran"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
+															<StackPanel Orientation="Horizontal">
+																<ToggleButton Content="Ran"
+																			  IsChecked="{ Binding RandomDropEnabled }"
+																			  HorizontalAlignment="Stretch"
+																			  HorizontalContentAlignment="Center"
+																			  ToolTip.Tip="RandomDrop"/>
+																<TextBox Text="{ Binding RandomDropChance }"/>
 
-												</StackPanel>
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Adj"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="AddAdj"/>
-													<TextBox Text="{ Binding AddAdjChance }"/>
-													<ComboBox x:CompileBindings="False"
-															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding $parent[Button].DataContext.SelectedAddAdjTypeOption, Mode=TwoWay }"
-															  HorizontalAlignment="Center"
-															  HorizontalContentAlignment="Center">
-														<ComboBox.ItemTemplate>
-															<DataTemplate>
-																<TextBlock Text="{Binding}"
-																		   TextAlignment="Center"
-																		   HorizontalAlignment="Center"/>
-															</DataTemplate>
-														</ComboBox.ItemTemplate>
-													</ComboBox>
-												</StackPanel>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
+															</StackPanel>
+															<StackPanel Orientation="Horizontal">
+																<ToggleButton Content="Adj"
+																			  IsChecked="{ Binding AddAdjEnabled }"
+																			  HorizontalAlignment="Stretch"
+																			  HorizontalContentAlignment="Center"
+																			  ToolTip.Tip="AddAdj"/>
+																<TextBox Text="{ Binding AddAdjChance }"/>
+																<ComboBox x:CompileBindings="False"
+																		  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
+																		  SelectedItem="{ Binding $parent[Button].DataContext.SelectedAddAdjTypeOption, Mode=TwoWay }"
+																		  HorizontalAlignment="Center"
+																		  HorizontalContentAlignment="Center">
+																	<ComboBox.ItemTemplate>
+																		<DataTemplate>
+																			<TextBlock Text="{Binding}"
+																					   TextAlignment="Center"
+																					   HorizontalAlignment="Center"/>
+																		</DataTemplate>
+																	</ComboBox.ItemTemplate>
+																</ComboBox>
+															</StackPanel>
+														</StackPanel>
+													</Flyout>
+												</Button.Flyout>
+											</Button>
 
-								<TextBlock Grid.Column="3"
-										   FontSize="16"
-										   Text="{ Binding BlockName }"
-										   HorizontalAlignment="Center"
-										   VerticalAlignment="Center">BlockName</TextBlock>
-								<NumericUpDown HorizontalAlignment="Stretch"
-												Grid.Column="4"
-												Tag="{ Binding BlockName }"
-												Value="{ Binding SelectCount, Mode=TwoWay }"
-												Increment="1"
-												Minimum="0"
-												ValueChanged=""
-												HorizontalContentAlignment="Center"
-												ToolTip.Tip="Number of tags to select from this block"/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Expander>
-		<Expander HorizontalAlignment="Stretch"
-				  IsExpanded="False"
-				  Padding="5">
-			<Expander.Header>
-				<TextBlock Text="Negative"
-						   FontWeight="Bold"
-						   FontSize="20"/>
-			</Expander.Header>
-			<ItemsControl  ItemsSource="{ Binding Negative }">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="Gen"
-							   Margin="0,2"
-							   Padding="5">
-
-							<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
-								  ShowGridLines="False">
-								<Button Content="&#8943;"
-										Grid.Column="0"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Open File Location"
-														ToolTip.Tip="Open original data source location for this block"/>
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Reload Data"
-														ToolTip.Tip="Reload the internal database for this block"/>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-								<Button Content="&#8634;"
-										Tag="{ Binding BlockName }"
-										ToolTip.Tip="Reset tag select number"
-										Click="ResetSelectCountBox"
-										Grid.Column="1"
-										Margin="5,0"/>
-
-								<Button Content="&#9881;"
-										Grid.Column="2"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<ToggleButton Content="&#8646;"
-															  HorizontalAlignment="Stretch"
-															  IsChecked="{ Binding ShuffleEnabled }"
-															  HorizontalContentAlignment="Center"
-															  ToolTip.Tip="Shuffle"/>
-
-												<ToggleSplitButton Content="TagStyle"
-																   IsChecked="{ Binding TagStyleEnabled }"
-																   HorizontalAlignment="Center"
-																   HorizontalContentAlignment="Center">
-													<ToggleSplitButton.Flyout>
-														<Flyout Placement="Bottom">
-															<ListBox x:CompileBindings="False"
-																	 SelectionMode="Single"
-																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding TagStyleOption }"
-																	 Margin="0" Padding="0">
-																<ListBox.ItemTemplate>
-																	<DataTemplate>
-																		<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-																	</DataTemplate>
-																</ListBox.ItemTemplate>
-															</ListBox>
-														</Flyout>
-													</ToggleSplitButton.Flyout>
-												</ToggleSplitButton>
-
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Ran"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-
-												</StackPanel>
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Adj"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-													<ComboBox x:CompileBindings="False"
-															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding AddAdjTypeOption, Mode=TwoWay }"
-															  HorizontalAlignment="Center"
-															  HorizontalContentAlignment="Center">
-														<ComboBox.ItemTemplate>
-															<DataTemplate>
-																<TextBlock Text="{Binding}"
-																		   TextAlignment="Center"
-																		   HorizontalAlignment="Center"/>
-															</DataTemplate>
-														</ComboBox.ItemTemplate>
-													</ComboBox>
-												</StackPanel>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-
-								<TextBlock Grid.Column="3"
-										   FontSize="16"
-										   Text="{ Binding BlockName }"
-										   HorizontalAlignment="Center"
-										   VerticalAlignment="Center">BlockName</TextBlock>
-								<NumericUpDown HorizontalAlignment="Stretch"
-												Grid.Column="4"
-												Tag="{ Binding BlockName }"
-												Value="{ Binding SelectCount, Mode=TwoWay }"
-												Increment="1"
-												Minimum="0"
-												ValueChanged=""
-												HorizontalContentAlignment="Center"
-												ToolTip.Tip="Number of tags to select from this block"/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Expander>
-		<Expander HorizontalAlignment="Stretch"
-				  IsExpanded="False"
-				  Padding="5">
-			<Expander.Header>
-				<TextBlock Text="Width"
-						   FontWeight="Bold"
-						   FontSize="20"/>
-			</Expander.Header>
-			<ItemsControl  ItemsSource="{ Binding Width }">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="Gen"
-							   Margin="0,2"
-							   Padding="5">
-
-							<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
-								  ShowGridLines="False">
-								<Button Content="&#8943;"
-										Grid.Column="0"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Open File Location"
-														ToolTip.Tip="Open original data source location for this block"/>
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Reload Data"
-														ToolTip.Tip="Reload the internal database for this block"/>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-								<Button Content="&#8634;"
-										Tag="{ Binding BlockName }"
-										ToolTip.Tip="Reset tag select number"
-										Click="ResetSelectCountBox"
-										Grid.Column="1"
-										Margin="5,0"/>
-
-								<Button Content="&#9881;"
-										Grid.Column="2"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<ToggleButton Content="&#8646;"
-															  HorizontalAlignment="Stretch"
-															  IsChecked="{ Binding ShuffleEnabled }"
-															  HorizontalContentAlignment="Center"
-															  ToolTip.Tip="Shuffle"/>
-
-												<ToggleSplitButton Content="TagStyle"
-																   IsChecked="{ Binding TagStyleEnabled }"
-																   HorizontalAlignment="Center"
-																   HorizontalContentAlignment="Center">
-													<ToggleSplitButton.Flyout>
-														<Flyout Placement="Bottom">
-															<ListBox x:CompileBindings="False"
-																	 SelectionMode="Single"
-																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding TagStyleOption }"
-																	 Margin="0" Padding="0">
-																<ListBox.ItemTemplate>
-																	<DataTemplate>
-																		<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-																	</DataTemplate>
-																</ListBox.ItemTemplate>
-															</ListBox>
-														</Flyout>
-													</ToggleSplitButton.Flyout>
-												</ToggleSplitButton>
-
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Ran"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-
-												</StackPanel>
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Adj"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-													<ComboBox x:CompileBindings="False"
-															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding AddAdjTypeOption, Mode=TwoWay }"
-															  HorizontalAlignment="Center"
-															  HorizontalContentAlignment="Center">
-														<ComboBox.ItemTemplate>
-															<DataTemplate>
-																<TextBlock Text="{Binding}"
-																		   TextAlignment="Center"
-																		   HorizontalAlignment="Center"/>
-															</DataTemplate>
-														</ComboBox.ItemTemplate>
-													</ComboBox>
-												</StackPanel>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-
-								<TextBlock Grid.Column="3"
-										   FontSize="16"
-										   Text="{ Binding BlockName }"
-										   HorizontalAlignment="Center"
-										   VerticalAlignment="Center">BlockName</TextBlock>
-								<NumericUpDown HorizontalAlignment="Stretch"
-												Grid.Column="4"
-												Tag="{ Binding BlockName }"
-												Value="{ Binding SelectCount, Mode=TwoWay }"
-												Increment="1"
-												Minimum="0"
-												ValueChanged=""
-												HorizontalContentAlignment="Center"
-												ToolTip.Tip="Number of tags to select from this block"/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Expander>
-		<Expander HorizontalAlignment="Stretch"
-				  IsExpanded="False"
-				  Padding="5">
-			<Expander.Header>
-				<TextBlock Text="Height"
-						   FontWeight="Bold"
-						   FontSize="20"/>
-			</Expander.Header>
-			<ItemsControl  ItemsSource="{ Binding Height }">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="Gen"
-							   Margin="0,2"
-							   Padding="5">
-
-							<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
-								  ShowGridLines="False">
-								<Button Content="&#8943;"
-										Grid.Column="0"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Open File Location"
-														ToolTip.Tip="Open original data source location for this block"/>
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Reload Data"
-														ToolTip.Tip="Reload the internal database for this block"/>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-								<Button Content="&#8634;"
-										Tag="{ Binding BlockName }"
-										ToolTip.Tip="Reset tag select number"
-										Click="ResetSelectCountBox"
-										Grid.Column="1"
-										Margin="5,0"/>
-
-								<Button Content="&#9881;"
-										Grid.Column="2"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<ToggleButton Content="&#8646;"
-															  HorizontalAlignment="Stretch"
-															  IsChecked="{ Binding ShuffleEnabled }"
-															  HorizontalContentAlignment="Center"
-															  ToolTip.Tip="Shuffle"/>
-
-												<ToggleSplitButton Content="TagStyle"
-																   IsChecked="{ Binding TagStyleEnabled }"
-																   HorizontalAlignment="Center"
-																   HorizontalContentAlignment="Center">
-													<ToggleSplitButton.Flyout>
-														<Flyout Placement="Bottom">
-															<ListBox x:CompileBindings="False"
-																	 SelectionMode="Single"
-																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding TagStyleOption }"
-																	 Margin="0" Padding="0">
-																<ListBox.ItemTemplate>
-																	<DataTemplate>
-																		<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-																	</DataTemplate>
-																</ListBox.ItemTemplate>
-															</ListBox>
-														</Flyout>
-													</ToggleSplitButton.Flyout>
-												</ToggleSplitButton>
-
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Ran"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-
-												</StackPanel>
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Adj"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-													<ComboBox x:CompileBindings="False"
-															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding AddAdjTypeOption, Mode=TwoWay }"
-															  HorizontalAlignment="Center"
-															  HorizontalContentAlignment="Center">
-														<ComboBox.ItemTemplate>
-															<DataTemplate>
-																<TextBlock Text="{Binding}"
-																		   TextAlignment="Center"
-																		   HorizontalAlignment="Center"/>
-															</DataTemplate>
-														</ComboBox.ItemTemplate>
-													</ComboBox>
-												</StackPanel>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-
-								<TextBlock Grid.Column="3"
-										   FontSize="16"
-										   Text="{ Binding BlockName }"
-										   HorizontalAlignment="Center"
-										   VerticalAlignment="Center">BlockName</TextBlock>
-								<NumericUpDown HorizontalAlignment="Stretch"
-												Grid.Column="4"
-												Tag="{ Binding BlockName }"
-												Value="{ Binding SelectCount, Mode=TwoWay }"
-												Increment="1"
-												Minimum="0"
-												ValueChanged=""
-												HorizontalContentAlignment="Center"
-												ToolTip.Tip="Number of tags to select from this block"/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Expander>
-		<Expander HorizontalAlignment="Stretch"
-				  IsExpanded="False"
-				  Padding="5">
-			<Expander.Header>
-				<TextBlock Text="Steps"
-						   FontWeight="Bold"
-						   FontSize="20"/>
-			</Expander.Header>
-			<ItemsControl  ItemsSource="{ Binding Steps }">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="Gen"
-							   Margin="0,2"
-							   Padding="5">
-
-							<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
-								  ShowGridLines="False">
-								<Button Content="&#8943;"
-										Grid.Column="0"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Open File Location"
-														ToolTip.Tip="Open original data source location for this block"/>
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Reload Data"
-														ToolTip.Tip="Reload the internal database for this block"/>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-								<Button Content="&#8634;"
-										Tag="{ Binding BlockName }"
-										ToolTip.Tip="Reset tag select number"
-										Click="ResetSelectCountBox"
-										Grid.Column="1"
-										Margin="5,0"/>
-
-								<Button Content="&#9881;"
-										Grid.Column="2"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<ToggleButton Content="&#8646;"
-															  HorizontalAlignment="Stretch"
-															  IsChecked="{ Binding ShuffleEnabled }"
-															  HorizontalContentAlignment="Center"
-															  ToolTip.Tip="Shuffle"/>
-
-												<ToggleSplitButton Content="TagStyle"
-																   IsChecked="{ Binding TagStyleEnabled }"
-																   HorizontalAlignment="Center"
-																   HorizontalContentAlignment="Center">
-													<ToggleSplitButton.Flyout>
-														<Flyout Placement="Bottom">
-															<ListBox x:CompileBindings="False"
-																	 SelectionMode="Single"
-																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding TagStyleOption }"
-																	 Margin="0" Padding="0">
-																<ListBox.ItemTemplate>
-																	<DataTemplate>
-																		<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-																	</DataTemplate>
-																</ListBox.ItemTemplate>
-															</ListBox>
-														</Flyout>
-													</ToggleSplitButton.Flyout>
-												</ToggleSplitButton>
-
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Ran"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-
-												</StackPanel>
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Adj"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-													<ComboBox x:CompileBindings="False"
-															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding AddAdjTypeOption, Mode=TwoWay }"
-															  HorizontalAlignment="Center"
-															  HorizontalContentAlignment="Center">
-														<ComboBox.ItemTemplate>
-															<DataTemplate>
-																<TextBlock Text="{Binding}"
-																		   TextAlignment="Center"
-																		   HorizontalAlignment="Center"/>
-															</DataTemplate>
-														</ComboBox.ItemTemplate>
-													</ComboBox>
-												</StackPanel>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-
-								<TextBlock Grid.Column="3"
-										   FontSize="16"
-										   Text="{ Binding BlockName }"
-										   HorizontalAlignment="Center"
-										   VerticalAlignment="Center">BlockName</TextBlock>
-								<NumericUpDown HorizontalAlignment="Stretch"
-												Grid.Column="4"
-												Tag="{ Binding BlockName }"
-												Value="{ Binding SelectCount, Mode=TwoWay }"
-												Increment="1"
-												Minimum="0"
-												ValueChanged=""
-												HorizontalContentAlignment="Center"
-												ToolTip.Tip="Number of tags to select from this block"/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Expander>
-		<Expander HorizontalAlignment="Stretch"
-				  IsExpanded="False"
-				  Padding="5">
-			<Expander.Header>
-				<TextBlock Text="Cfg_Scale"
-						   FontWeight="Bold"
-						   FontSize="20"/>
-			</Expander.Header>
-			<ItemsControl  ItemsSource="{ Binding Cfg_scale }">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="Gen"
-							   Margin="0,2"
-							   Padding="5">
-
-							<Grid ColumnDefinitions="Auto,Auto,Auto,*,100"
-								  ShowGridLines="False">
-								<Button Content="&#8943;"
-										Grid.Column="0"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Open File Location"
-														ToolTip.Tip="Open original data source location for this block"/>
-												<Button HorizontalAlignment="Stretch"
-														HorizontalContentAlignment="Center"
-														Content="Reload Data"
-														ToolTip.Tip="Reload the internal database for this block"/>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-								<Button Content="&#8634;"
-										Tag="{ Binding BlockName }"
-										ToolTip.Tip="Reset tag select number"
-										Click="ResetSelectCountBox"
-										Grid.Column="1"
-										Margin="5,0"/>
-
-								<Button Content="&#9881;"
-										Grid.Column="2"
-										HorizontalAlignment="Left"
-										Margin="5,0">
-									<Button.Flyout>
-										<Flyout Placement="BottomEdgeAlignedLeft">
-											<StackPanel HorizontalAlignment="Stretch">
-												<ToggleButton Content="&#8646;"
-															  HorizontalAlignment="Stretch"
-															  IsChecked="{ Binding ShuffleEnabled }"
-															  HorizontalContentAlignment="Center"
-															  ToolTip.Tip="Shuffle"/>
-
-												<ToggleSplitButton Content="TagStyle"
-																   IsChecked="{ Binding TagStyleEnabled }"
-																   HorizontalAlignment="Center"
-																   HorizontalContentAlignment="Center">
-													<ToggleSplitButton.Flyout>
-														<Flyout Placement="Bottom">
-															<ListBox x:CompileBindings="False"
-																	 SelectionMode="Single"
-																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding TagStyleOption }"
-																	 Margin="0" Padding="0">
-																<ListBox.ItemTemplate>
-																	<DataTemplate>
-																		<ListBoxItem Padding="0" Margin="0" Background="Transparent" Content="{Binding}"/>
-																	</DataTemplate>
-																</ListBox.ItemTemplate>
-															</ListBox>
-														</Flyout>
-													</ToggleSplitButton.Flyout>
-												</ToggleSplitButton>
-
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Ran"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-
-												</StackPanel>
-												<StackPanel Orientation="Horizontal">
-													<ToggleButton Content="Adj"
-																  HorizontalAlignment="Stretch"
-																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
-													<ComboBox x:CompileBindings="False"
-															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding AddAdjTypeOption, Mode=TwoWay }"
-															  HorizontalAlignment="Center"
-															  HorizontalContentAlignment="Center">
-														<ComboBox.ItemTemplate>
-															<DataTemplate>
-																<TextBlock Text="{Binding}"
-																		   TextAlignment="Center"
-																		   HorizontalAlignment="Center"/>
-															</DataTemplate>
-														</ComboBox.ItemTemplate>
-													</ComboBox>
-												</StackPanel>
-											</StackPanel>
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-
-								<TextBlock Grid.Column="3"
-										   FontSize="16"
-										   Text="{ Binding BlockName }"
-										   HorizontalAlignment="Center"
-										   VerticalAlignment="Center">BlockName</TextBlock>
-								<NumericUpDown HorizontalAlignment="Stretch"
-												Grid.Column="4"
-												Tag="{ Binding BlockName }"
-												Value="{ Binding SelectCount, Mode=TwoWay }"
-												Increment="1"
-												Minimum="0"
-												ValueChanged=""
-												HorizontalContentAlignment="Center"
-												ToolTip.Tip="Number of tags to select from this block"/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Expander>
+											<TextBlock Grid.Column="3"
+													   FontSize="16"
+													   Text="{ Binding BlockName }"
+													   HorizontalAlignment="Center"
+													   VerticalAlignment="Center">BlockName</TextBlock>
+											<NumericUpDown HorizontalAlignment="Stretch"
+															Grid.Column="4"
+															Tag="{ Binding BlockName }"
+															Value="{ Binding SelectCount, Mode=TwoWay }"
+															Increment="1"
+															Minimum="0"
+															ValueChanged=""
+															HorizontalContentAlignment="Center"
+															ToolTip.Tip="Number of tags to select from this block"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</Expander>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+		<!--It's actually probably dogshit code though-->
 	</StackPanel>
 </UserControl>

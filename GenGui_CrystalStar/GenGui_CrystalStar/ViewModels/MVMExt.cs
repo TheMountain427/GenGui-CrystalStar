@@ -167,82 +167,82 @@ public partial class MainViewModel : ViewModelBase
 
 
 
-    private IList<BlockFlag> _blockFlagsList { get; } = new List<BlockFlag>
-    {
-        BlockFlag.positive,
-        BlockFlag.negative,
-        BlockFlag.width,
-        BlockFlag.height,
-        BlockFlag.steps,
-        BlockFlag.cfg_scale,
-        BlockFlag.batch_size,
-        BlockFlag.sd_model,
-        BlockFlag.sampler_name,
-        BlockFlag.sampler_index,
-        BlockFlag.seed,
-        BlockFlag.subseed,
-        BlockFlag.subseed_strength,
-        BlockFlag.outpath_samples,
-        BlockFlag.outpath_grids,
-        BlockFlag.prompt_for_display,
-        BlockFlag.styles,
-        BlockFlag.seed_resize_from_w,
-        BlockFlag.seed_resize_from_h,
-        BlockFlag.n_iter,
-        BlockFlag.restore_faces,
-        BlockFlag.tiling,
-        BlockFlag.do_not_save_samples,
-        BlockFlag.do_not_save_grid
-    };
+    //private IList<BlockFlag> _blockFlagsList { get; } = new List<BlockFlag>
+    //{
+    //    BlockFlag.positive,
+    //    BlockFlag.negative,
+    //    BlockFlag.width,
+    //    BlockFlag.height,
+    //    BlockFlag.steps,
+    //    BlockFlag.cfg_scale,
+    //    BlockFlag.batch_size,
+    //    BlockFlag.sd_model,
+    //    BlockFlag.sampler_name,
+    //    BlockFlag.sampler_index,
+    //    BlockFlag.seed,
+    //    BlockFlag.subseed,
+    //    BlockFlag.subseed_strength,
+    //    BlockFlag.outpath_samples,
+    //    BlockFlag.outpath_grids,
+    //    BlockFlag.prompt_for_display,
+    //    BlockFlag.styles,
+    //    BlockFlag.seed_resize_from_w,
+    //    BlockFlag.seed_resize_from_h,
+    //    BlockFlag.n_iter,
+    //    BlockFlag.restore_faces,
+    //    BlockFlag.tiling,
+    //    BlockFlag.do_not_save_samples,
+    //    BlockFlag.do_not_save_grid
+    //};
 
-    [ObservableProperty]
-    private List<GuiBlock> _positive;
-    [ObservableProperty]
-    private List<GuiBlock> _negative;
-    [ObservableProperty]
-    private List<GuiBlock> _width;
-    [ObservableProperty]
-    private List<GuiBlock> _height;
-    [ObservableProperty]
-    private List<GuiBlock> _steps;
-    [ObservableProperty]
-    private List<GuiBlock> _cfg_scale;
-    [ObservableProperty]
-    private List<GuiBlock> _batch_size;
-    [ObservableProperty]
-    private List<GuiBlock> _sd_model;
-    [ObservableProperty]
-    private List<GuiBlock> _sampler_name;
-    [ObservableProperty]
-    private List<GuiBlock> _sampler_index;
-    [ObservableProperty]
-    private List<GuiBlock> _seed;
-    [ObservableProperty]
-    private List<GuiBlock> _subseed;
-    [ObservableProperty]
-    private List<GuiBlock> _subseed_strength;
-    [ObservableProperty]
-    private List<GuiBlock> _outpath_samples;
-    [ObservableProperty]
-    private List<GuiBlock> _outpath_grids;
-    [ObservableProperty]
-    private List<GuiBlock> _prompt_for_display;
-    [ObservableProperty]
-    private List<GuiBlock> _styles;
-    [ObservableProperty]
-    private List<GuiBlock> _seed_resize_from_w;
-    [ObservableProperty]
-    private List<GuiBlock> _seed_resize_from_h;
-    [ObservableProperty]
-    private List<GuiBlock> _n_iter;
-    [ObservableProperty]
-    private List<GuiBlock> _restore_faces;
-    [ObservableProperty]
-    private List<GuiBlock> _tiling;
-    [ObservableProperty]
-    private List<GuiBlock> _do_not_save_samples;
-    [ObservableProperty]
-    private List<GuiBlock> _do_not_save_grid;
+    //[ObservableProperty]
+    //private List<GuiBlock> _positive;
+    //[ObservableProperty]
+    //private List<GuiBlock> _negative;
+    //[ObservableProperty]
+    //private List<GuiBlock> _width;
+    //[ObservableProperty]
+    //private List<GuiBlock> _height;
+    //[ObservableProperty]
+    //private List<GuiBlock> _steps;
+    //[ObservableProperty]
+    //private List<GuiBlock> _cfg_scale;
+    //[ObservableProperty]
+    //private List<GuiBlock> _batch_size;
+    //[ObservableProperty]
+    //private List<GuiBlock> _sd_model;
+    //[ObservableProperty]
+    //private List<GuiBlock> _sampler_name;
+    //[ObservableProperty]
+    //private List<GuiBlock> _sampler_index;
+    //[ObservableProperty]
+    //private List<GuiBlock> _seed;
+    //[ObservableProperty]
+    //private List<GuiBlock> _subseed;
+    //[ObservableProperty]
+    //private List<GuiBlock> _subseed_strength;
+    //[ObservableProperty]
+    //private List<GuiBlock> _outpath_samples;
+    //[ObservableProperty]
+    //private List<GuiBlock> _outpath_grids;
+    //[ObservableProperty]
+    //private List<GuiBlock> _prompt_for_display;
+    //[ObservableProperty]
+    //private List<GuiBlock> _styles;
+    //[ObservableProperty]
+    //private List<GuiBlock> _seed_resize_from_w;
+    //[ObservableProperty]
+    //private List<GuiBlock> _seed_resize_from_h;
+    //[ObservableProperty]
+    //private List<GuiBlock> _n_iter;
+    //[ObservableProperty]
+    //private List<GuiBlock> _restore_faces;
+    //[ObservableProperty]
+    //private List<GuiBlock> _tiling;
+    //[ObservableProperty]
+    //private List<GuiBlock> _do_not_save_samples;
+    //[ObservableProperty]
+    //private List<GuiBlock> _do_not_save_grid;
 
 
 
@@ -294,5 +294,138 @@ public partial class MainViewModel : ViewModelBase
 
         else
             return null;
+    }
+
+
+    [ObservableProperty]
+    private List<BlocksContainer> _blocksContainers = [];
+
+    public async void LoadBlockContainers()
+    {
+         // lol smelly shit, idgaf tbh
+         // lmaoooooooo it works
+        var blocks = await _dataService.GetAllBlocks();
+
+           
+        BlocksContainers.Add(new BlocksContainer { 
+            BlockFlagName = "positive", 
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.positive).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.positive).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer {
+            BlockFlagName = "negative",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.negative).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.negative).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "width",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.width).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.width).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "height",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.height).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.height).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "steps",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.steps).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.steps).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "cfg_scale",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.cfg_scale).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.cfg_scale).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "batch_size",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.batch_size).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.batch_size).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "sd_model",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sd_model).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sd_model).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "sampler_name",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_name).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_name).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "sampler_index",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_index).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_index).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "seed",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "subseed",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "subseed_strength",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed_strength).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed_strength).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "outpath_samples",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_samples).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_samples).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "outpath_grids",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_grids).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_grids).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "prompt_for_display",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.prompt_for_display).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.prompt_for_display).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "styles",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.styles).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.styles).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "seed_resize_from_w",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_w).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_w).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "seed_resize_from_h",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_h).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_h).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "n_iter",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.n_iter).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.n_iter).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "restore_faces",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.restore_faces).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.restore_faces).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "tiling",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.tiling).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.tiling).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "do_not_save_samples",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_samples).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_samples).ToList()) : new List<GuiBlock>())});
+
+        BlocksContainers.Add(new BlocksContainer{
+            BlockFlagName = "do_not_save_grid",
+            GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_grid).Count() > 0 ?
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_grid).ToList()) : new List<GuiBlock>())});
+
     }
 }

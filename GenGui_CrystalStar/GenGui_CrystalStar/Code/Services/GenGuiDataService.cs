@@ -31,6 +31,8 @@ public interface IGenGuiDataService
     Task<Response<ResultCode>> InsertPromptHistory(List<PromptOutput> promptOutputs);
     Task<Response<List<PromptHistory>>> GetPromptHistory();
     Task<Response<List<Blocks>>> GetBlocksByFlag(BlockFlag blockFlag);
+    Task<Response<List<Blocks>>> GetAllBlocks();
+    Task<Response<ResultCode>> UpdateBlocksSettings(BlockGenSettingsList blockSettingsList);
     }
 
 public class GenGuiDataService : IGenGuiDataService
@@ -47,6 +49,41 @@ public class GenGuiDataService : IGenGuiDataService
     public void Init()
     {
 
+    }
+    public async Task<Response<ResultCode>> UpdateBlocksSettings(BlockGenSettingsList blockSettingsList)
+    {
+        var allBlocks = await GetAllBlocks();
+        foreach (var blkSet in blockSettingsList)
+        {
+            var foundBlock = allBlocks.Data.FirstOrDefault(x => x.BlockName == blkSet.BlockName);
+            if (foundBlock is not null)
+            {
+                foundBlock.SelectCount = blkSet.SelectCount;
+                foundBlock.ShuffleEnabled = blkSet.BlockShuffleSetting;
+                foundBlock.TagStyleEnabled = blkSet.BlockTagStyleSettings.IsEnabled;
+                foundBlock.TagStyleOption = blkSet.BlockTagStyleSettings.BlockTagStyle;
+                foundBlock.RandomDropEnabled = blkSet.BlockRandomDropSettings.IsEnabled;
+                foundBlock.RandomDropChance = blkSet.BlockRandomDropSettings.BlockRandomDropChance;
+                foundBlock.AddAdjEnabled = blkSet.BlockAddAdjSettings.IsEnabled;
+                foundBlock.AddAdjTypeOption = blkSet.BlockAddAdjSettings.BlockAdjType;
+                foundBlock.AddAdjChance = blkSet.BlockAddAdjSettings.BlockAddAdjChance;
+                _database.Update(foundBlock);
+            }
+        }
+
+        
+        await _database.SaveChangesAsync();
+        _database.ChangeTracker.Clear();
+        
+        return new Response<ResultCode>(ResultCode.Okay);
+    }
+
+
+
+    public async Task<Response<List<Blocks>>> GetAllBlocks()
+    {
+        var blocks = await _database.Blocks.ToListAsync();
+        return new Response<List<Blocks>>(blocks);
     }
 
     public async Task<Response<List<Blocks>>> GetBlocksByFlag(BlockFlag blockFlag)
@@ -245,7 +282,30 @@ public class GenGuiDataService : IGenGuiDataService
     {
         if (blocks.Any())
         {
-            await _database.Blocks.AddRangeAsync(blocks);
+            foreach (var block in blocks)
+            {
+                var doesExist = _database.Blocks.FirstOrDefault(x => x.BlockName == block.BlockName);
+                
+                if (doesExist is not null)
+                {
+                    if (doesExist.BlockFlag == block.BlockFlag)
+                    {
+                        doesExist.TagCount = block.TagCount;
+                        _database.Blocks.Update(doesExist);
+                    }
+                    else
+                    {
+                        doesExist.BlockFlag = block.BlockFlag;
+                        doesExist.TagCount = block.TagCount;
+                        _database.Blocks.Update(doesExist);
+                    }
+                }
+                else
+                {
+                    _database.Blocks.Add(block);
+                }
+            }
+
             await _database.SaveChangesAsync();
             _database.ChangeTracker.Clear();
 
