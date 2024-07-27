@@ -205,8 +205,7 @@
 	<Style Selector="TextBlock">
 		<Setter Property="Foreground" Value="#dadce0"/>
 	</Style>
-	
-							
+			
 	
 	
 	

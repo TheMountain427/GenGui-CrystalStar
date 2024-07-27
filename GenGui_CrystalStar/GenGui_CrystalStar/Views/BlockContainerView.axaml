@@ -77,7 +77,7 @@
 															<ListBox x:CompileBindings="False"
 																	 SelectionMode="Single"
 																	 ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-																	 SelectedItem="{ Binding TagStyleOption, Mode=TwoWay }"
+																	 SelectedItem="{ Binding $parent[Button].DataContext.SelectedTagStyleOption, Mode=TwoWay }"
 																	 Margin="0" Padding="0">
 																<ListBox.ItemTemplate>
 																	<DataTemplate>
@@ -101,11 +101,11 @@
 													<ToggleButton Content="Adj"
 																  HorizontalAlignment="Stretch"
 																  HorizontalContentAlignment="Center"
-																  ToolTip.Tip="RandomDrop"/>
-													<TextBox Text="{ Binding RandomDropChance }"/>
+																  ToolTip.Tip="AddAdj"/>
+													<TextBox Text="{ Binding AddAdjChance }"/>
 													<ComboBox x:CompileBindings="False"
 															  ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-															  SelectedItem="{ Binding AddAdjTypeOption, Mode=TwoWay }"
+															  SelectedItem="{ Binding $parent[Button].DataContext.SelectedAddAdjTypeOption, Mode=TwoWay }"
 															  HorizontalAlignment="Center"
 															  HorizontalContentAlignment="Center">
 														<ComboBox.ItemTemplate>

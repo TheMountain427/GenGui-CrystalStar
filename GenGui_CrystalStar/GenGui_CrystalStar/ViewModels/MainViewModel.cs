@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using GenGui_CrystalStar.Code.DatabaseModels;
 using System.Data;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GenGui_CrystalStar.ViewModels;
 
@@ -47,36 +48,8 @@ public partial class MainViewModel : ViewModelBase
         _databaseService.Init();
         _textFileSourceService.Init();
 
-        Task.Run(async () =>
-        {
-            Positive = (await _dataService.GetBlocksByFlag(BlockFlag.positive)).Data ?? [];
-            Negative = (await _dataService.GetBlocksByFlag(BlockFlag.negative)).Data ?? [];
-            Width = (await _dataService.GetBlocksByFlag(BlockFlag.width)).Data ?? [];
-            Height = (await _dataService.GetBlocksByFlag(BlockFlag.height)).Data ?? [];
-            Steps = (await _dataService.GetBlocksByFlag(BlockFlag.steps)).Data ?? [];
-            Cfg_scale = (await _dataService.GetBlocksByFlag(BlockFlag.cfg_scale)).Data ?? [];
-            Batch_size = (await _dataService.GetBlocksByFlag(BlockFlag.batch_size)).Data ?? [];
-            Sd_model = (await _dataService.GetBlocksByFlag(BlockFlag.sd_model)).Data ?? [];
-            Sampler_name = (await _dataService.GetBlocksByFlag(BlockFlag.sampler_name)).Data ?? [];
-            Sampler_index = (await _dataService.GetBlocksByFlag(BlockFlag.sampler_index)).Data ?? [];
-            Seed = (await _dataService.GetBlocksByFlag(BlockFlag.seed)).Data ?? [];
-            Subseed = (await _dataService.GetBlocksByFlag(BlockFlag.subseed)).Data ?? [];
-            Subseed_strength = (await _dataService.GetBlocksByFlag(BlockFlag.subseed_strength)).Data ?? [];
-            Outpath_samples = (await _dataService.GetBlocksByFlag(BlockFlag.outpath_samples)).Data ?? [];
-            Outpath_grids = (await _dataService.GetBlocksByFlag(BlockFlag.outpath_grids)).Data ?? [];
-            Prompt_for_display = (await _dataService.GetBlocksByFlag(BlockFlag.prompt_for_display)).Data ?? [];
-            Styles = (await _dataService.GetBlocksByFlag(BlockFlag.styles)).Data ?? [];
-            Seed_resize_from_w = (await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_w)).Data ?? [];
-            Seed_resize_from_h = (await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_h)).Data ?? [];
-            N_iter = (await _dataService.GetBlocksByFlag(BlockFlag.n_iter)).Data ?? [];
-            Restore_faces = (await _dataService.GetBlocksByFlag(BlockFlag.restore_faces)).Data ?? [];
-            Tiling = (await _dataService.GetBlocksByFlag(BlockFlag.tiling)).Data ?? [];
-            Do_not_save_samples = (await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_samples)).Data ?? [];
-            Do_not_save_grid = (await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_grid)).Data ?? [];
-        });
-        Task.WhenAll();
-
-
+        
+        LoadBlocks();
     }
 
     [ObservableProperty]
@@ -181,7 +154,7 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    private List<BlockGenerationSettings> GenerateBlockSettings(List<Blocks> blocks)
+    private List<BlockGenerationSettings> GenerateBlockSettings(List<GuiBlock> blocks)
     {
         var blockSettings = new List<BlockGenerationSettings>();
         if (blocks.Any())
@@ -193,22 +166,22 @@ public partial class MainViewModel : ViewModelBase
                     BlockName = block.BlockName,
                     BlockFlag = block.BlockFlag,
                     SelectCount = block.SelectCount,
-                    BlockShuffleSetting = block.ShuffleEnabled,             // V this shit don't work :( V
+                    BlockShuffleSetting = block.ShuffleEnabled ? Enabled.Enabled : Enabled.Disabled,             // V this shit don't work :( V
                     BlockTagStyleSettings = new BlockTagStyleSettings
                     {
-                        IsEnabled = block.TagStyleEnabled,
-                        BlockTagStyle = block.TagStyleOption
+                        IsEnabled = block.TagStyleEnabled ? Enabled.Enabled : Enabled.Disabled,
+                        BlockTagStyle = block.SelectedTagStyleOption
                     },
                     BlockRandomDropSettings = new BlockRandomDropSettings
                     {
-                        IsEnabled = block.RandomDropEnabled,
-                        BlockRandomDropChance = block.RandomDropChance
+                        IsEnabled = block.RandomDropEnabled ? Enabled.Enabled : Enabled.Disabled,
+                        BlockRandomDropChance = (int)block.RandomDropChance
                     },
                     BlockAddAdjSettings = new BlockAddAdjectivesSettings
                     {
-                        IsEnabled = block.AddAdjEnabled,
-                        BlockAdjType = block.AddAdjTypeOption,
-                        BlockAddAdjChance = block.AddAdjChance
+                        IsEnabled = block.AddAdjEnabled ? Enabled.Enabled : Enabled.Disabled,
+                        BlockAdjType = block.SelectedAddAdjTypeOption,
+                        BlockAddAdjChance = (int)block.AddAdjChance
                     }
 
                     // add the rest of the settings
@@ -235,5 +208,33 @@ public partial class MainViewModel : ViewModelBase
     //{
     //    throw new NotImplementedException();
     //}
+
+    public async void LoadBlocks()
+    {
+        Positive = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.positive)).Data);
+        Negative = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.negative)).Data) ?? [];
+        Width = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.width)).Data) ?? [];
+        Height = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.height)).Data) ?? [];
+        Steps = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.steps)).Data) ?? [];
+        Cfg_scale = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.cfg_scale)).Data) ?? [];
+        Batch_size = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.batch_size)).Data) ?? [];
+        Sd_model = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sd_model)).Data) ?? [];
+        Sampler_name = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_name)).Data) ?? [];
+        Sampler_index = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_index)).Data) ?? [];
+        Seed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed)).Data) ?? [];
+        Subseed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed)).Data) ?? [];
+        Subseed_strength = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed_strength)).Data) ?? [];
+        Outpath_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_samples)).Data) ?? [];
+        Outpath_grids = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_grids)).Data) ?? [];
+        Prompt_for_display = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.prompt_for_display)).Data) ?? [];
+        Styles = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.styles)).Data) ?? [];
+        Seed_resize_from_w = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_w)).Data) ?? [];
+        Seed_resize_from_h = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_h)).Data) ?? [];
+        N_iter = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.n_iter)).Data) ?? [];
+        Restore_faces = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.restore_faces)).Data) ?? [];
+        Tiling = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.tiling)).Data) ?? [];
+        Do_not_save_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_samples)).Data) ?? [];
+        Do_not_save_grid = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_grid)).Data) ?? [];
+    }
 }
 

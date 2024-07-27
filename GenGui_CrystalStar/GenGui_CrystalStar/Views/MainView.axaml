@@ -104,7 +104,8 @@
 					<TextBox VerticalAlignment="Center"
 							 Margin="10"
 							 MinHeight="90"
-							 Text="{ Binding PromptOutput }">TextBox</TextBox>
+							 Text="{ Binding PromptOutput }"
+							 TextWrapping="Wrap">TextBox</TextBox>
 				</StackPanel>
 
 			</Grid>

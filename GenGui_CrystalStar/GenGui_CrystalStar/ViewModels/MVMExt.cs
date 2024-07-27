@@ -196,54 +196,103 @@ public partial class MainViewModel : ViewModelBase
     };
 
     [ObservableProperty]
-    private List<Blocks> _positive;
+    private List<GuiBlock> _positive;
     [ObservableProperty]
-    private List<Blocks> _negative;
+    private List<GuiBlock> _negative;
     [ObservableProperty]
-    private List<Blocks> _width;
+    private List<GuiBlock> _width;
     [ObservableProperty]
-    private List<Blocks> _height;
+    private List<GuiBlock> _height;
     [ObservableProperty]
-    private List<Blocks> _steps;
+    private List<GuiBlock> _steps;
     [ObservableProperty]
-    private List<Blocks> _cfg_scale;
+    private List<GuiBlock> _cfg_scale;
     [ObservableProperty]
-    private List<Blocks> _batch_size;
+    private List<GuiBlock> _batch_size;
     [ObservableProperty]
-    private List<Blocks> _sd_model;
+    private List<GuiBlock> _sd_model;
     [ObservableProperty]
-    private List<Blocks> _sampler_name;
+    private List<GuiBlock> _sampler_name;
     [ObservableProperty]
-    private List<Blocks> _sampler_index;
+    private List<GuiBlock> _sampler_index;
     [ObservableProperty]
-    private List<Blocks> _seed;
+    private List<GuiBlock> _seed;
     [ObservableProperty]
-    private List<Blocks> _subseed;
+    private List<GuiBlock> _subseed;
     [ObservableProperty]
-    private List<Blocks> _subseed_strength;
+    private List<GuiBlock> _subseed_strength;
     [ObservableProperty]
-    private List<Blocks> _outpath_samples;
+    private List<GuiBlock> _outpath_samples;
     [ObservableProperty]
-    private List<Blocks> _outpath_grids;
+    private List<GuiBlock> _outpath_grids;
     [ObservableProperty]
-    private List<Blocks> _prompt_for_display;
+    private List<GuiBlock> _prompt_for_display;
     [ObservableProperty]
-    private List<Blocks> _styles;
+    private List<GuiBlock> _styles;
     [ObservableProperty]
-    private List<Blocks> _seed_resize_from_w;
+    private List<GuiBlock> _seed_resize_from_w;
     [ObservableProperty]
-    private List<Blocks> _seed_resize_from_h;
+    private List<GuiBlock> _seed_resize_from_h;
     [ObservableProperty]
-    private List<Blocks> _n_iter;
+    private List<GuiBlock> _n_iter;
     [ObservableProperty]
-    private List<Blocks> _restore_faces;
+    private List<GuiBlock> _restore_faces;
     [ObservableProperty]
-    private List<Blocks> _tiling;
+    private List<GuiBlock> _tiling;
     [ObservableProperty]
-    private List<Blocks> _do_not_save_samples;
+    private List<GuiBlock> _do_not_save_samples;
     [ObservableProperty]
-    private List<Blocks> _do_not_save_grid;
+    private List<GuiBlock> _do_not_save_grid;
 
 
 
+    public GuiBlock ConvertBlocksToGui(Blocks blocks)
+    {
+        return new GuiBlock
+        {
+            BlockName = blocks.BlockName,
+            BlockFlag = blocks.BlockFlag,
+            SelectCount = blocks.SelectCount,
+            ShuffleEnabled = blocks.ShuffleEnabled == Enabled.Enabled ? true : false,
+            TagStyleEnabled = blocks.TagStyleEnabled == Enabled.Enabled ? true : false,
+            SelectedTagStyleOption = blocks.TagStyleOption,
+            RandomDropEnabled = blocks.RandomDropEnabled == Enabled.Enabled ? true : false,
+            RandomDropChance = blocks.RandomDropChance,
+            AddAdjEnabled = blocks.AddAdjEnabled == Enabled.Enabled ? true : false,
+            SelectedAddAdjTypeOption = blocks.AddAdjTypeOption,
+            AddAdjChance = blocks.AddAdjChance
+        };
+    }    
+    
+    public List<GuiBlock> ConvertBlocksToGui(List<Blocks> blocks)
+    {
+        
+        if (blocks.Any())
+        {
+            var guiBlockList = new List<GuiBlock>();
+            foreach (var block in blocks)
+            {
+                var guiBlock = new GuiBlock
+                {
+                    BlockName = block.BlockName,
+                    BlockFlag = block.BlockFlag,
+                    SelectCount = block.SelectCount,
+                    ShuffleEnabled = block.ShuffleEnabled == Enabled.Enabled ? true : false,
+                    TagStyleEnabled = block.TagStyleEnabled == Enabled.Enabled ? true : false,
+                    SelectedTagStyleOption = block.TagStyleOption,
+                    RandomDropEnabled = block.RandomDropEnabled == Enabled.Enabled ? true : false,
+                    RandomDropChance = block.RandomDropChance,
+                    AddAdjEnabled = block.AddAdjEnabled == Enabled.Enabled ? true : false,
+                    SelectedAddAdjTypeOption = block.AddAdjTypeOption,
+                    AddAdjChance = block.AddAdjChance
+                };
+                guiBlockList.Add(guiBlock);
+            }
+
+            return guiBlockList;
+        }
+
+        else
+            return null;
+    }
 }

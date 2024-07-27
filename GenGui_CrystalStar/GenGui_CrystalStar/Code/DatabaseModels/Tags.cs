@@ -17,4 +17,8 @@ public class Tags
     [Indexed]
     public string? BlockName { get; set; }
     public BlockFlag BlockFlag { get; set; }
+    
+    
+
+
 }
