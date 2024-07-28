@@ -191,7 +191,8 @@
 		<Setter Property="CornerRadius" Value="4"/>
 		<Setter Property="Background" Value="#4a4d57"/>
 		<Setter Property="Margin" Value="10,5"/>
-	</Style>
+	</Style>	
+	
 
 	<Style Selector="SplitView">
 		<Setter Property="PaneBackground" Value="#30333b"/>
@@ -205,12 +206,40 @@
 	<Style Selector="TextBlock">
 		<Setter Property="Foreground" Value="#dadce0"/>
 	</Style>
-			
-	
-	
-	
-	
-	
+
+
+
+	<!-- Resources for Button.xaml -->
+	<Style Selector="Button">
+		<Setter Property="CornerRadius" Value="2"/>
+	</Style>
+	<Styles.Resources>
+		<Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
+
+		<SolidColorBrush x:Key="AccentButtonBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="#5d5e66" />
+
+		<SolidColorBrush x:Key="AccentButtonForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="White" />
+
+		<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="#18181A" />
+
+		<SolidColorBrush x:Key="ButtonBackground" Color="#2a2e38" />
+		<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#5d5e66" />
+		<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#5d5e66" />
+
+		<SolidColorBrush x:Key="ButtonForeground" Color="#dadce0" />
+		<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />
+		<SolidColorBrush x:Key="ButtonForegroundPressed" Color="White" />
+
+		<SolidColorBrush x:Key="ButtonBorderBrush" Color="#18181A" />
+		<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#18181A" />
+		<SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="#18181A" />
+	</Styles.Resources>
 	
 	
 									<!--Expander-->
@@ -242,7 +271,6 @@
 		<SolidColorBrush x:Key="ExpanderChevronBorderBrushPressed" Color="Transparent" />
 		<SolidColorBrush x:Key="ExpanderChevronBorderBrushDisabled" Color="Transparent" />
 	</Styles.Resources>
-								<!--End Expander-->
 
 	<!-- Resources for ComboBox.xaml -->
 	<Styles.Resources>
@@ -275,6 +303,7 @@
 		
 		<SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="#dadce0" />
 	</Styles.Resources>
+	
 	
 	<!-- Resources for ToggleButton.xaml -->
 	<Styles.Resources>
@@ -326,39 +355,6 @@
 		
 		<SolidColorBrush x:Key="SliderTickBarFill" Color="#18181A" />
 		<SolidColorBrush x:Key="SliderInlineTickBarFill" Color="#18181A" />
-	</Styles.Resources>
-
-
-	<!-- Resources for Button.xaml -->
-	<Style Selector="Button">
-		<Setter Property="CornerRadius" Value="2"/>
-	</Style>
-	<Styles.Resources>
-		<Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
-		
-		<SolidColorBrush x:Key="AccentButtonBackground" Color="#2a2e38" />
-		<SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="#5d5e66" />
-		<SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="#5d5e66" />
-		
-		<SolidColorBrush x:Key="AccentButtonForeground" Color="#dadce0" />
-		<SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="White" />
-		<SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="White" />
-		
-		<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="#18181A" />
-		<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="#18181A" />
-		<SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="#18181A" />
-		
-		<SolidColorBrush x:Key="ButtonBackground" Color="#2a2e38" />
-		<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#5d5e66" />
-		<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#5d5e66" />
-		
-		<SolidColorBrush x:Key="ButtonForeground" Color="#dadce0" />
-		<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />
-		<SolidColorBrush x:Key="ButtonForegroundPressed" Color="White" />
-		
-		<SolidColorBrush x:Key="ButtonBorderBrush" Color="#18181A" />
-		<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#18181A" />
-		<SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="#18181A" />
 	</Styles.Resources>
 
 

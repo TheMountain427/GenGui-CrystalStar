@@ -8,31 +8,67 @@
              x:Class="GenGui_CrystalStar.Views.MainView"
              x:DataType="vm:MainViewModel">
 
-  <Grid ColumnDefinitions="2*,8*"
-		  ShowGridLines="False"
-		  Height="{ Binding MainViewGridHeight }"
-          Focusable="True"
-          Background="#00000000"
-		  PointerPressed="MainViewGrid_PointerPressed">
+	<Grid ColumnDefinitions="2*,8*"
+			ShowGridLines="False"
+			Height="{ Binding MainViewGridHeight }"
+			Focusable="True"
+			Background="#00000000"
+			PointerPressed="MainViewGrid_PointerPressed">
 
-			<SplitView Name="BlocksSidePane"
-					   Grid.Column="0"
-					   IsPaneOpen="{ Binding BlocksSidePaneState }"
-					   DisplayMode="Inline"
-					   OpenPaneLength="{ Binding BlocksOpenPaneLength }"
-					   PropertyChanged="BlocksSidePaneOpened">
-				<SplitView.Pane>
-					<ScrollViewer >
-									<views:BlockContainerView />
-					</ScrollViewer>
-				</SplitView.Pane>
-			</SplitView>
+		<SplitView Name="BlocksSidePane"
+				   Grid.Column="0"
+				   IsPaneOpen="{ Binding BlocksSidePaneState }"
+				   DisplayMode="Inline"
+				   OpenPaneLength="{ Binding BlocksOpenPaneLength }"
+				   PropertyChanged="BlocksSidePaneOpened"
+				   ZIndex="5">
+			<SplitView.Pane>
+				<ScrollViewer>
+					<!--<views:BlockContainerView/>-->
+					<views:BlockContainerControl/>
+				</ScrollViewer>
+			</SplitView.Pane>
+		</SplitView>
 
 		<Grid Grid.Column="1"
 			  Width="{ Binding MainViewWidth }"
 			  ShowGridLines="False"
 			  RowDefinitions="5*,5*"
 			  ColumnDefinitions="*,Auto">
+
+			<Grid Grid.Row="1"
+				  ShowGridLines="False">
+				<StackPanel Spacing="0">
+					<Border Classes="Gen"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Height="55"
+							Width="250"
+							Margin="0,20,0,0"
+							Padding="0">
+						<StackPanel Orientation="Horizontal"
+									Spacing="10"
+									HorizontalAlignment="Center">
+							<Button HorizontalAlignment="Center"
+									HorizontalContentAlignment="Center"
+									Content="Generate"
+									Command="{ Binding Generate }"
+									Width="90"/>
+							<Button HorizontalAlignment="Center"
+									HorizontalContentAlignment="Center"
+									Content="Copy"
+									Command="{ Binding CopyOutput }"
+									Width="90"/>
+						</StackPanel>
+					</Border>
+					<TabStrip ZIndex="150" >Output</TabStrip>
+					<TextBox VerticalAlignment="Center"
+							 Margin="10"
+							 MinHeight="90"
+							 Text="{ Binding PromptOutput }"
+							 TextWrapping="Wrap"/>
+				</StackPanel>
+			</Grid>
 			
 			<Button HorizontalAlignment="Left"
 					VerticalAlignment="Center"
@@ -74,41 +110,6 @@
 					</Grid>
 				</SplitView.Pane>
 			</SplitView>
-
-			<Grid Grid.Row="1"
-				  ShowGridLines="False">
-				<StackPanel Spacing="0">
-					<Border Classes="Gen"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							Height="55"
-							Width="250"
-							Margin="0,20,0,0"
-							Padding="0">
-						<StackPanel Orientation="Horizontal"
-									Spacing="10"
-									HorizontalAlignment="Center">
-							<Button HorizontalAlignment="Center"
-									HorizontalContentAlignment="Center"
-									Content="Generate"
-									Command="{ Binding Generate }"
-									Width="90"/>
-							<Button HorizontalAlignment="Center"
-									HorizontalContentAlignment="Center"
-									Content="Copy"
-									Command="{ Binding CopyOutput }"
-									Width="90"/>
-						</StackPanel>
-					</Border>
-					<TabStrip>Output</TabStrip>
-					<TextBox VerticalAlignment="Center"
-							 Margin="10"
-							 MinHeight="90"
-							 Text="{ Binding PromptOutput }"
-							 TextWrapping="Wrap">TextBox</TextBox>
-				</StackPanel>
-
-			</Grid>
 
 
 		</Grid>
