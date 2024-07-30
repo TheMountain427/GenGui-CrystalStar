@@ -106,6 +106,33 @@
 										Orientation="Horizontal"
 										IsVisible="{TemplateBinding ShowButtonSpinner}">
 
+								<RepeatButton Name="PART_IncreaseButton"
+											  Classes="ButtonSpinnerRepeatButton"
+											  VerticalContentAlignment="Center"
+											  Foreground="{TemplateBinding Foreground}"
+											  BorderBrush="{TemplateBinding BorderBrush}"
+											  Background="{TemplateBinding Background}"
+											  Padding="0"
+											  Margin="0">
+									<Path Fill="{TemplateBinding Foreground}"
+										  Width="10"
+										  Height=""
+										  Stretch="Uniform"
+										  HorizontalAlignment="Center"
+										  VerticalAlignment="Center"
+										  Data="{StaticResource ButtonSpinnerIncreaseButtonIcon}" />
+								</RepeatButton>
+
+								<ContentPresenter Name="PART_ContentPresenter"
+												  Grid.Column="1"
+												  ContentTemplate="{TemplateBinding ContentTemplate}"
+												  Content="{TemplateBinding Content}"
+												  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+												  VerticalContentAlignment="Center"
+												  Padding="{TemplateBinding Padding}"
+												  BorderBrush="Transparent"
+												  Width="30"/>
+
 								<RepeatButton Name="PART_DecreaseButton"
 											  Classes="ButtonSpinnerRepeatButton"
 											  Foreground="{TemplateBinding Foreground}"
@@ -122,33 +149,6 @@
 										  HorizontalAlignment="Center"
 										  VerticalAlignment="Center"
 										  Data="{StaticResource ButtonSpinnerDecreaseButtonIcon}" />
-								</RepeatButton>
-
-								<ContentPresenter Name="PART_ContentPresenter"
-												  Grid.Column="1"
-												  ContentTemplate="{TemplateBinding ContentTemplate}"
-												  Content="{TemplateBinding Content}"
-												  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-												  VerticalContentAlignment="Center"
-												  Padding="{TemplateBinding Padding}"
-												  BorderBrush="Transparent"
-												  Width="30"/>
-
-								<RepeatButton Name="PART_IncreaseButton"
-											  Classes="ButtonSpinnerRepeatButton"
-											  VerticalContentAlignment="Center"
-											  Foreground="{TemplateBinding Foreground}"
-											  BorderBrush="{TemplateBinding BorderBrush}"
-											  Background="{TemplateBinding Background}"
-											  Padding="0"
-											  Margin="0">
-									<Path Fill="{TemplateBinding Foreground}"
-										  Width="10"
-										  Height=""
-										  Stretch="Uniform"
-										  HorizontalAlignment="Center"
-										  VerticalAlignment="Center"
-										  Data="{StaticResource ButtonSpinnerIncreaseButtonIcon}" />
 								</RepeatButton>
 
 							</StackPanel>

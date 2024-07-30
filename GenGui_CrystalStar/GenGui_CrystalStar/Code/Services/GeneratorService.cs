@@ -229,7 +229,8 @@ public class GeneratorService : IGeneratorService
                                     Enabled.Enabled : blkset.BlockRandomDropSettings.IsEnabled,
 
                 RandomDropChance = globalSettings.GlobalRandomDropSettings.IsEnabled == Enabled.Enabled && globalSettings.GlobalRandomDropSettings.SelectionScope == SelectionScope.Global ?
-                                    globalSettings.GlobalRandomDropSettings.GlobalRandomDropChance : blkset.BlockRandomDropSettings.BlockRandomDropChance,
+                                        blkset.BlockRandomDropSettings.IsEnabled == Enabled.Enabled ? blkset.BlockRandomDropSettings.BlockRandomDropChance : // if global but block enabled > use block's random chance
+                                            globalSettings.GlobalRandomDropSettings.GlobalRandomDropChance : blkset.BlockRandomDropSettings.BlockRandomDropChance,
 
                 AddAdj = globalSettings.GlobalAddAdjSettings.IsEnabled == Enabled.Enabled && globalSettings.GlobalAddAdjSettings.SelectionScope == SelectionScope.Global ?
                                     Enabled.Enabled : blkset.BlockAddAdjSettings.IsEnabled,
