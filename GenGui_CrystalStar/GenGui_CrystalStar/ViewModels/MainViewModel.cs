@@ -50,7 +50,14 @@ public partial class MainViewModel : ViewModelBase
         _textFileSourceService.Init();
 
         LoadBlockContainers(); // this is hilarious that this works
+        _ = Task.Run( () => GetInitialPromptHistory());
+        _ = Task.Run( () => GetLastGenSettings());
         //LoadBlocks();
+    }
+
+    private async Task GetInitialPromptHistory()
+    {
+        PromptHistory = (await _dataService.GetPromptHistory()).Data;
     }
 
     [ObservableProperty]
@@ -85,6 +92,24 @@ public partial class MainViewModel : ViewModelBase
             await window.Clipboard!.SetTextAsync(PromptOutput);
 
         }
+    }
+
+    public async Task GetLastGenSettings()
+    {
+        var jsonLastGen = await _dataService.GetLastGenSettings();
+
+        var lastGen = JsonSerializer.Deserialize<GlobalGenerationSettings>(jsonLastGen.Exception); //Response<string> makes an exception lol
+
+        PromptCount = lastGen.OutputCount;
+        TrimLastCommaToggle = lastGen.TrimLastComma == TrimLastComma.True ? true : false;
+        SelectedGlobalShuffleOption = lastGen.ShuffleSetting;
+        SelectedPromptOutputType = lastGen.OutputType;
+        GlobalTagStyleEnabledOption = lastGen.GlobalTagStyleSettings.IsEnabled ==  Enabled.Enabled ? true : false;
+        GlobalTagStyleSelectionScopeOption = lastGen.GlobalTagStyleSettings.SelectionScope;
+        SelectedGlobalTagStyleOption = lastGen.GlobalTagStyleSettings.GlobalTagStyle;
+        GlobalRandomDropEnabledOption = lastGen.GlobalRandomDropSettings.IsEnabled ==  Enabled.Enabled ? true : false;
+        GlobalRandomDropSelectionScopeOption = lastGen.GlobalRandomDropSettings.SelectionScope;
+        GlobalRandomDropChance = lastGen.GlobalRandomDropSettings.GlobalRandomDropChance;
     }
 
     public async void Generate()
@@ -123,21 +148,6 @@ public partial class MainViewModel : ViewModelBase
             blockSettingsList.AddRange(GenerateBlockSettings(shittyBlockThing.GuiBlocks));
         }
 
-
-
-        //if (Positive.Any())
-        //    blockSettingsList.AddRange(GenerateBlockSettings(Positive));
-        //if (Negative.Any())
-        //    blockSettingsList.AddRange(GenerateBlockSettings(Negative));
-        //if (Width.Any())
-        //    blockSettingsList.AddRange(GenerateBlockSettings(Width));
-        //if (Height.Any())
-        //    blockSettingsList.AddRange(GenerateBlockSettings(Height));
-        //if (Steps.Any())
-        //    blockSettingsList.AddRange(GenerateBlockSettings(Steps));
-        //if (Cfg_scale.Any())
-        //    blockSettingsList.AddRange(GenerateBlockSettings(Cfg_scale));
-        // add the rest later
 
         var jsonGlobalSettings = JsonSerializer.Serialize(globalSettings);
         var jsonBlockSettings = JsonSerializer.Serialize(blockSettingsList);
@@ -211,39 +221,6 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty]
     private List<PromptHistory> _promptHistory;
-
-    //partial void OnPromptHistoryChanged(List<PromptHistory> value)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public async void LoadBlocks()
-    //{
-    //    Positive = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.positive)).Data);
-    //    Negative = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.negative)).Data) ?? [];
-    //    Width = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.width)).Data) ?? [];
-    //    Height = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.height)).Data) ?? [];
-    //    Steps = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.steps)).Data) ?? [];
-    //    Cfg_scale = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.cfg_scale)).Data) ?? [];
-    //    Batch_size = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.batch_size)).Data) ?? [];
-    //    Sd_model = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sd_model)).Data) ?? [];
-    //    Sampler_name = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_name)).Data) ?? [];
-    //    Sampler_index = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.sampler_index)).Data) ?? [];
-    //    Seed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed)).Data) ?? [];
-    //    Subseed = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed)).Data) ?? [];
-    //    Subseed_strength = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.subseed_strength)).Data) ?? [];
-    //    Outpath_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_samples)).Data) ?? [];
-    //    Outpath_grids = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.outpath_grids)).Data) ?? [];
-    //    Prompt_for_display = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.prompt_for_display)).Data) ?? [];
-    //    Styles = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.styles)).Data) ?? [];
-    //    Seed_resize_from_w = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_w)).Data) ?? [];
-    //    Seed_resize_from_h = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.seed_resize_from_h)).Data) ?? [];
-    //    N_iter = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.n_iter)).Data) ?? [];
-    //    Restore_faces = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.restore_faces)).Data) ?? [];
-    //    Tiling = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.tiling)).Data) ?? [];
-    //    Do_not_save_samples = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_samples)).Data) ?? [];
-    //    Do_not_save_grid = ConvertBlocksToGui((await _dataService.GetBlocksByFlag(BlockFlag.do_not_save_grid)).Data) ?? [];
-    //}
 
     public async void ReloadTagBlock(object args)
     {

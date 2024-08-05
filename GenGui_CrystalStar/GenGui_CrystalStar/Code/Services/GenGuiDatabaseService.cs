@@ -17,6 +17,7 @@ public interface IGenGuiDatabaseService
     Task ResetTagsTable();
     Task ResetBlocksTable();
     Task ResetBlockFilesTable();
+    Task ResetPromptHistory();
 
     // Task RefreshTransientTables(List<Tags> Tags);
     // void RefreshBlocksTable();
@@ -43,6 +44,12 @@ public class GenGuiDataBaseService : IGenGuiDatabaseService
     {
         CreateNewTransientTables();
         CreateNewStatefulTables();
+    }
+
+    public async Task ResetPromptHistory()
+    {
+        await _db.DeleteAllAsync<PromptHistory>();
+        await _db.CreateTableAsync<PromptHistory>();
     }
 
     private void CreateNewTransientTables()

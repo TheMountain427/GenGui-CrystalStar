@@ -33,6 +33,7 @@ public interface IGenGuiDataService
     Task<Response<List<Blocks>>> GetBlocksByFlag(BlockFlag blockFlag);
     Task<Response<List<Blocks>>> GetAllBlocks();
     Task<Response<ResultCode>> UpdateBlocksSettings(BlockGenSettingsList blockSettingsList);
+    Task<Response<string>> GetLastGenSettings();
     }
 
 public class GenGuiDataService : IGenGuiDataService
@@ -50,6 +51,15 @@ public class GenGuiDataService : IGenGuiDataService
     {
 
     }
+
+    public async Task<Response<string>> GetLastGenSettings()
+    {
+        var last = await _database.PromptHistory.OrderBy(x => x.ID).LastAsync();
+        
+        return new Response<string>(last.GenSettings);
+
+    }
+
     public async Task<Response<ResultCode>> UpdateBlocksSettings(BlockGenSettingsList blockSettingsList)
     {
         var allBlocks = await GetAllBlocks();
@@ -95,10 +105,22 @@ public class GenGuiDataService : IGenGuiDataService
 
     public async Task<Response<List<PromptHistory>>> GetPromptHistory()
     {
+        
         var promptHistory =  await _database.PromptHistory.OrderByDescending(item => item.ID)
                                                           .Take(50)
                                                           .OrderBy(item => item.ID)
+                                                          .Reverse()
                                                           .ToListAsync();
+
+        var historyCount = _database.PromptHistory.Count();
+        if (historyCount is >= 50)
+        {
+            await _databaseService.ResetPromptHistory();
+            _database.ChangeTracker.Clear();
+            await _database.AddRangeAsync(promptHistory);
+            await _database.SaveChangesAsync();
+            _database.ChangeTracker.Clear();
+        }
 
         return new Response<List<PromptHistory>>(promptHistory);
     }

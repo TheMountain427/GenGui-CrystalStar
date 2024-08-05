@@ -310,122 +310,122 @@ public partial class MainViewModel : ViewModelBase
         BlocksContainers.Add(new BlocksContainer { 
             BlockFlagName = "positive", 
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.positive).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.positive).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.positive).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer {
             BlockFlagName = "negative",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.negative).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.negative).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.negative).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "width",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.width).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.width).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.width).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "height",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.height).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.height).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.height).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "steps",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.steps).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.steps).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.steps).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "cfg_scale",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.cfg_scale).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.cfg_scale).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.cfg_scale).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "batch_size",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.batch_size).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.batch_size).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.batch_size).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "sd_model",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sd_model).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sd_model).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sd_model).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "sampler_name",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_name).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_name).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_name).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "sampler_index",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_index).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_index).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.sampler_index).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "seed",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "subseed",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "subseed_strength",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed_strength).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed_strength).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.subseed_strength).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "outpath_samples",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_samples).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_samples).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_samples).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "outpath_grids",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_grids).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_grids).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.outpath_grids).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "prompt_for_display",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.prompt_for_display).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.prompt_for_display).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.prompt_for_display).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "styles",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.styles).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.styles).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.styles).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "seed_resize_from_w",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_w).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_w).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_w).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "seed_resize_from_h",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_h).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_h).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.seed_resize_from_h).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "n_iter",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.n_iter).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.n_iter).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.n_iter).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "restore_faces",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.restore_faces).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.restore_faces).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.restore_faces).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "tiling",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.tiling).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.tiling).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.tiling).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "do_not_save_samples",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_samples).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_samples).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_samples).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
         BlocksContainers.Add(new BlocksContainer{
             BlockFlagName = "do_not_save_grid",
             GuiBlocks = new List<GuiBlock>(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_grid).Count() > 0 ?
-                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_grid).ToList()) : new List<GuiBlock>())});
+                ConvertBlocksToGui(blocks.Data.Where(x => x.BlockFlag == BlockFlag.do_not_save_grid).OrderBy(x => x.BlockName).ToList()) : new List<GuiBlock>())});
 
     }
 }

@@ -173,7 +173,7 @@ public class GeneratorService : IGeneratorService
 
                     if (globalSettings.TrimLastComma == TrimLastComma.True)
                     {
-                        if (prompt.Last() == ',' )
+                        if (prompt.Length > 0 && prompt.Last() == ',' )
                             prompt = prompt.TrimEnd(',');
                     }
                 }

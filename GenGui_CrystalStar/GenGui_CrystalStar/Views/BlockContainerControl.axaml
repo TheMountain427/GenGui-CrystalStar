@@ -44,6 +44,9 @@
 		<StreamGeometry x:Key="GeneralTagIcon">
 			M-7.6823-12.2723 8.3832-12.2723C8.666-12.2723 8.8852-12.4915 8.8852-12.7743L8.8852-21.8677C8.8852-22.1505 8.666-22.3697 8.3832-22.3697L-7.6823-22.3697C-7.8096-22.3697-7.9439-22.3202-8.0358-22.2283L-12.5825-17.6816C-12.7805-17.4836-12.7805-17.1725-12.5825-16.9745L-8.0358-12.4278C-7.9439-12.3218-7.8166-12.2793-7.6823-12.2723Z
 		</StreamGeometry>
+		<StreamGeometry x:Key="ResetBlockSettingsIcon">
+			M8.87 10.5046L10.8204 12.4504L9.76045 13.511L6 9.75456L9.76045 5.99805L10.8204 7.05871L8.87 9.00456H18V18H11.9532V16.5H16.5V10.5046H8.87Z
+		</StreamGeometry>
 
 		<Thickness x:Key="ExpanderHeaderPadding">1</Thickness>
 		<Thickness x:Key="ExpanderContentPadding">1</Thickness>
@@ -312,314 +315,351 @@
 
 	</UserControl.ContentTemplate>
 
-	<ItemsControl x:CompileBindings="False" ItemsSource="{ Binding BlocksContainers }">
-		<ItemsControl.ItemTemplate>
-			<DataTemplate>
-				<Expander Classes="FlagExpanders"
-						  HorizontalAlignment="Stretch"
-						  IsExpanded="False"
-						  Padding="5">
-					<Expander.Header>
-						<TextBlock Text="{ Binding BlockFlagName }"
-								   FontWeight="Bold"
-								   FontSize="20"/>
-					</Expander.Header>
-					<ItemsControl  ItemsSource="{ Binding GuiBlocks }">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<Expander Classes="BlkContainers"
-										  IsExpanded="False"
-										  HorizontalAlignment="Stretch"
-										  MinHeight="20"
-										  Margin="0,1">
-									<Expander.Header>
-										<Border Classes="BlkContainer"
-												CornerRadius="0">
-											<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto"
-												  ShowGridLines="False" >
-												<ToggleButton Name="ShuffleEnabledMiniButton"
-															  Height="30"
-															  Width="30"
-															  CornerRadius="0"
-															  Grid.Column="0"
-															  IsChecked="{ Binding ShuffleEnabled }">
-													<Path Fill="White"
-														  Stretch="Uniform"
-														  Width="10"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource ShuffleIcon }"/>
-												</ToggleButton>
-												<ToggleButton Name="TagStyleEnabledMiniButton"
-															  Height="20"
-															  Width="30"
-															  CornerRadius="0"
-															  Grid.Column="1"
-															  IsChecked="{ Binding TagStyleEnabled }">
-													<Path Fill="{ DynamicResource TextControlForeground }"
-														  Stretch="Uniform"
-														  Width="15"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource GeneralTagIcon }"/>
-												</ToggleButton>
-												<ToggleButton Name="RandomDropEnabledMiniButton" Height="30"
-															  Width="30"
-															  CornerRadius="0"
-															  Grid.Column="2"
-															  IsChecked="{ Binding RandomDropEnabled }">
-													<Path Fill="White"
-														  Stretch="Uniform"
-														  Width="10"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource RandomIcon }"/>
-												</ToggleButton>
-												<ToggleButton Name="AddAdjEnabledMiniButton"
-															  Height="30"
-															  Width="30"
-															  CornerRadius="0"
-															  Grid.Column="3"
-															  IsChecked="{ Binding AddAdjEnabled }">
-													<Path Fill="White"
-														  Stretch="Uniform"
-														  Width="15"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource AddAdjIcon }"/>
-												</ToggleButton>
-												<TextBlock Text="{ Binding BlockName }"
-														   TextAlignment="Center"
-														   Grid.Column="4"
-														   FontSize="11"
-														   FontWeight="Bold"
-														   HorizontalAlignment="Center"
-														   VerticalAlignment="Center"/>
-												<Button Height="30"
-														Width="30"
-														Grid.Column="5"
-														Margin="0,0,10,0"
-													Tag="{ Binding BlockName }"
-													ToolTip.Tip="Reset tag select number"
-													Click="ResetSelectCountBox">
-													<Path Fill="White"
-														  Stretch="Uniform"
-														  Width="10"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource ResetNumBox }"/>
-												</Button>
-												<NumericUpDown Grid.Column="6"
-															   Width=""
+	<StackPanel Name="MainStackPanel">
+		<DockPanel>
+			<TextBlock	FontSize="24"
+						FontWeight="Bold"
+						TextDecorations="Underline"
+						Text="Block Settings"
+						DockPanel.Dock="Left"/>
+			<Button Click="ResetAllSelectCounts"
+					HorizontalAlignment="Right"
+					Margin="5,0,20,0"
+					DockPanel.Dock="Right"
+					ToolTip.Tip="Reset all select counts">
+				<Path Fill="White"
+					  Stretch="Uniform"
+					  Width="10"
+					  HorizontalAlignment="Center"
+					  VerticalAlignment="Center"
+					  Data="{ StaticResource ResetNumBox }"/>
+			</Button>
+			<Button Click="ResetAllBlockSettings"
+					HorizontalAlignment="Right"
+					Margin="5,0,5,0"
+					DockPanel.Dock="Right"
+					ToolTip.Tip="Disable all block toggles">
+				<Path Fill="White"
+					  Stretch="Uniform"
+					  Width="10"
+					  HorizontalAlignment="Center"
+					  VerticalAlignment="Center"
+					  Data="{ StaticResource ResetBlockSettingsIcon }"/>
+			</Button>
+		</DockPanel>
+		<ItemsControl x:CompileBindings="False" ItemsSource="{ Binding BlocksContainers }">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Expander Classes="FlagExpanders"
+							  HorizontalAlignment="Stretch"
+							  IsExpanded="False"
+							  Padding="5">
+						<Expander.Header>
+							<TextBlock Text="{ Binding BlockFlagName }"
+									   FontWeight="Bold"
+									   FontSize="20"/>
+						</Expander.Header>
+						<ItemsControl  ItemsSource="{ Binding GuiBlocks }">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Expander Classes="BlkContainers"
+											  IsExpanded="False"
+											  HorizontalAlignment="Stretch"
+											  MinHeight="20"
+											  Margin="0,1">
+										<Expander.Header>
+											<Border Classes="BlkContainer"
+													CornerRadius="0">
+												<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto"
+													  ShowGridLines="False" >
+													<ToggleButton Name="ShuffleEnabledMiniButton"
+																  Height="30"
+																  Width="30"
+																  CornerRadius="0"
+																  Grid.Column="0"
+																  IsChecked="{ Binding ShuffleEnabled }"
+																  Tag="MiniButton">
+														<Path Fill="White"
+															  Stretch="Uniform"
+															  Width="10"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource ShuffleIcon }"/>
+													</ToggleButton>
+													<ToggleButton Name="TagStyleEnabledMiniButton"
+																  Height="20"
+																  Width="30"
+																  CornerRadius="0"
+																  Grid.Column="1"
+																  IsChecked="{ Binding TagStyleEnabled }"
+																  Tag="MiniButton">
+														<Path Fill="{ DynamicResource TextControlForeground }"
+															  Stretch="Uniform"
+															  Width="15"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource GeneralTagIcon }"/>
+													</ToggleButton>
+													<ToggleButton Name="RandomDropEnabledMiniButton" Height="30"
+																  Width="30"
+																  CornerRadius="0"
+																  Grid.Column="2"
+																  IsChecked="{ Binding RandomDropEnabled }"
+																  Tag="MiniButton">
+														<Path Fill="White"
+															  Stretch="Uniform"
+															  Width="10"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource RandomIcon }"/>
+													</ToggleButton>
+													<ToggleButton Name="AddAdjEnabledMiniButton"
+																  Height="30"
+																  Width="30"
+																  CornerRadius="0"
+																  Grid.Column="3"
+																  IsChecked="{ Binding AddAdjEnabled }"
+																  Tag="MiniButton">
+														<Path Fill="White"
+															  Stretch="Uniform"
+															  Width="15"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource AddAdjIcon }"/>
+													</ToggleButton>
+													<TextBlock Text="{ Binding BlockName }"
+															   TextAlignment="Center"
+															   Grid.Column="4"
+															   FontSize="11"
+															   FontWeight="Bold"
+															   HorizontalAlignment="Center"
+															   VerticalAlignment="Center"/>
+													<Button Height="30"
+															Width="30"
+															Grid.Column="5"
+															Margin="0,0,10,0"
+														Tag="{ Binding BlockName }"
+														ToolTip.Tip="Reset tag select number"
+														Click="ResetSelectCountBox">
+														<Path Fill="White"
+															  Stretch="Uniform"
+															  Width="10"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource ResetNumBox }"/>
+													</Button>
+													<NumericUpDown Grid.Column="6"
+																   Width=""
+																   HorizontalAlignment="Right"
+																   Tag="{ Binding BlockName }"
+																   Value="{ Binding SelectCount, Mode=TwoWay }"
+																   ToolTip.Tip="Number of tags to select from this block">
+													</NumericUpDown>
+												</Grid>
+											</Border>
+										</Expander.Header>
+										<Expander.Content>
+											<StackPanel Margin="0,5,0,0"
+														Spacing="1">
+												<DockPanel>
+													<ToggleButton DockPanel.Dock="Left"
+																  Height="25"
+																  Padding="4"
+																  IsChecked="{ Binding #ShuffleEnabledMiniButton.IsChecked, Mode=TwoWay }">
+														<TextBlock FontSize="11">
+															<InlineUIContainer>
+																<Path Fill="White"
+																	  Stretch="Uniform"
+																	  Width="10"
+																	  HorizontalAlignment="Center"
+																	  VerticalAlignment="Center"
+																	  Data="{ StaticResource ShuffleIcon }"/>
+															</InlineUIContainer>
+															<Run Text=" Enable Shuffle"/>
+														</TextBlock>
+													</ToggleButton>
+													<Button HorizontalAlignment="Right"
+															Height="25"
+															Width="40"
+															DockPanel.Dock="Right">
+														<Path Fill="{ DynamicResource TextControlForeground }"
+															  Stretch="Uniform"
+															  Width="14"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource OpenFile }"/>
+													</Button>
+													<Button HorizontalAlignment="Right"
+															Height="25"
+															Width="40"
+															DockPanel.Dock="Right"
+															Margin="0,0,10,0"
+															  Tag="{ Binding BlockName }"
+															  Command="{ Binding $parent[UserControl].DataContext.ReloadTagBlock }"
+															  CommandParameter="{ Binding $self.Tag }"
+															  ToolTip.Tip="Reload the internal database for this block">
+														<Path Fill="{ DynamicResource TextControlForeground }"
+															  Stretch="Uniform"
+															  Width="12"
+															  HorizontalAlignment="Center"
+															  VerticalAlignment="Center"
+															  Data="{ StaticResource ReloadIcon }"/>
+													</Button>
+												</DockPanel>
+
+												<DockPanel>
+													<ToggleButton DockPanel.Dock="Left"
+																  Height="25"
+																  Padding="4"
+																  IsChecked="{ Binding #TagStyleEnabledMiniButton.IsChecked, Mode=TwoWay }">
+														<TextBlock FontSize="11">
+															<InlineUIContainer>
+																<Path Fill="White"
+																	  Stretch="Uniform"
+																	  Width="10"
+																	  HorizontalAlignment="Center"
+																	  VerticalAlignment="Center"
+																	  Data="{ StaticResource GeneralTagIcon }"/>
+															</InlineUIContainer>
+															<Run Text=" Enable Tag Style"/>
+														</TextBlock>
+													</ToggleButton>
+													<TextBlock Text="TagStyle: "
+															   FontSize="11"
+															   DockPanel.Dock="Left"
 															   HorizontalAlignment="Right"
-															Tag="{ Binding BlockName }"
-															Value="{ Binding SelectCount, Mode=TwoWay }"
-															ToolTip.Tip="Number of tags to select from this block">
-												</NumericUpDown>
-											</Grid>
-										</Border>
-									</Expander.Header>
-									<Expander.Content>
-										<StackPanel Margin="0,5,0,0"
-													Spacing="1">
-											<DockPanel>
-												<ToggleButton DockPanel.Dock="Left"
+															   VerticalAlignment="Center"
+															  Margin="20,0"/>
+													<ComboBox DockPanel.Dock="Left"
 															  Height="25"
-															  Padding="4"
-															  IsChecked="{ Binding #ShuffleEnabledMiniButton.IsChecked, Mode=TwoWay }">
-													<TextBlock FontSize="11">
-														<InlineUIContainer>
-															<Path Fill="White"
-																  Stretch="Uniform"
-																  Width="10"
-																  HorizontalAlignment="Center"
-																  VerticalAlignment="Center"
-																  Data="{ StaticResource ShuffleIcon }"/>
-														</InlineUIContainer>
-														<Run Text=" Enable Shuffle"/>
-													</TextBlock>
-												</ToggleButton>
-												<Button HorizontalAlignment="Right"
-														Height="25"
-														Width="40"
-														DockPanel.Dock="Right">
-													<Path Fill="{ DynamicResource TextControlForeground }"
-														  Stretch="Uniform"
-														  Width="14"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource OpenFile }"/>
-												</Button>
-												<Button HorizontalAlignment="Right"
-														Height="25"
-														Width="40"
-														DockPanel.Dock="Right"
-														Margin="0,0,10,0"
-														  Tag="{ Binding BlockName }"
-														  Command="{ Binding $parent[UserControl].DataContext.ReloadTagBlock }"
-														  CommandParameter="{ Binding $self.Tag }"
-														  ToolTip.Tip="Reload the internal database for this block">
-													<Path Fill="{ DynamicResource TextControlForeground }"
-														  Stretch="Uniform"
-														  Width="12"
-														  HorizontalAlignment="Center"
-														  VerticalAlignment="Center"
-														  Data="{ StaticResource ReloadIcon }"/>
-												</Button>
-											</DockPanel>
+															  x:CompileBindings="False"
+															ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
+															SelectedItem="{ Binding $parent[Expander].DataContext.SelectedTagStyleOption, Mode=TwoWay }"
+															HorizontalAlignment="Left"
+															HorizontalContentAlignment="Center">
+														<ComboBox.ItemTemplate>
+															<DataTemplate>
+																<TextBlock Text="{Binding}"
+																		   TextAlignment="Center"
+																		   FontSize="11"
+																		   HorizontalAlignment="Center"/>
+															</DataTemplate>
+														</ComboBox.ItemTemplate>
+													</ComboBox>
+												</DockPanel>
 
-											<DockPanel>
-												<ToggleButton DockPanel.Dock="Left"
-															  Height="25"
-															  Padding="4"
-															  IsChecked="{ Binding #TagStyleEnabledMiniButton.IsChecked, Mode=TwoWay }">
-													<TextBlock FontSize="11">
-														<InlineUIContainer>
-															<Path Fill="White"
-																  Stretch="Uniform"
-																  Width="10"
-																  HorizontalAlignment="Center"
-																  VerticalAlignment="Center"
-																  Data="{ StaticResource GeneralTagIcon }"/>
-														</InlineUIContainer>
-														<Run Text=" Enable Tag Style"/>
-													</TextBlock>
-												</ToggleButton>
-												<TextBlock Text="TagStyle: "
-														   FontSize="11"
-														   DockPanel.Dock="Left"
-														   HorizontalAlignment="Right"
-														   VerticalAlignment="Center"
-														  Margin="20,0"/>
-												<ComboBox DockPanel.Dock="Left"
-														  Height="25"
-														  x:CompileBindings="False"
-														ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalTagStyleOptionsList }"
-														SelectedItem="{ Binding $parent[Button].DataContext.SelectedTagStyleOption, Mode=TwoWay }"
-														HorizontalAlignment="Left"
-														HorizontalContentAlignment="Center">
-													<ComboBox.ItemTemplate>
-														<DataTemplate>
-															<TextBlock Text="{Binding}"
-																	   TextAlignment="Center"
-																	   FontSize="11"
-																	   HorizontalAlignment="Center"/>
-														</DataTemplate>
-													</ComboBox.ItemTemplate>
-												</ComboBox>
-											</DockPanel>
-
-											<DockPanel>
-												<ToggleButton DockPanel.Dock="Left"
-															  Height="25"
-															  Padding="4"
-															  IsChecked="{ Binding #RandomDropEnabledMiniButton.IsChecked, Mode=TwoWay }">
-													<TextBlock FontSize="11">
-														<InlineUIContainer>
-															<Path Fill="White"
-																  Stretch="Uniform"
-																  Width="10"
-																  Height="10"
-																  HorizontalAlignment="Center"
-																  VerticalAlignment="Center"
-																  Data="{ StaticResource RandomIcon }"/>
-														</InlineUIContainer>
-														<Run Text=" Enable Random Drop"/>
-													</TextBlock>
-												</ToggleButton>
-												<Slider Value="{ Binding #RandomChanceTextBox.Value }"
-														SmallChange="1"
-														TickFrequency="1"
-														IsSnapToTickEnabled="True"
-														Height="25"
-														VerticalAlignment="Center"
-														DockPanel.Dock="Right"
-														MinWidth="125"
-														Margin="0"/>
-												<NumericUpDown Classes="TextBoxOnly"
-															   DockPanel.Dock="Right"
-															   Name="RandomChanceTextBox"
-															   Value="{ Binding RandomDropChance }"
+												<DockPanel>
+													<ToggleButton DockPanel.Dock="Left"
+																  Height="25"
+																  Padding="4"
+																  IsChecked="{ Binding #RandomDropEnabledMiniButton.IsChecked, Mode=TwoWay }">
+														<TextBlock FontSize="11">
+															<InlineUIContainer>
+																<Path Fill="White"
+																	  Stretch="Uniform"
+																	  Width="10"
+																	  Height="10"
+																	  HorizontalAlignment="Center"
+																	  VerticalAlignment="Center"
+																	  Data="{ StaticResource RandomIcon }"/>
+															</InlineUIContainer>
+															<Run Text=" Enable Random Drop"/>
+														</TextBlock>
+													</ToggleButton>
+													<Slider Value="{ Binding #RandomChanceTextBox.Value }"
+															SmallChange="1"
+															TickFrequency="1"
+															IsSnapToTickEnabled="True"
+															Height="25"
+															VerticalAlignment="Center"
+															DockPanel.Dock="Right"
+															MinWidth="125"
+															Margin="0"/>
+													<NumericUpDown Classes="TextBoxOnly"
+																   DockPanel.Dock="Right"
+																   Name="RandomChanceTextBox"
+																   Value="{ Binding RandomDropChance }"
+																   FontSize="11"
+																   Height="22"
+																   Margin="10,0"/>
+													<TextBlock Text="Chance:"
 															   FontSize="11"
-															   Height="22"
-															   Margin="10,0"/>
-												<TextBlock Text="Chance:"
-														   FontSize="11"
-														   DockPanel.Dock="Left"
-														   HorizontalAlignment="Right"
-														   VerticalAlignment="Center"/>
+															   DockPanel.Dock="Left"
+															   HorizontalAlignment="Right"
+															   VerticalAlignment="Center"/>
 
-											</DockPanel>
-											<DockPanel>
-												<ToggleButton DockPanel.Dock="Left"
-															  Height="25"
-															  Padding="4"
-															  IsChecked="{ Binding #AddAdjEnabledMiniButton.IsChecked, Mode=TwoWay }">
-													<TextBlock FontSize="11">
-														<InlineUIContainer>
-															<Path Fill="White"
-																  Stretch="Uniform"
-																  Width="15"
-																  HorizontalAlignment="Center"
-																  VerticalAlignment="Center"
-																  Data="{ StaticResource AddAdjIcon }"/>
-														</InlineUIContainer>
-														<Run Text=" Enable Add Adj"/>
-													</TextBlock>
-												</ToggleButton>
-												<TextBlock Text="Type: "
-														   FontSize="11"
-														   DockPanel.Dock="Left"
-														   HorizontalAlignment="Right"
-														   VerticalAlignment="Center"
-														  Margin="10,0"/>
-												<ComboBox DockPanel.Dock="Left"
-														  Height="25"
-														  x:CompileBindings="False"
-														ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
-														SelectedItem="{ Binding $parent[Button].DataContext.SelectedAddAdjTypeOption, Mode=TwoWay }"
-														HorizontalAlignment="Center"
-														HorizontalContentAlignment="Center">
-													<ComboBox.ItemTemplate>
-														<DataTemplate>
-															<TextBlock Text="{Binding}"
-																	   TextAlignment="Center"
-																	   FontSize="11"
-																	   HorizontalAlignment="Center"/>
-														</DataTemplate>
-													</ComboBox.ItemTemplate>
-												</ComboBox>
-												<Slider Value="{ Binding #AddAdjChanceTextBox.Value }"
-														SmallChange="1"
-														TickFrequency="1"
-														IsSnapToTickEnabled="True"
-														Height="25"
-														VerticalAlignment="Center"
-														DockPanel.Dock="Right"
-														MinWidth="125"
-														Margin="0"/>
-												<NumericUpDown Classes="TextBoxOnly"
-															   DockPanel.Dock="Right"
-															   Name="AddAdjChanceTextBox"
-															   Value="{ Binding AddAdjChance }"
+												</DockPanel>
+												<DockPanel>
+													<ToggleButton DockPanel.Dock="Left"
+																  Height="25"
+																  Padding="4"
+																  IsChecked="{ Binding #AddAdjEnabledMiniButton.IsChecked, Mode=TwoWay }">
+														<TextBlock FontSize="11">
+															<InlineUIContainer>
+																<Path Fill="White"
+																	  Stretch="Uniform"
+																	  Width="15"
+																	  HorizontalAlignment="Center"
+																	  VerticalAlignment="Center"
+																	  Data="{ StaticResource AddAdjIcon }"/>
+															</InlineUIContainer>
+															<Run Text=" Enable Add Adj"/>
+														</TextBlock>
+													</ToggleButton>
+													<TextBlock Text="Type: "
 															   FontSize="11"
-															   Height="22"
-															   Margin="10,0"/>
-												<TextBlock Text="Chance:"
-														   FontSize="11"
-														   DockPanel.Dock="Left"
-														   HorizontalAlignment="Right"
-														   VerticalAlignment="Center"/>
+															   DockPanel.Dock="Left"
+															   HorizontalAlignment="Right"
+															   VerticalAlignment="Center"
+															  Margin="10,0"/>
+													<ComboBox DockPanel.Dock="Left"
+															  Height="25"
+															  x:CompileBindings="False"
+															ItemsSource="{ Binding $parent[UserControl].DataContext.GlobalAddAdjectivesOptionsList }"
+															SelectedItem="{ Binding $parent[Expander].DataContext.SelectedAddAdjTypeOption, Mode=TwoWay }"
+															HorizontalAlignment="Center"
+															HorizontalContentAlignment="Center">
+														<ComboBox.ItemTemplate>
+															<DataTemplate>
+																<TextBlock Text="{Binding}"
+																		   TextAlignment="Center"
+																		   FontSize="11"
+																		   HorizontalAlignment="Center"/>
+															</DataTemplate>
+														</ComboBox.ItemTemplate>
+													</ComboBox>
+													<Slider Value="{ Binding #AddAdjChanceTextBox.Value }"
+															SmallChange="1"
+															TickFrequency="1"
+															IsSnapToTickEnabled="True"
+															Height="25"
+															VerticalAlignment="Center"
+															DockPanel.Dock="Right"
+															MinWidth="125"
+															Margin="0"/>
+													<NumericUpDown Classes="TextBoxOnly"
+																   DockPanel.Dock="Right"
+																   Name="AddAdjChanceTextBox"
+																   Value="{ Binding AddAdjChance }"
+																   FontSize="11"
+																   Height="22"
+																   Margin="10,0"/>
+													<TextBlock Text="Chance:"
+															   FontSize="11"
+															   DockPanel.Dock="Left"
+															   HorizontalAlignment="Right"
+															   VerticalAlignment="Center"/>
 
-											</DockPanel>
-										</StackPanel>
-									</Expander.Content>
-								</Expander>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</Expander>
-			</DataTemplate>
-		</ItemsControl.ItemTemplate>
-	</ItemsControl>
+												</DockPanel>
+											</StackPanel>
+										</Expander.Content>
+									</Expander>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</Expander>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
 </UserControl>
