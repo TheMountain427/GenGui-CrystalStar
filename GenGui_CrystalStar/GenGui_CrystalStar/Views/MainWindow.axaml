@@ -9,6 +9,7 @@
         Title="GenGui_CrystalStar"
 		Name="GenGuiCrystalStar"
 		SystemDecorations="None"
+		Icon="/Assets/GenGuiLogo.ico"
 		Background="#2a2e38"
 		x:DataType="vm:MainViewModel"
 		Width="{ Binding MainWindowWidth }"
